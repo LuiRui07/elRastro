@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const pujasSchema = require("../models/productos.js");
+const productosSchema = require("../models/pujas.js");
 
 // create 
 router.post("/", (req, res) => {
-  const user = pujasSchema(req.body);
+  const user = productosSchema(req.body);
   user
     .save()
     .then((data) => res.json(data))
@@ -14,7 +14,7 @@ router.post("/", (req, res) => {
 
 // get all
 router.get("/", (req, res) => {
-  pujasSchema
+  productosSchema
     .find()
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
@@ -23,7 +23,7 @@ router.get("/", (req, res) => {
 // get 
 router.get("/:id", (req, res) => {
   const { id } = req.params;
-  pujasSchema
+  productosSchema
     .findById(id)
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
@@ -32,7 +32,7 @@ router.get("/:id", (req, res) => {
 // delete 
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
-  pujasSchema
+  productosSchema
     .deleteOne({ _id: id })
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
@@ -42,7 +42,7 @@ router.delete("/:id", (req, res) => {
 router.put("/:id", (req, res) => {
   const { id } = req.params;
   const { name, age, email } = req.body;
-  pujasSchema
+  productosSchema
     .updateOne({ _id: id }, { $set: { name, age, email } })
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));

@@ -9,7 +9,9 @@ const port = process.env.PORT || 5000;
 app.use(express.json());
 
 const productoRoutes = require("./routes/productoRoutes.js")
+const pujaRoutes = require("./routes/pujaRoutes.js")
 app.use('/productos', productoRoutes);
+app.use('/pujas', pujaRoutes);
 mongoose.connect(
   process.env.ATLAS_URI).then(()=>
     console.log("Hemos conectado con mongoDB, BOMBA")
