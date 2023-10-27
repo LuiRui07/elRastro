@@ -34,6 +34,7 @@ router.get("/productos-ofertados/:usuarioId", (req, res) => {
   const { usuarioId } = req.params;
   pujasSchema
     .find({ vendedor: usuarioId })
+    .sort({ fecha: -1 }) //Ordena en en fecha descendente
     .then((productosOfertados) => {
       if (productosOfertados.length === 0) {
         return res.json({ message: "El usuario no ha ofertado ningún producto." });
