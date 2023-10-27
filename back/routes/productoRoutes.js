@@ -29,6 +29,20 @@ router.get("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
+// get productos ofertados por un usuario
+router.get("/productos-ofertados/:usuarioId", (req, res) => {
+  const { usuarioId } = req.params;
+  pujasSchema
+    .find({ vendedor: usuarioId })
+    .then((productosOfertados) => {
+      if (productosOfertados.length === 0) {
+        return res.json({ message: "El usuario no ha ofertado ningún producto." });
+      }
+      res.json(productosOfertados);
+    })
+    .catch((error) => res.json({ message: error }));
+});
+
 // delete 
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
