@@ -2,21 +2,21 @@ const mongoose = require("mongoose")
 
 const productosSchema = new mongoose.Schema({
     vendedor: {
-        type: String,
-        required: true,
-        
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'usuarios',
+        required: false,
         },
     direccion: {
         type: String,
-        required: true
+        required: false
         },
     descripcion: {
         type: String,
-        required: true
+        required: false
         },
     precioInicial: {
         type: Number,
-        required: true
+        required: false
         },
     precioActual: {
         type: Number,
@@ -24,11 +24,11 @@ const productosSchema = new mongoose.Schema({
     },
     categorias: {
         type: String,
-        required: true
+        required: false
     },
     fechaDeCreacion: {
         type: Date,
-        required: true
+        required: false
     }
 });
 

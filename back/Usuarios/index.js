@@ -5,13 +5,11 @@ require("dotenv").config({ path: "./config.env" });
 const app = express();
 
 
-const port = process.env.PORT || 5000;
+const port = 5002;
 app.use(express.json());
 
-const productoRoutes = require("./routes/productoRoutes.js")
-const pujaRoutes = require("./routes/pujaRoutes.js")
-app.use('/productos', productoRoutes);
-app.use('/pujas', pujaRoutes);
+const usuarioRouter = require("./routes/usuarioRoutes.js")
+app.use('/usuarios', usuarioRouter);
 mongoose.connect(
   process.env.ATLAS_URI).then(()=>
     console.log("Hemos conectado con mongoDB, BOMBA")

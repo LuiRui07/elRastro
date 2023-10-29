@@ -29,20 +29,6 @@ router.get("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// get productos ofertados por un usuario
-router.get("/productos-ofertados/:usuarioId", (req, res) => {
-  const { usuarioId } = req.params;
-  pujasSchema
-    .find({ vendedor: usuarioId })
-    .sort({ fecha: -1 }) //Ordena en en fecha descendente
-    .then((productosOfertados) => {
-      if (productosOfertados.length === 0) {
-        return res.json({ message: "El usuario no ha ofertado ningún producto." });
-      }
-      res.json(productosOfertados);
-    })
-    .catch((error) => res.json({ message: error }));
-});
 
 // delete 
 router.delete("/:id", (req, res) => {
@@ -60,6 +46,21 @@ router.put("/:id", (req, res) => {
   pujasSchema
     .updateOne({ _id: id }, { $set: { name, age, email } })
     .then((data) => res.json(data))
+    .catch((error) => res.json({ message: error }));
+});
+
+// get productos ofertados por un usuario
+router.get("/productos-ofertados/:usuarioId", (req, res) => {
+  const { usuarioId } = req.params;
+  pujasSchema
+    .find({ vendedor: usuarioId })
+    .sort({ fecha: -1 }) //Ordena en en fecha descendente
+    .then((productosOfertados) => {
+      if (productosOfertados.length === 0) {
+        return res.json({ message: "El usuario no ha ofertado ningún producto." });
+      }
+      res.json(productosOfertados);
+    })
     .catch((error) => res.json({ message: error }));
 });
 
