@@ -5,7 +5,7 @@ require("dotenv").config({ path: "./config.env" });
 const app = express();
 
 
-const port = 5001;
+const port =  process.env.PORT ;
 app.use(express.json());
 
 const pujaRoutes = require("./routes/pujaRoutes.js")

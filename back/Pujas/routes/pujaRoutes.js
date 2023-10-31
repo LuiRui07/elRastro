@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 const productosSchema = require("../models/pujas.js");
 
 // create 
@@ -26,6 +27,21 @@ router.get("/:id", (req, res) => {
   productosSchema
     .findById(id)
     .then((data) => res.json(data))
+    .catch((error) => res.json({ message: error }));
+});
+
+// get todos los productos a los que ha ofertado un usuario
+router.get("/pujas-realizadas/:usuarioId", (req, res) => {
+  const { usuarioId } = req.params;
+  productosSchema
+    .find({ comprador: new ObjectId(usuarioId)})
+    .sort({ fecha: -1 }) //Ordena en en fecha descendente
+    .then((pujasRealizadas) => {
+      if (pujasRealizadas.length === 0) {
+        return res.json({ message: "El usuario no ha realizado ninguna puja." });
+      }
+      res.json(pujasRealizadas);
+    })
     .catch((error) => res.json({ message: error }));
 });
 

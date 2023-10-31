@@ -3,9 +3,10 @@ const mongoose = require("mongoose")
 
 const pujasSchema = new mongoose.Schema({
     comprador: {
-        type: String,
-        required: true
-    },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'usuarios',
+        required: false,
+        },
     producto: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'productos',

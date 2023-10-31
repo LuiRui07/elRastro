@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const pujasSchema = require("../models/productos.js");
 

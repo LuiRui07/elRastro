@@ -1,0 +1,4 @@
+
+GET   http://localhost:27017/pujas/pujas-realizadas/65411c097cb2b09812e770e8 HTTP/1.1
+Content-Type: application/json
+
