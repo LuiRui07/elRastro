@@ -1,0 +1,11 @@
+
+GET   http://localhost:27017/productos/productos-ofertados/65411c097cb2b09812e770e8 HTTP/1.1
+Content-Type: application/json
+
+{ 
+  "vendedor": "65411c097cb2b09812e770e8" ,
+  "producto": "eee" ,
+  "precio": 100.00
+
+  
+  }

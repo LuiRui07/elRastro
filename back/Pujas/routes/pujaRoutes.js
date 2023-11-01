@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
-const productosSchema = require("../models/pujas.js");
+const pujasSchema = require("../models/pujas.js");
 
 // create 
 router.post("/", (req, res) => {
-  const user = productosSchema(req.body);
+  const user = pujasSchema(req.body);
   user
     .save()
     .then((data) => res.json(data))
@@ -15,7 +15,7 @@ router.post("/", (req, res) => {
 
 // get all
 router.get("/", (req, res) => {
-  productosSchema
+  pujasSchema
     .find()
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
@@ -24,7 +24,7 @@ router.get("/", (req, res) => {
 // get 
 router.get("/:id", (req, res) => {
   const { id } = req.params;
-  productosSchema
+  pujasSchema
     .findById(id)
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
@@ -33,7 +33,7 @@ router.get("/:id", (req, res) => {
 // get todos los productos a los que ha ofertado un usuario
 router.get("/pujas-realizadas/:usuarioId", (req, res) => {
   const { usuarioId } = req.params;
-  productosSchema
+  pujasSchema
     .find({ comprador: new ObjectId(usuarioId)})
     .sort({ fecha: -1 }) //Ordena en en fecha descendente
     .then((pujasRealizadas) => {
@@ -48,7 +48,7 @@ router.get("/pujas-realizadas/:usuarioId", (req, res) => {
 // delete 
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
-  productosSchema
+  pujasSchema
     .deleteOne({ _id: id })
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
@@ -58,7 +58,7 @@ router.delete("/:id", (req, res) => {
 router.put("/:id", (req, res) => {
   const { id } = req.params;
   const { name, age, email } = req.body;
-  productosSchema
+  pujasSchema
     .updateOne({ _id: id }, { $set: { name, age, email } })
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
