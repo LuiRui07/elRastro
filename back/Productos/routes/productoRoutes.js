@@ -85,17 +85,22 @@ router.put("/:id", (req, res) => {
 //get productos dados por un usuario con un nombre x
 router.get('/productos-usuario/:nombre', (req, res) => {
   const {nombre} = req.params;
-  axios.get('http://localhost:5000/usuarios/nombre/${nombre}')
+  axios.get('http://localhost:5002/usuarios/nombre/' + nombre)
   .then((response) => {
     const {data} = response;
     const {message} = data;
-    if(message){
-      return res.json({message: message})
+    //  if(message){
+    //    return res.json({message: message})
+    //  }
+    if(data.length === 0){
+      return res.json({message: 'No se ha encontrado ningún usuario con ese nombre.'})
+    }else if(data.length > 1){
+      return res.json({message: 'Hay más de un usuario con ese nombre.'})
     }
-    const {usuarios} = data;
-    const {id} = usuarios[0];
+
+    const {_id} = data[0];
     productosSchema
-    .find({vendedor: new ObjectId(id)})
+    .find({vendedor: new ObjectId(_id)})
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
   })

@@ -27,15 +27,18 @@
 //Get de productos por categoria
 #GET  http://localhost:5001/productos/productos-categoria/Juegos HTTP/1.1
 
-//Editar con PUT de un producto con ID especifico
-PUT   http://localhost:5001/productos/654cce4acd48927b0fbd3a91 HTTP/1.1
-Content-Type: application/json
+# //Editar con PUT de un producto con ID especifico
+# PUT   http://localhost:5001/productos/654cce4acd48927b0fbd3a91 HTTP/1.1
+# Content-Type: application/json
 
-{
-  "vendedor" : "653e4c42646ba4c6ea2eff33",
-  "descripcion" : "Producto 1EDITADO",
-  "precioInicial" : 200,
-  "precioActual" : 200,
-  "categorias" : "Juegos, Electronica, Editado",
-  "nombre" : "Producto 1 Editado"
-}
+# {
+#   "vendedor" : "653e4c42646ba4c6ea2eff33",
+#   "descripcion" : "Producto 1EDITADO",
+#   "precioInicial" : 200,
+#   "precioActual" : 200,
+#   "categorias" : "Juegos, Electronica, Editado",
+#   "nombre" : "Producto 1 Editado"
+# }
+
+//Get de productos por nombre
+# GET  http://localhost:5001/productos/productos-usuario/C HTTP/1.1
