@@ -85,7 +85,7 @@ router.put("/:id", (req, res) => {
 //get productos dados por un usuario con un nombre x
 router.get('/productos-usuario/:nombre', (req, res) => {
   const {nombre} = req.params;
-  axios.get(`http://localhost:5000/usuarios/name/${nombre}`)
+  axios.get('http://localhost:5000/usuarios/nombre/${nombre}')
   .then((response) => {
     const {data} = response;
     const {message} = data;
