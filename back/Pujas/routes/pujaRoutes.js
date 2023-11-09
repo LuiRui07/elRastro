@@ -45,6 +45,22 @@ router.get("/pujas-realizadas/:usuarioId", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
+// get la puja mas alta para un producto 
+router.get("/pujas-mas-alta/:productoId", (req, res) => {
+  const { productoId } = req.params;
+  pujasSchema
+    .find({ producto: new ObjectId(productoId)})
+    .sort({ precio: -1 }) //Ordena en en precio descendente
+    .limit(1)
+    .then((pujaMasAlta) => {
+      if (pujaMasAlta.length === 0) {
+        return res.json({ message: "No existe puja para ese producto" });
+      }
+      res.json(pujaMasAlta[0] );
+    })
+    .catch((error) => res.json({ message: error }));
+});
+
 // delete 
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
