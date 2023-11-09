@@ -6,7 +6,7 @@ const productosSchema = require("../models/productos.js");
 const axios = require("axios");
 router.use(express.json());
 
-// create 
+// create, comprobado y funciona
 router.post("/", (req, res) => {
   const user = productosSchema(req.body);
   user
@@ -15,16 +15,16 @@ router.post("/", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// get all
+// get all, compronado y funciona
 router.get("/", (req, res) => {
   productosSchema
     .find()
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
-    res.send("Esta es la API");
+
 });
 
-// get 
+// get por id comprobado y funciona
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   productosSchema
@@ -33,7 +33,7 @@ router.get("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// get productos ofertados por un usuario
+// get productos ofertados por un usuario con un id x, comprobado y funciona
 router.get("/productos-ofertados/:usuarioId", (req, res) => {
   const { usuarioId } = req.params;
   productosSchema
@@ -48,7 +48,7 @@ router.get("/productos-ofertados/:usuarioId", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// get productos filtrados por categoria
+// get productos filtrados por categoria, comprobado y funciona
 router.get("/productos-categoria/:categoria", (req, res) => {
   const { categoria } = req.params;
   productosSchema
@@ -63,7 +63,7 @@ router.get("/productos-categoria/:categoria", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// delete 
+// delete , comprobado y funciona
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
   productosSchema
@@ -72,12 +72,12 @@ router.delete("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// update 
+// update , comprobado y funciona
 router.put("/:id", (req, res) => {
   const { id } = req.params;
-  const { name, age, email } = req.body;
+  const { vendedor,descripcion , precioInicial, precioActual, categorias, fechaDeCreacion, nombre } = req.body;
   productosSchema
-    .updateOne({ _id: id }, { $set: { name, age, email } })
+    .updateOne({ _id: id }, { $set: { vendedor,descripcion , precioInicial, precioActual, categorias, fechaDeCreacion, nombre} })
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
