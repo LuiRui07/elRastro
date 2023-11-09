@@ -80,6 +80,20 @@ router.put("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
+// devolver cantidad de pujas para un producto con id x
+router.get("/cantidad-pujas/:productoId", (req, res) => {
+  const { productoId } = req.params;
+  pujasSchema
+    .find({ producto: new ObjectId(productoId)})
+    .then((pujas) => {
+      if (pujas.length === 0) {
+        return res.json({ message: "No hay pujas para este producto." });
+      }
+      res.json(pujas.length);
+    })  
+    .catch((error) => res.json({ message: error }));
+});
+
 module.exports = router;
 
 

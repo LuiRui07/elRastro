@@ -42,3 +42,6 @@
 
 //Get de productos por nombre
 # GET  http://localhost:5001/productos/productos-usuario/C HTTP/1.1
+
+//get de productos ordenados por cantidad de pujas
+GET  http://localhost:5001/productos/productos-ordenados-por-pujas/Juegos HTTP/1.1

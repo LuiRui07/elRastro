@@ -52,7 +52,7 @@ router.get("/productos-ofertados/:usuarioId", (req, res) => {
 router.get("/productos-categoria/:categoria", (req, res) => {
   const { categoria } = req.params;
   productosSchema
-    .find({ categorias: { $in: [categoria] } })
+    .find({ categorias: { $regex: categoria, $options: "i" } })
     .sort({ fecha: -1 }) //Ordena en en fecha descendente
     .then((productosCategoria) => {
       if (productosCategoria.length === 0) {
@@ -103,6 +103,56 @@ router.get('/productos-usuario/:nombre', (req, res) => {
     .find({vendedor: new ObjectId(_id)})
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
+  })
+})
+
+//get productos ordenados por pujas en categoria x
+router.get('/productos-ordenados-por-pujas/:categoria', (req, res) => {
+  const {categoria} = req.params;
+  productosSchema.find({ categorias: { $regex: categoria, $options: "i" } })
+  .then(async (data) => {
+    if(data.length === 0){
+      return res.json({message: 'No hay productos de esta categoría.'})
+    }
+    var productosArray = [];
+    for(let i = 0; i < data.length; i++){
+      productoI = {
+        _id: data[i]._id,
+        nombre: data[i].nombre,
+        descripcion: data[i].descripcion,
+        precioInicial: data[i].precioInicial,
+        precioActual: data[i].precioActual,
+        categorias: data[i].categorias,
+        fechaDeCreacion: data[i].fechaDeCreacion,
+        vendedor: data[i].vendedor,
+        cantidadPujas: 0
+      }
+
+      await axios.get('http://localhost:5000/pujas/cantidad-pujas/' + data[i]._id)
+      .then((response) => {
+
+        const {data} = response;
+        console.log(data)
+        const {message} = data;
+        if(message){
+          return res.json({message: message})
+        }
+        productoI.cantidadPujas = data;
+        productosArray.push(productoI)
+      })
+
+    }
+    console.log(productosArray)
+    productosArray.sort((a,b) => {
+      if(a.cantidadPujas > b.cantidadPujas){
+        return -1;
+      }else if(a.cantidadPujas < b.cantidadPujas){
+        return 1;
+      }else{
+        return 0;
+      }
+    })
+    res.json(productosArray)
   })
 })
 module.exports = router;

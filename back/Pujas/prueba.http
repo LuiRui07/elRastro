@@ -1,4 +1,15 @@
+// get all pujas
+# GET   http://localhost:5000/pujas HTTP/1.1
+# Content-Type: application/json
 
-GET   http://localhost:27017/pujas/pujas-realizadas/65411c097cb2b09812e770e8 HTTP/1.1
-Content-Type: application/json
+// crear una puja
+ POST  http://localhost:5000/pujas HTTP/1.1
+ Content-Type: application/json
 
+ {
+     "producto": "654cced4cd48927b0fbd3a99",
+     "comprador": "653e4c42646ba4c6ea2eff33",
+     "precio": 200
+ }
+
+//get pujas 
