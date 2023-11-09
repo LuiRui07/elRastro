@@ -6,10 +6,6 @@ const productosSchema = new mongoose.Schema({
         ref: 'usuarios',
         required: false,
         },
-    direccion: {
-        type: String,
-        required: false
-        },
     descripcion: {
         type: String,
         required: false
@@ -29,7 +25,11 @@ const productosSchema = new mongoose.Schema({
     fechaDeCreacion: {
         type: Date,
         required: false
-    }
+    },
+    nombre: {
+        type: String,
+        required: false
+    },
 });
 
 module.exports = mongoose.model("productos", productosSchema);
