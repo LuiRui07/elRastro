@@ -5,7 +5,6 @@ const ObjectId = mongoose.Types.ObjectId;
 const productosSchema = require("../models/productos.js");
 
 router.use(express.json());
-router.use(cors());
 
 // create 
 router.post("/", (req, res) => {
@@ -49,6 +48,20 @@ router.get("/productos-ofertados/:usuarioId", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
+// get productos filtrados por categoria
+router.get("/productos-categoria/:categoria", (req, res) => {
+  const { categoria } = req.params;
+  productosSchema
+    .find({ categorias: { $in: [categoria] } })
+    .sort({ fecha: -1 }) //Ordena en en fecha descendente
+    .then((productosCategoria) => {
+      if (productosCategoria.length === 0) {
+        return res.json({ message: "No hay productos de esta categoría." });
+      }
+      res.json(productosCategoria);
+    })  
+    .catch((error) => res.json({ message: error }));
+});
 
 // delete 
 router.delete("/:id", (req, res) => {
