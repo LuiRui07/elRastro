@@ -48,6 +48,20 @@ router.put("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
+// get por parte de nombre
+router.get("/nombre/:nombre", (req, res) => {
+  const { nombre } = req.params;
+  usuariosSchema
+    .find({ nombreCompleto: { $regex: nombre, $options: "i" } })
+    .then((data) => 
+    {
+      if (data.length === 0) {
+        return res.json({ message: "No se ha encontrado ningún usuario con ese nombre." });
+      }
+      res.json(data);
+    })
+    .catch((error) => res.json({ message: error }));
+});
 module.exports = router;
 
 

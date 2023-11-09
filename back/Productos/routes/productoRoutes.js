@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const productosSchema = require("../models/productos.js");
-
+const axios = require("axios");
 router.use(express.json());
 
 // create 
@@ -82,8 +82,24 @@ router.put("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-
-
+//get productos dados por un usuario con un nombre x
+router.get('/productos-usuario/:nombre', (req, res) => {
+  const {nombre} = req.params;
+  axios.get(`http://localhost:5000/usuarios/name/${nombre}`)
+  .then((response) => {
+    const {data} = response;
+    const {message} = data;
+    if(message){
+      return res.json({message: message})
+    }
+    const {usuarios} = data;
+    const {id} = usuarios[0];
+    productosSchema
+    .find({vendedor: new ObjectId(id)})
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ message: error }));
+  })
+})
 module.exports = router;
 
 
