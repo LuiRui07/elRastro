@@ -106,7 +106,7 @@ router.get('/productos-usuario/:nombre', (req, res) => {
   })
 })
 
-//get productos ordenados por pujas en categoria x
+//get productos ordenados por pujas en categoria x, hecho y funciona, estaria bien segunda comprobacion.
 router.get('/productos-ordenados-por-pujas/:categoria', (req, res) => {
   const {categoria} = req.params;
   productosSchema.find({ categorias: { $regex: categoria, $options: "i" } })
@@ -132,7 +132,6 @@ router.get('/productos-ordenados-por-pujas/:categoria', (req, res) => {
       .then((response) => {
 
         const {data} = response;
-        console.log(data)
         const {message} = data;
         if(message){
           return res.json({message: message})
@@ -142,7 +141,6 @@ router.get('/productos-ordenados-por-pujas/:categoria', (req, res) => {
       })
 
     }
-    console.log(productosArray)
     productosArray.sort((a,b) => {
       if(a.cantidadPujas > b.cantidadPujas){
         return -1;
