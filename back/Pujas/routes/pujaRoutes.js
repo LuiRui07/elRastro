@@ -50,7 +50,7 @@ router.put("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 //LLAMADAS INTERNAS-------------------------------------------------------------------------------
-// get la puja mas alta para un producto 
+// get la puja mas alta para un producto, comprobado con Postman
 router.get("/pujas-mas-alta/:productoId", (req, res) => {
   const { productoId } = req.params;
   pujasSchema
@@ -65,7 +65,7 @@ router.get("/pujas-mas-alta/:productoId", (req, res) => {
     })
     .catch((error) => res.json({ message: error }));
 });
-// get todas las pujas a los que ha ofertado un usuario
+// get todas las pujas a los que ha ofertado un usuario, comprobado con Postman
 router.get("/pujas-realizadas/:usuarioId", (req, res) => {
   const { usuarioId } = req.params;
   pujasSchema
@@ -79,7 +79,7 @@ router.get("/pujas-realizadas/:usuarioId", (req, res) => {
     })
     .catch((error) => res.json({ message: error }));
 });
-// devolver cantidad de pujas para un producto con id x
+// devolver cantidad de pujas para un producto con id x, comprobado con Postman
 router.get("/cantidad-pujas/:productoId", (req, res) => {
   const { productoId } = req.params;
   pujasSchema
@@ -93,16 +93,16 @@ router.get("/cantidad-pujas/:productoId", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-//Que pujas ha hecho un usuario de id x en un producto de id 
+//Que pujas ha hecho un usuario de id x en un producto de id x, comprobado con Postman
 router.get("/puja-usuario-producto/:usuarioId/:productoId", (req, res) => {
-  const { productoId } = req.params;
+  const { usuarioId, productoId } = req.params;
   pujasSchema
     .find({ producto: new ObjectId(productoId), comprador: new ObjectId(usuarioId) })
     .then((pujas) => {
       if (pujas.length === 0) {
         return res.json({ message: "No hay pujas para este producto y esta persona." });
       }
-      res.json(pujas.length);
+      res.json(pujas);
     })
     .catch((error) => res.json({ message: error }));
 });
