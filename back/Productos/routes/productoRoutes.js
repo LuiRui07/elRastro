@@ -5,7 +5,7 @@ const ObjectId = mongoose.Types.ObjectId;
 const productosSchema = require("../models/productos.js");
 const axios = require("axios");
 router.use(express.json());
-
+//LLAMADAS CRUD-------------------------------------------------------------------------------
 // create, comprobado y funciona
 router.post("/", (req, res) => {
   const user = productosSchema(req.body);
@@ -33,6 +33,26 @@ router.get("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
+
+// delete , comprobado y funciona
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  productosSchema
+    .deleteOne({ _id: id })
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ message: error }));
+});
+
+// update , comprobado y funciona
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const { vendedor,descripcion , precioInicial, precioActual, categorias, fechaDeCreacion, nombre } = req.body;
+  productosSchema
+    .updateOne({ _id: id }, { $set: { vendedor,descripcion , precioInicial, precioActual, categorias, fechaDeCreacion, nombre} })
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ message: error }));
+});
+//LLAMADAS INTERNAS-------------------------------------------------------------------------------
 // get productos ofertados por un usuario con un id x, comprobado y funciona
 router.get("/productos-ofertados/:usuarioId", (req, res) => {
   const { usuarioId } = req.params;
@@ -63,25 +83,20 @@ router.get("/productos-categoria/:categoria", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// delete , comprobado y funciona
-router.delete("/:id", (req, res) => {
-  const { id } = req.params;
-  productosSchema
-    .deleteOne({ _id: id })
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error }));
-});
 
-// update , comprobado y funciona
-router.put("/:id", (req, res) => {
-  const { id } = req.params;
-  const { vendedor,descripcion , precioInicial, precioActual, categorias, fechaDeCreacion, nombre } = req.body;
-  productosSchema
-    .updateOne({ _id: id }, { $set: { vendedor,descripcion , precioInicial, precioActual, categorias, fechaDeCreacion, nombre} })
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error }));
-});
+//Get de productos por parte de nombre.
+router.get('/productos-por-nombre/:nombre', (req, res) => {
+  const {nombre} = req.params;
+  productosSchema.find({ nombre: { $regex: nombre, $options: "i" } })
+  .then((data) => {
+    if(data.length === 0){
+      return res.json({message: 'No hay productos con ese nombre.'})
+    }
+    res.json(data)
+  })
+})
 
+//LLAMADAS EXTENRAS-------------------------------------------------------------------------------\
 //2
 router.get('/productos-usuario/:nombre', (req, res) => {
   const {nombre} = req.params;
@@ -151,18 +166,6 @@ router.get('/productos-ordenados-por-pujas/:categoria', (req, res) => {
       }
     })
     res.json(productosArray)
-  })
-})
-
-//Get de productos por parte de nombre.
-router.get('/productos-por-nombre/:nombre', (req, res) => {
-  const {nombre} = req.params;
-  productosSchema.find({ nombre: { $regex: nombre, $options: "i" } })
-  .then((data) => {
-    if(data.length === 0){
-      return res.json({message: 'No hay productos con ese nombre.'})
-    }
-    res.json(data)
   })
 })
 module.exports = router;

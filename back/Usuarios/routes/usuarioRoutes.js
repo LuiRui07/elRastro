@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require("axios");
 const usuariosSchema = require("../models/usuarios.js");
 const usuarios = require("../models/usuarios.js");
-
+//LLAMADAS CRUD-------------------------------------------------------------------------------
 // create 
 router.post("/", (req, res) => {
   const user = usuariosSchema(req.body);
@@ -48,7 +48,7 @@ router.put("/:id", (req, res) => {
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
-
+//LLAMADAS INTERNAS-------------------------------------------------------------------------------
 // get por parte de nombre
 router.get("/nombre/:nombre", (req, res) => {
   const { nombre } = req.params;
@@ -63,7 +63,7 @@ router.get("/nombre/:nombre", (req, res) => {
     })
     .catch((error) => res.json({ message: error }));
 });
-
+//LLAMADAS EXTERNAS-------------------------------------------------------------------------------
 //get compradores de un articulo con indentificador x, REVISAR
 router.get("/compradores/:productoId", (req, res) => {
   const { productoId } = req.params;
@@ -92,7 +92,6 @@ router.get("/compradores/:productoId", (req, res) => {
 
 });
 
-//Productos comprados por un usuario con nombre x
 
 
 module.exports = router
