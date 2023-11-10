@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-
+const axios = require("axios");
 const usuariosSchema = require("../models/usuarios.js");
+const usuarios = require("../models/usuarios.js");
 
 // create 
 router.post("/", (req, res) => {
@@ -64,4 +65,31 @@ router.get("/nombre/:nombre", (req, res) => {
 });
 module.exports = router;
 
+//get compradores de un articulo con indentificador x, REVISAR
+router.get("/compradores/:productoId", (req, res) => {
+  const { productoId } = req.params;
+  axios.get('http://localhost:5001/productos/' + productoId)
+  .then((response) => {
+    const {data} = response;
+    const {message} = data;
+    if(data.length === 0){
+      return res.json({message: 'No se ha encontrado ningún producto con ese id.'})
+    }else if(data.length > 1){
+      return res.json({message: 'Hay más de un producto con ese id.'})
+    }
+    var compradores = [];
+    for(let i = 0; i < data.length; i++){
+      compradorI= {
+        _id: data[i].comprador
+      }
+      usuariosSchema
+      .findById(data[i].comprador)
+      .then((data) => {
+        compradorI.nombre = data.nombreCompleto;
+        compradores.push(compradorI);
+      })
+    }
+    res.json(compradores);
+  })
 
+});

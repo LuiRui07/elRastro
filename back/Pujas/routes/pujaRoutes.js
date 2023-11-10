@@ -94,6 +94,20 @@ router.get("/cantidad-pujas/:productoId", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
+//Que pujas ha hecho un usuario de nombre x en un producto de id y DEBERIA MIRAR EN OTRA TABLAS
+router.get("/puja-usuario-producto/:usuarioId/:productoId", (req, res) => {
+  const { productoId } = req.params;
+  pujasSchema
+    .find({ producto: new ObjectId(productoId) , comprador: new ObjectId(usuarioId)})
+    .then((pujas) => {
+      if (pujas.length === 0) {
+        return res.json({ message: "No hay pujas para este producto y esta persona." });
+      }
+      res.json(pujas.length);
+    })  
+    .catch((error) => res.json({ message: error }));
+});
+
 module.exports = router;
 
 
