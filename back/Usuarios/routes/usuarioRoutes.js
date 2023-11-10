@@ -93,3 +93,6 @@ router.get("/compradores/:productoId", (req, res) => {
 });
 
 //Productos comprados por un usuario con nombre x
+
+
+module.exports = router
