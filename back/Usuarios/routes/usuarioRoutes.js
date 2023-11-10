@@ -4,7 +4,7 @@ const axios = require("axios");
 const usuariosSchema = require("../models/usuarios.js");
 const usuarios = require("../models/usuarios.js");
 //LLAMADAS CRUD-------------------------------------------------------------------------------
-// create 
+// create, comprobado con Postman 
 router.post("/", (req, res) => {
   const user = usuariosSchema(req.body);
   user
@@ -13,7 +13,7 @@ router.post("/", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// get all
+// get all, comprobado con Postman
 router.get("/", (req, res) => {
   usuariosSchema
     .find()
@@ -21,7 +21,7 @@ router.get("/", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// get 
+// get, comprobado con Postman
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   usuariosSchema
@@ -30,7 +30,7 @@ router.get("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// delete 
+// delete, comprobado con Postman 
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
   usuariosSchema
@@ -39,7 +39,7 @@ router.delete("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// update 
+// update, comprobado con Postman
 router.put("/:id", (req, res) => {
   const { id } = req.params;
   const { nombreCompleto, direccion} = req.body;
@@ -49,7 +49,7 @@ router.put("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 //LLAMADAS INTERNAS-------------------------------------------------------------------------------
-// get por parte de nombre
+// get por parte de nombre, comprobado con Postman
 router.get("/nombre/:nombre", (req, res) => {
   const { nombre } = req.params;
   usuariosSchema
@@ -64,14 +64,13 @@ router.get("/nombre/:nombre", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// get por direccion 
+// get por direccion, comprobado con Postman
 router.get("/direccion/:direccion", (req, res) => {
   const { direccion } = req.params;
-  const regexPattern = `^(?!.*calle).*[a-zA-Z]{4,}.*${direccion}.*$`;
+
   usuariosSchema
-    .find({ direccion: { $regex: regexPattern, $options: "i" } })
-    .then((data) => 
-    {
+    .find({ direccion: { $regex: direccion, $options: "i" } })
+    .then((data) => {
       if (data.length === 0) {
         return res.json({ message: "No se ha encontrado ningún usuario con esa direccion." });
       }
