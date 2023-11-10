@@ -5,7 +5,7 @@ const ObjectId = mongoose.Types.ObjectId;
 const pujasSchema = require("../models/pujas.js");
 const axios = require("axios");
 //LLAMADAS CRUD-------------------------------------------------------------------------------
-// create 
+// create, comprobado en Postman
 router.post("/", (req, res) => {
   const user = pujasSchema(req.body);
   user
@@ -14,7 +14,7 @@ router.post("/", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// get all
+// get all, comprobado en Postman
 router.get("/", (req, res) => {
   pujasSchema
     .find()
@@ -22,7 +22,7 @@ router.get("/", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// get 
+// get, comprobado con Postman
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   pujasSchema
@@ -31,7 +31,7 @@ router.get("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// delete 
+// delete, comprobado con Postman
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
   pujasSchema
@@ -40,12 +40,12 @@ router.delete("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// update 
+// update, comprobado con Postman
 router.put("/:id", (req, res) => {
   const { id } = req.params;
-  const { name, age, email } = req.body;
+  const { comprador, producto, precio, fechaDeCreacion } = req.body;
   pujasSchema
-    .updateOne({ _id: id }, { $set: { name, age, email } })
+    .updateOne({ _id: id }, { $set: { comprador, producto, precio, fechaDeCreacion } })
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
