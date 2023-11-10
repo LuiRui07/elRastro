@@ -42,9 +42,9 @@ router.delete("/:id", (req, res) => {
 // update 
 router.put("/:id", (req, res) => {
   const { id } = req.params;
-  const { name, age, email } = req.body;
+  const { nombreCompleto, direccion} = req.body;
   usuariosSchema
-    .updateOne({ _id: id }, { $set: { name, age, email } })
+    .updateOne({ _id: id }, { $set: { nombreCompleto, direccion} })
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
