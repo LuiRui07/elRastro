@@ -6,9 +6,9 @@ const productosSchema = new mongoose.Schema({
         ref: 'usuarios',
         required: false,
         },
-    comprador: {
+    pujaMasAlta: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'usuarios',
+        ref: 'pujas',
         required: false,
         },
     descripcion: {

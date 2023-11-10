@@ -78,10 +78,15 @@ router.get("/compradores/:productoId", (req, res) => {
       return res.json({message: 'Hay más de un producto con ese id.'})
     }
     var compradores = [];
+    var puja = null;
     for(let i = 0; i < data.length; i++){
-      compradorI= {
-        _id: data[i].comprador
-      }
+      puja = data[i].pujaMasAlta;
+      axios.get('http://localhost:5000/pujas/' + puja._id)
+      .then((response) => {
+        const {data} = response;
+        const {message} = data;
+        compradores.push(data[0].comprador);
+      }) 
       usuariosSchema
       .findById(data[i].comprador)
       .then((data) => {
