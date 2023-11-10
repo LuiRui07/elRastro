@@ -93,24 +93,3 @@ router.get("/compradores/:productoId", (req, res) => {
 });
 
 //Productos comprados por un usuario con nombre x
-router.get("/productos-comprados/:nombre", (req, res) => {
-  const { nombre } = req.params;
-  usuariosSchema
-    .findOne({ nombreCompleto: { $regex: nombre, $options: "i" } })
-    .then((usuario) => {
-      if (!usuario) {
-        return res.json({ message: "No se ha encontrado ningún usuario con ese nombre." });
-      }
-
-      // Ahora, buscamos los productos comprados por ese usuario
-      axios.get('http://localhost:5001/compras', { params: { compradorId: usuario._id } })
-        .then((response) => {
-          const { data } = response;
-          res.json(data);
-        })
-        .catch((error) => res.json({ message: error }));
-    })
-    .catch((error) => res.json({ message: error }));
-});
-
-module.exports = router;
