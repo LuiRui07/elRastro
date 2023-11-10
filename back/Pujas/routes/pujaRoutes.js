@@ -106,7 +106,7 @@ router.get("/puja-usuario-producto/:usuarioId/:productoId", (req, res) => {
     })
     .catch((error) => res.json({ message: error }));
 });
-//LLAMADAS EXTENRAS-------------------------------------------------------------------------------
+//LLAMADAS EXTERNAS-------------------------------------------------------------------------------
 //Que pujas ha hecho un usuario con nombre x
 router.get("/puja-usuario/:nombre", (req, res) => {
   const { nombre } = req.params;
