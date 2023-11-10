@@ -19,10 +19,6 @@ const productosSchema = new mongoose.Schema({
         type: Number,
         required: false
         },
-    precioActual: {
-        type: Number,
-        required: false
-    },
     categorias: {
         type: String,
         required: false
@@ -33,6 +29,10 @@ const productosSchema = new mongoose.Schema({
     },
     nombre: {
         type: String,
+        required: false
+    },
+    fechaDeCierre: {
+        type: Date,
         required: false
     },
 });

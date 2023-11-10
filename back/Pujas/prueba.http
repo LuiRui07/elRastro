@@ -7,7 +7,7 @@
  Content-Type: application/json
 
  {
-     "producto": "654cced4cd48927b0fbd3a99",
+     "producto": "654ccee9cd48927b0fbd3a9d",
      "comprador": "653e4c42646ba4c6ea2eff33",
      "precio": 200
  }

@@ -82,7 +82,7 @@ router.put("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-//get productos dados por un usuario con un nombre x
+//2
 router.get('/productos-usuario/:nombre', (req, res) => {
   const {nombre} = req.params;
   axios.get('http://localhost:5002/usuarios/nombre/' + nombre)
@@ -151,6 +151,18 @@ router.get('/productos-ordenados-por-pujas/:categoria', (req, res) => {
       }
     })
     res.json(productosArray)
+  })
+})
+
+//Get de productos por parte de nombre.
+router.get('/productos-por-nombre/:nombre', (req, res) => {
+  const {nombre} = req.params;
+  productosSchema.find({ nombre: { $regex: nombre, $options: "i" } })
+  .then((data) => {
+    if(data.length === 0){
+      return res.json({message: 'No hay productos con ese nombre.'})
+    }
+    res.json(data)
   })
 })
 module.exports = router;
