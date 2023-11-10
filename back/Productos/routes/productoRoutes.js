@@ -6,7 +6,7 @@ const productosSchema = require("../models/productos.js");
 const axios = require("axios");
 router.use(express.json());
 //LLAMADAS CRUD-------------------------------------------------------------------------------
-// create, comprobado y funciona
+// create, comprobado con Postman
 router.post("/", (req, res) => {
   const user = productosSchema(req.body);
   user
@@ -15,7 +15,7 @@ router.post("/", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// get all, compronado y funciona
+// get all, comprobado con Postman
 router.get("/", (req, res) => {
   productosSchema
     .find()
@@ -24,7 +24,7 @@ router.get("/", (req, res) => {
 
 });
 
-// get por id comprobado y funciona
+// get por id, comprobado con Postman
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   productosSchema
@@ -34,7 +34,7 @@ router.get("/:id", (req, res) => {
 });
 
 
-// delete , comprobado y funciona
+// delete , comprobado con Postman
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
   productosSchema
@@ -43,7 +43,7 @@ router.delete("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// update , comprobado y funciona
+// update , comprobado con Postman
 router.put("/:id", (req, res) => {
   const { id } = req.params;
   const { vendedor,descripcion , precioInicial, precioActual, categorias, fechaDeCreacion, nombre } = req.body;
@@ -53,7 +53,7 @@ router.put("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 //LLAMADAS INTERNAS-------------------------------------------------------------------------------
-// get productos ofertados por un usuario con un id x, comprobado y funciona
+// get productos ofertados por un usuario con un id x, comprobado con Postman
 router.get("/productos-ofertados/:usuarioId", (req, res) => {
   const { usuarioId } = req.params;
   productosSchema
@@ -68,7 +68,7 @@ router.get("/productos-ofertados/:usuarioId", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// get productos filtrados por categoria, comprobado y funciona
+// get productos filtrados por categoria, comprobado con Postman
 router.get("/productos-categoria/:categoria", (req, res) => {
   const { categoria } = req.params;
   productosSchema
@@ -84,7 +84,7 @@ router.get("/productos-categoria/:categoria", (req, res) => {
 });
 
 
-//Get de productos por parte de nombre.
+//Get de productos por parte de nombre, comprobado con Postman
 router.get('/productos-por-nombre/:nombre', (req, res) => {
   const {nombre} = req.params;
   productosSchema.find({ nombre: { $regex: nombre, $options: "i" } })
@@ -98,6 +98,8 @@ router.get('/productos-por-nombre/:nombre', (req, res) => {
 
 //LLAMADAS EXTENRAS-------------------------------------------------------------------------------\
 //2
+
+//Get de productos con parte o el nombre completo de vendedor, comprobado con Postman
 router.get('/productos-usuario/:nombre', (req, res) => {
   const {nombre} = req.params;
   axios.get('http://localhost:5002/usuarios/nombre/' + nombre)
@@ -121,7 +123,7 @@ router.get('/productos-usuario/:nombre', (req, res) => {
   })
 })
 
-//get productos ordenados por pujas en categoria x, hecho y funciona, estaria bien segunda comprobacion.
+//get productos ordenados por pujas en categoria x, PROBADO EN POSTMAN Y NO FUNCIONA?? PROBLEMA CON LOS ESPACIOS??
 router.get('/productos-ordenados-por-pujas/:categoria', (req, res) => {
   const {categoria} = req.params;
   productosSchema.find({ categorias: { $regex: categoria, $options: "i" } })
