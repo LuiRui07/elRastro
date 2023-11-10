@@ -108,6 +108,7 @@ router.get("/compradores/:productoId", (req, res) => {
   })
 
 });
+//get usuarios a x distancia de ti, ESPERAR A QUE SE HAGA EL DE DISTANCIA CON EL SERVICIO EXTERNO
 
 
 
