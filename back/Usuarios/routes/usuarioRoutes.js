@@ -87,12 +87,6 @@ router.get("/compradores/:productoId", (req, res) => {
         const {message} = data;
         compradores.push(data[0].comprador);
       }) 
-      usuariosSchema
-      .findById(data[i].comprador)
-      .then((data) => {
-        compradorI.nombre = data.nombreCompleto;
-        compradores.push(compradorI);
-      })
     }
     res.json(compradores);
   })
