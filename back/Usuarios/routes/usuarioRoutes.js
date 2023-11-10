@@ -63,7 +63,27 @@ router.get("/nombre/:nombre", (req, res) => {
     })
     .catch((error) => res.json({ message: error }));
 });
+<<<<<<< Updated upstream
 //LLAMADAS EXTERNAS-------------------------------------------------------------------------------
+=======
+
+// get por direccion 
+router.get("/direccion/:direccion", (req, res) => {
+  const { direccion } = req.params;
+  const regexPattern = `^(?!.*calle).*[a-zA-Z]{4,}.*${direccion}.*$`;
+  usuariosSchema
+    .find({ direccion: { $regex: regexPattern, $options: "i" } })
+    .then((data) => 
+    {
+      if (data.length === 0) {
+        return res.json({ message: "No se ha encontrado ningún usuario con esa direccion." });
+      }
+      res.json(data);
+    })
+    .catch((error) => res.json({ message: error }));
+});
+
+>>>>>>> Stashed changes
 //get compradores de un articulo con indentificador x, REVISAR
 router.get("/compradores/:productoId", (req, res) => {
   const { productoId } = req.params;

@@ -65,7 +65,7 @@ router.get("/pujas-mas-alta/:productoId", (req, res) => {
     })
     .catch((error) => res.json({ message: error }));
 });
-// get todos los productos a los que ha ofertado un usuario
+// get todas las pujas a los que ha ofertado un usuario
 router.get("/pujas-realizadas/:usuarioId", (req, res) => {
   const { usuarioId } = req.params;
   pujasSchema
