@@ -86,7 +86,7 @@ router.get("/cantidad-pujas/:productoId", (req, res) => {
     .find({ producto: new ObjectId(productoId) })
     .then((pujas) => {
       if (pujas.length === 0) {
-        return res.json({ message: "No hay pujas para este producto." });
+        return res.json(0);
       }
       res.json(pujas.length);
     })
