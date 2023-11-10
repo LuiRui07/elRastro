@@ -63,9 +63,6 @@ router.get("/nombre/:nombre", (req, res) => {
     })
     .catch((error) => res.json({ message: error }));
 });
-<<<<<<< Updated upstream
-//LLAMADAS EXTERNAS-------------------------------------------------------------------------------
-=======
 
 // get por direccion 
 router.get("/direccion/:direccion", (req, res) => {
@@ -83,7 +80,8 @@ router.get("/direccion/:direccion", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
->>>>>>> Stashed changes
+//LLAMADAS EXTERNAS-------------------------------------------------------------------------------
+
 //get compradores de un articulo con indentificador x, REVISAR
 router.get("/compradores/:productoId", (req, res) => {
   const { productoId } = req.params;
