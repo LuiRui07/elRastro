@@ -107,24 +107,27 @@ router.get("/puja-usuario-producto/:usuarioId/:productoId", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 //LLAMADAS EXTERNAS-------------------------------------------------------------------------------
-//Que pujas ha hecho un usuario con nombre x
-router.get("/puja-usuario/:nombre", (req, res) => {
-  const { nombre } = req.params;
-  axios.get(`http://localhost:5002/usuarios/nombre/${nombre}`).then((response) => {
+//Que pujas ha hecho un usuario con nombre x, comprobado con Postman
+router.get("/puja-usuario/:nombre", async (req, res) => {
+  try {
+    const { nombre } = req.params;
+    const response = await axios.get(`http://localhost:5002/usuarios/nombre/${nombre}`);
     const { _id } = response.data[0];
-    pujasSchema
-      .find({ comprador: new ObjectId(_id) })
-      .then((pujas) => {
-        if (pujas.length === 0) {
-          return res.json({ message: "No hay pujas para este usuario." });
-        }
-        res.json(pujas);
-      })
-      .catch((error) => res.json({ message: error }));
-  });
+
+    const pujas = await pujasSchema.find({ comprador: new ObjectId(_id) });
+
+    if (pujas.length === 0) {
+      return res.json({ message: "No hay pujas para este usuario." });
+    }
+
+    res.json(pujas);
+  } catch (error) {
+    res.json({ message: error.message });
+  }
 });
 
 //Que pujas se han hecho sobre un producto con nombre x, y si hay mas de un producto con ese nombre, se devuelve un array con, todas las pujas del primero, todas las pujas del segundo..
+//Comprobado con Postman
 router.get("/puja-producto/:nombre", async (req, res) => {
   const { nombre } = req.params;
   let devolver = [];
@@ -160,5 +163,3 @@ router.get("/puja-producto/:nombre", async (req, res) => {
 });
 
 module.exports = router;
-
-
