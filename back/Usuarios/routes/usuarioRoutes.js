@@ -69,7 +69,7 @@ router.get("/direccion/:direccion", (req, res) => {
   const { direccion } = req.params;
 
   usuariosSchema
-    .find({ direccion: { $regex: direccion, $options: "i" } })
+    .find({ calle: { $regex: direccion, $options: "i" } })
     .then((data) => {
       if (data.length === 0) {
         return res.json({ message: "No se ha encontrado ningún usuario con esa direccion." });
@@ -109,7 +109,28 @@ router.get("/compradores/:productoId", (req, res) => {
 
 });
 
-//Get de propietario de producto con ID x
+
+router.get('/propietarioPorID/:productoId', (req, res) => {
+  const {productoId} = req.params;
+  axios.get('http://localhost:5001/productos/' + productoId)
+  .then((response) => {
+    const {data} = response;
+    const {message} = data;
+    if(message){
+      return res.json({message: message})
+    }
+    if(data.length === 0){
+      return res.json({message: 'No se ha encontrado ningún producto con ese id.'})
+    }else if(data.length > 1){
+      return res.json({message: 'Hay más de un producto con ese id.'})
+    }
+    res.json(data[0].vendedor);
+  })
+})
+//get usuarios a x distancia de ti, ESPERAR A QUE SE HAGA EL DE DISTANCIA CON EL SERVICIO EXTERNO
+
+//AUXILIARES-------------------------------------------------------------------------------
+//Get de propietario de producto con ID x, devuelve el producto entero y de ahi podemos pillar el vendedor, auxiliar
 router.get('/propietario/:productoId', (req, res) => {
   const {productoId} = req.params;
   axios.get('http://localhost:5001/productos/' + productoId)
@@ -127,8 +148,5 @@ router.get('/propietario/:productoId', (req, res) => {
     res.json(data);
   })
 })
-//get usuarios a x distancia de ti, ESPERAR A QUE SE HAGA EL DE DISTANCIA CON EL SERVICIO EXTERNO
-
-
 
 module.exports = router
