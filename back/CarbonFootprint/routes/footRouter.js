@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require("axios");
 router.use(express.json());
 const huellaModel = require("../models/huellaModel.js");
-const API_KEY = "Xm5gLqrLw95f6ujRVn9t";
+const API_KEY = "Xm5gLqrLw95f6ujRVn9tQ";
 //LLAMADAS CRUD-------------------------------------------------------------------------------
 //Get all
 router.get("/", (req, res) => {
@@ -68,11 +68,12 @@ router.get('/huellaCarbono/:distancia/:peso', async (req, res) => {
 });
 
 
-//Calcular huella carbono en KG
+//Calcular huella carbono en G
 router.get('/huellaCarbonoCosto/:idUsuario/:idProducto', async (req, res) => {
     axios.get('http://localhost:5004/mapa/coordenadasUsuario/' + req.params.idUsuario).then((respuesta) => {
-        const latitudUsuario = respuesta.data.lat;
-        const longitudUsuario = respuesta.data.lon;
+        const latitudUsuario = respuesta.data.latitud;
+        const longitudUsuario = respuesta.data.longitud;
+        console.log(respuesta.data);
         axios.get('http://localhost:5004/mapa/coordenadasProducto/' + req.params.idProducto).then((respuesta) => {
             const latitudProducto = respuesta.data.latitud;
             const longitudProducto = respuesta.data.longitud;

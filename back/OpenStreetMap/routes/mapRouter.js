@@ -6,8 +6,10 @@ router.use(express.json());
 //Get coordenadas de una dirección, comprobado con Postman
 router.get('/direccionCoordenadas/:direccion', async (req, res) => {
     const { direccion } = req.params;
+    console.log(direccion)
     try {
         const respuesta = await axios.get(`https://nominatim.openstreetmap.org/search?q=${direccion}&format=json&limit=1`)
+        console.log(respuesta.data)
         const lat = respuesta.data[0].lat
         const lon = respuesta.data[0].lon
         res.json({ lat, lon })
