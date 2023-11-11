@@ -5,7 +5,12 @@ Content-Type: application/json
 {
   
   "nombreCompleto"  : "Juan Perez",
-  "direccion"       : "Calle 123"
+  "calle"       : "Carretera de Malaga",
+  "numero"      : "95",
+  "codigoPostal": "04713",
+  "ciudad"      : "Balanegra",
+  "provincia"   : "Almeria",
+  "pais"        : "España"
 
 }
 
