@@ -150,7 +150,7 @@ router.get('/productos-ordenados-por-pujas/:categoria', (req, res) => {
         cantidadPujas: 0
       }
 
-      await axios.get('http://localhost:5000/pujas/cantidad-pujas/' + data[i]._id)
+      await axios.get('http://localhost:5003/pujas/cantidad-pujas/' + data[i]._id)
       .then((response) => {
         const {data} = response;
         const {message} = data;
