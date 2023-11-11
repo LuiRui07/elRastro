@@ -20,7 +20,7 @@ router.get("/:id", (req, res) => {
         .then((data) => res.json(data))
         .catch((error) => res.json({ message: error }));
 });
-//Post
+//Create
 router.post("/", (req, res) => {
     const huella = huellaModel(req.body);
     huella
