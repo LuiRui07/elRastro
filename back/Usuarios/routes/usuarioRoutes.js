@@ -127,43 +127,48 @@ router.get('/propietarioPorID/:productoId', (req, res) => {
     })
 })
 //get usuarios a x distancia de ti, ESPERAR A QUE SE HAGA EL DE DISTANCIA CON EL SERVICIO EXTERNO, VAMOS A REVISAR
-router.get("/distancia/:usuarioID/:distancia", (req, res) => {
+router.get("/distancia/:usuarioID/:distancia", async (req, res) => {
   const { distancia } = req.params;
+  const devolver2 = [];
   const { usuarioID } = req.params;
-  axios.get('http://localhost:5002/usuarios/' + usuarioID)
+  await axios.get('http://localhost:5002/usuarios/' + usuarioID)
     .then((response) => {
-      usuariosSchema.find().then((todosLosUsuarios) => {
+      usuariosSchema.find().then(async (todosLosUsuarios) => {
         const datosUsuario = response.data;
         const { calle, numero, codigoPostal, ciudad, provincia, pais } = datosUsuario;
         const direccion = calle + " " + numero + ", " + codigoPostal + ", " + ciudad + ", " + provincia + ", " + pais;
-        axios.get('http://localhost:5004/mapa/direccionCoordenadas/' + direccion)
-          .then((coordenadas) => {
+        await axios.get('http://localhost:5004/mapa/direccionCoordenadas/' + direccion)
+          .then(async (coordenadas) => {
             const latUsuario = coordenadas.data.lat;
             const lonUsuario = coordenadas.data.lon;
-            const devolver = todosLosUsuarios.filter((usuario) => {
-              const { calle, numero, codigoPostal, ciudad, provincia, pais } = usuario;
-              const direccion = calle + " " + numero + ", " + codigoPostal + ", " + ciudad + ", " + provincia + ", " + pais;
-              axios.get('http://localhost:5004/mapa/direccionCoordenadas/' + direccion)
-                .then((coord) => {
+
+            for(let i = 0; i < todosLosUsuarios.length; i++){
+              const { calle, numero, codigoPostal, ciudad, provincia, pais } = todosLosUsuarios[i];
+              const direccion2 = calle + " " + numero + ", " + codigoPostal + ", " + ciudad + ", " + provincia + ", " + pais;
+               await axios.get('http://localhost:5004/mapa/direccionCoordenadas/' + direccion2)
+                .then(async (coord) => {
                   const latUsuario2 = coord.data.lat;
                   const lonUsuario2 = coord.data.lon;
-                  axios.get(`https://router.project-osrm.org/route/v1/driving/${lonUsuario},${latUsuario};${lonUsuario2},${latUsuario2}?overview=false`)
+                   axios.get(`https://router.project-osrm.org/route/v1/driving/${lonUsuario},${latUsuario};${lonUsuario2},${latUsuario2}?overview=false`)
                     .then((respuesta) => {
                       const { distance } = respuesta.data.routes[0];
                       if (distance <= distancia) {
-                        return true;
+                        devolver2.push(todosLosUsuarios[i]);
                       }
                     })
                     .catch((error) => console.log(error))
                 }
-                )
-            })
-          res.json(devolver);
+                ).catch((error) => console.log(error))
+            }
+          res.json(devolver2);
           })
-      })
+
+          })
+
+        })
 
     });
-});
+
 //AUXILIARES-------------------------------------------------------------------------------
 //Get de propietario de producto con ID x, devuelve el producto entero y de ahi podemos pillar el vendedor, auxiliar
 router.get('/propietario/:productoId', (req, res) => {
