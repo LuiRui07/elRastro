@@ -8,27 +8,27 @@ const usuariosSchema = new mongoose.Schema({
     },
     calle: {
         type: String,
-        required: false
+        required: true
     },
     numero: {
         type: String,
-        required: false
+        required: true
     },
     codigoPostal: {
         type: String,
-        required: false
+        required: true
     },
     ciudad: {
         type: String,
-        required: false
+        required: true
     },
     provincia: {
         type: String,
-        required: false
+        required: true
     },
     pais: {
         type: String,
-        required: false
+        required: true
     },
     
 });

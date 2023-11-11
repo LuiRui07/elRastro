@@ -2,18 +2,19 @@
 # GET   http://localhost:5001/productos/
 # Content-Type: application/json
 
-//Post de un producto
-# POST  http://localhost:5001/productos/ HTTP/1.1
-# Content-Type: application/json
+# //Post de un producto
+  POST  http://localhost:5001/productos/ HTTP/1.1
+  Content-Type: application/json
 
-# {
-#   "vendedor" : "653e4c42646ba4c6ea2eff33",
-#   "descripcion" : "Producto 1",
-#   "precioInicial" : 100,
-#   "precioActual" : 100,
-#   "categorias" : "Juegos, Electronica",
-#   "nombre" : "Producto 1"
-# }
+ {
+    "vendedor" : "654f87914e1717e6ab20666a",
+    "descripcion" : "Producto 1 CON PESO",
+    "precioInicial" : 100,
+    "precioActual" : 100,
+    "categorias" : "Juegos, Electronica",
+    "nombre" : "Producto 1",
+    "peso" : 100
+  }
 
 //Eliminar producto por ID
 # DELETE http://localhost:5001/productos/654cd30ac813f182b077ff31 HTTP/1.1
@@ -28,17 +29,18 @@
 #GET  http://localhost:5001/productos/productos-categoria/Juegos HTTP/1.1
 
 # //Editar con PUT de un producto con ID especifico
-# PUT   http://localhost:5001/productos/654cce4acd48927b0fbd3a91 HTTP/1.1
-# Content-Type: application/json
+#  PUT   http://localhost:5001/productos/654f60d04f673c0fd8bf5dfe HTTP/1.1
+#  Content-Type: application/json
 
 # {
-#   "vendedor" : "653e4c42646ba4c6ea2eff33",
-#   "descripcion" : "Producto 1EDITADO",
-#   "precioInicial" : 200,
-#   "precioActual" : 200,
-#   "categorias" : "Juegos, Electronica, Editado",
-#   "nombre" : "Producto 1 Editado"
-# }
+#   "vendedor" : "654f60d04f673c0fd8bf5dfe",
+#    "descripcion" : "Producto con Peso",
+#    "precioInicial" : 200,
+#    "precioActual" : 200,
+#    "categorias" : "Juegos, Electronica, Editado",
+#    "nombre" : "Producto 1 Editado",
+#    "peso" : 200
+#  }
 
 //Get de productos por nombre
 # GET  http://localhost:5001/productos/productos-usuario/C HTTP/1.1

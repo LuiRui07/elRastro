@@ -35,6 +35,10 @@ const productosSchema = new mongoose.Schema({
         type: Date,
         required: false
     },
+    peso: {
+        type: Number,
+        required: true
+    },
 });
 
 module.exports = mongoose.model("productos", productosSchema);

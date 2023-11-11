@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   
-  "nombreCompleto"  : "Juan Perez",
+  "nombreCompleto"  : "Juan Perez VENDEDOR DE PRODUCTO",
   "calle"       : "Carretera de Malaga",
   "numero"      : "95",
   "codigoPostal": "04713",

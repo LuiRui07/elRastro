@@ -108,6 +108,25 @@ router.get("/compradores/:productoId", (req, res) => {
   })
 
 });
+
+//Get de propietario de producto con ID x
+router.get('/propietario/:productoId', (req, res) => {
+  const {productoId} = req.params;
+  axios.get('http://localhost:5001/productos/' + productoId)
+  .then((response) => {
+    const {data} = response;
+    const {message} = data;
+    if(message){
+      return res.json({message: message})
+    }
+    if(data.length === 0){
+      return res.json({message: 'No se ha encontrado ningún producto con ese id.'})
+    }else if(data.length > 1){
+      return res.json({message: 'Hay más de un producto con ese id.'})
+    }
+    res.json(data);
+  })
+})
 //get usuarios a x distancia de ti, ESPERAR A QUE SE HAGA EL DE DISTANCIA CON EL SERVICIO EXTERNO
 
 

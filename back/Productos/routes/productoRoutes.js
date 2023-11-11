@@ -29,7 +29,12 @@ router.get("/:id", (req, res) => {
   const { id } = req.params;
   productosSchema
     .findById(id)
-    .then((data) => res.json(data))
+    .then((data) =>{
+      if(data){
+        res.json(data)
+      }else{
+        res.json({message: 'No se ha encontrado ningún producto con ese id.'})
+      }})
     .catch((error) => res.json({ message: error }));
 });
 

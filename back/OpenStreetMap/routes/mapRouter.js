@@ -5,10 +5,11 @@ router.use(express.json());
 
 //Get coordenadas de una dirección
 router.get('/direccionCoordenadas/:direccion', async (req, res) => {
-    const {direccion } = req.params;
+    const { direccion } = req.params;
     try {
-        const respuesta = await axios.get(`https://nominatim.openstreetmap.org/search?q=${direccion}&format=json&limit=1&addressdetails=1`)
-        const { lat, lon } = respuesta.data[0]
+        const respuesta = await axios.get(`https://nominatim.openstreetmap.org/search?q=${direccion}&format=json&limit=1`)
+        const lat = respuesta.data[0].lat
+        const lon = respuesta.data[0].lon
         res.json({ lat, lon })
     } catch (error) {
         console.log(error)
@@ -34,6 +35,7 @@ router.get("/direccionUsuario/:id", async (req, res) => {
     const { id } = req.params;
     axios.get('http://localhost:5002/usuarios/' + id)
         .then((respuesta) => {
+
             const calle = respuesta.data.calle;
             const numero = respuesta.data.numero;
             const codigoPostal = respuesta.data.codigoPostal;
@@ -41,13 +43,13 @@ router.get("/direccionUsuario/:id", async (req, res) => {
             const provincia = respuesta.data.provincia;
             const pais = respuesta.data.pais;
             const direccion = calle + " " + numero + ", " + codigoPostal + ", " + ciudad + ", " + provincia + ", " + pais;
-             axios.get('http://localhost:5004/mapa/direccionCoordenadas/' + direccion)
-                 .then((respuesta) => {
-                     const latitud = respuesta.data.lat;
-                     const longitud = respuesta.data.lon;
-                     res.json({ latitud, longitud })
-                 })
-                 .catch((error) => console.log(error))
+            axios.get('http://localhost:5004/mapa/direccionCoordenadas/' + direccion)
+                .then((respuesta) => {
+                    const latitud = respuesta.data.lat;
+                    const longitud = respuesta.data.lon;
+                    res.json({ latitud, longitud })
+                })
+                .catch((error) => console.log(error))
         })
         .catch((error) => console.log(error))
 
@@ -64,6 +66,33 @@ router.get('/distancia/:lat1/:lon1/:lat2/:lon2', async (req, res) => {
         console.log(error)
     }
 
+});
+
+//Get coordenadas dada una id de un usuario
+router.get('/coordenadasUsuario/:id', async (req, res) => {
+    axios.get('http://localhost:5002/usuarios/' + req.params.id)
+        .then((respuesta) => {
+            const { nombreCompleto, calle, numero, codigoPostal, ciudad, provincia, pais } = respuesta.data;
+            const direccion = calle + " " + numero + ", " + codigoPostal + ", " + ciudad + ", " + provincia + ", " + pais;
+            axios.get('http://localhost:5004/mapa/direccionCoordenadas/' + direccion)
+                .then((respuesta) => {
+                    const { lat, lon } = respuesta.data;
+                    res.json({ nombreCompleto, lat, lon })
+                })
+        });
+});
+
+//Get coordenadas dada una id de un producto
+router.get('/coordenadasProducto/:id', async (req, res) => {
+   axios.get('http://localhost:5002/usuarios/propietario/' + req.params.id)
+        .then((respuesta) => {
+            axios.get('http://localhost:5004/mapa/direccionUsuario/' + respuesta.data.vendedor)
+                .then((respuesta) => {
+                    const { latitud, longitud } = respuesta.data;
+                    res.json({  latitud, longitud })
+                })
+        }).catch((error) => res.json({ message: error }));
+      
 });
 module.exports = router;
 
