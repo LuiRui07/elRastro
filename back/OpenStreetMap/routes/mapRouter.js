@@ -68,7 +68,7 @@ router.get('/distancia/:lat1/:lon1/:lat2/:lon2', async (req, res) => {
 
 });
 
-//Get direccion dada una id de un usuario
+//Get direccion dada una id de un usuario, comprobado con Postman
 router.get("/direccionUsuario/:id", async (req, res) => {
     const { id } = req.params;
 
@@ -94,16 +94,22 @@ router.get("/direccionUsuario/:id", async (req, res) => {
 
 //Get coordenadas dada una id de un producto
 router.get('/coordenadasProducto/:id', async (req, res) => {
-   axios.get('http://localhost:5002/usuarios/propietario/' + req.params.id)
-        .then((respuesta) => {
-            axios.get('http://localhost:5004/mapa/direccionUsuario/' + respuesta.data.vendedor)
-                .then((respuesta) => {
-                    const { latitud, longitud } = respuesta.data;
-                    res.json({  latitud, longitud })
-                })
-        }).catch((error) => res.json({ message: error }));
-      
-});
+    try {
+         const responseUsuario = await axios.get(`http://localhost:5002/usuarios/propietario/${req.params.id}`);
+         const vendedorId = responseUsuario.data.vendedor;
+ 
+         const responseDireccionUsuario = await axios.get(`http://localhost:5004/mapa/direccionUsuario/${vendedorId}`);
+         const { direccion } = responseDireccionUsuario.data;
+ 
+         const responseCoordenadas = await axios.get(`http://localhost:5004/mapa/direccionCoordenadas/${direccion}`);
+         const { lat, lon } = responseCoordenadas.data;
+ 
+         res.json({ latitud: lat, longitud: lon });
+     } catch (error) {
+         console.error(error);
+         res.status(500).json({ error: "Error al obtener las coordenadas del producto." });
+     }
+ });
 module.exports = router;
 
 
