@@ -92,7 +92,7 @@ router.get("/direccionUsuario/:id", async (req, res) => {
 });
 
 
-//Get coordenadas dada una id de un producto
+//Get coordenadas dada una id de un producto, comprobado con Postman
 router.get('/coordenadasProducto/:id', async (req, res) => {
     try {
          const responseUsuario = await axios.get(`http://localhost:5002/usuarios/propietario/${req.params.id}`);
