@@ -42,12 +42,13 @@ router.delete("/:id", (req, res) => {
 // update, comprobado con Postman
 router.put("/:id", (req, res) => {
   const { id } = req.params;
-  const { nombreCompleto, direccion } = req.body;
+  const { nombreCompleto, calle, numero, codigoPostal, ciudad, provincia, pais} = req.body;
   usuariosSchema
-    .updateOne({ _id: id }, { $set: { nombreCompleto, direccion } })
+    .updateOne({ _id: id }, { $set: { nombreCompleto, calle, numero, codigoPostal, ciudad, provincia, pais} })
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
+
 //LLAMADAS INTERNAS-------------------------------------------------------------------------------
 // get por parte de nombre, comprobado con Postman
 router.get("/nombre/:nombre", (req, res) => {
