@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require("axios");
 router.use(express.json());
 
-//Get coordenadas de una dirección
+//Get coordenadas de una dirección, comprobado con Postman
 router.get('/direccionCoordenadas/:direccion', async (req, res) => {
     const { direccion } = req.params;
     try {
@@ -17,7 +17,7 @@ router.get('/direccionCoordenadas/:direccion', async (req, res) => {
 
 });
 
-//Get dirección de unas coordenadas
+//Get dirección de unas coordenadas, comprobado con Postman
 router.get('/coordenadasDireccion/:lat/:lon', async (req, res) => {
     const { lat, lon } = req.params;
     try {
@@ -30,8 +30,8 @@ router.get('/coordenadasDireccion/:lat/:lon', async (req, res) => {
 
 });
 
-//Get coordenadas de una usuario dado su ID
-router.get("/direccionUsuario/:id", async (req, res) => {
+//Get coordenadas de un usuario dado su ID, comprobado con Postman
+router.get("/coordenadasUsuario/:id", async (req, res) => {
     const { id } = req.params;
     axios.get('http://localhost:5002/usuarios/' + id)
         .then((respuesta) => {
@@ -55,7 +55,7 @@ router.get("/direccionUsuario/:id", async (req, res) => {
 
 });
 
-//Get distancia en KM entre dos coordenadas
+//Get distancia en KM entre dos coordenadas, comprobado con Postman
 router.get('/distancia/:lat1/:lon1/:lat2/:lon2', async (req, res) => {
     const { lat1, lon1, lat2, lon2 } = req.params;
     try {
@@ -68,19 +68,29 @@ router.get('/distancia/:lat1/:lon1/:lat2/:lon2', async (req, res) => {
 
 });
 
-//Get coordenadas dada una id de un usuario
-router.get('/coordenadasUsuario/:id', async (req, res) => {
-    axios.get('http://localhost:5002/usuarios/' + req.params.id)
-        .then((respuesta) => {
-            const { nombreCompleto, calle, numero, codigoPostal, ciudad, provincia, pais } = respuesta.data;
-            const direccion = calle + " " + numero + ", " + codigoPostal + ", " + ciudad + ", " + provincia + ", " + pais;
-            axios.get('http://localhost:5004/mapa/direccionCoordenadas/' + direccion)
-                .then((respuesta) => {
-                    const { lat, lon } = respuesta.data;
-                    res.json({ nombreCompleto, lat, lon })
-                })
-        });
+//Get direccion dada una id de un usuario
+router.get("/direccionUsuario/:id", async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const respuesta = await axios.get(`http://localhost:5002/usuarios/${id}`);
+        
+        const calle = respuesta.data.calle;
+        const numero = respuesta.data.numero;
+        const codigoPostal = respuesta.data.codigoPostal;
+        const ciudad = respuesta.data.ciudad;
+        const provincia = respuesta.data.provincia;
+        const pais = respuesta.data.pais;
+
+        const direccion = `${calle} ${numero}, ${codigoPostal}, ${ciudad}, ${provincia}, ${pais}`;
+
+        res.json({ direccion });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Error al obtener la dirección del usuario." });
+    }
 });
+
 
 //Get coordenadas dada una id de un producto
 router.get('/coordenadasProducto/:id', async (req, res) => {
