@@ -5,14 +5,14 @@ router.use(express.json());
 const huellaModel = require("../models/huellaModel.js");
 const API_KEY = "Xm5gLqrLw95f6ujRVn9tQ";
 //LLAMADAS CRUD-------------------------------------------------------------------------------
-//Get all
+//Get all, comprobado con Postman
 router.get("/", (req, res) => {
     huellaModel
         .find()
         .then((data) => res.json(data))
         .catch((error) => res.json({ message: error }));
 });
-//Get
+//Get, comprobado con Postman
 router.get("/:id", (req, res) => {
     const { id } = req.params;
     huellaModel
@@ -20,7 +20,7 @@ router.get("/:id", (req, res) => {
         .then((data) => res.json(data))
         .catch((error) => res.json({ message: error }));
 });
-//Create
+//Create, comprobado con Postman
 router.post("/", (req, res) => {
     const huella = huellaModel(req.body);
     huella
@@ -28,7 +28,7 @@ router.post("/", (req, res) => {
         .then((data) => res.json(data))
         .catch((error) => res.json({ message: error }));
 });
-//Delete
+//Delete, comprobado con Postman
 router.delete("/:id", (req, res) => {
     const { id } = req.params;
     huellaModel
@@ -36,7 +36,7 @@ router.delete("/:id", (req, res) => {
         .then((data) => res.json(data))
         .catch((error) => res.json({ message: error }));
 });
-//Update
+//Update, comprobado con Postman
 router.put("/:id", (req, res) => {
     const { id } = req.params;
     const { distancia, peso, distanciaMIN, distanciaMAX, pesoMIN, pesoMAX } = req.body;
@@ -68,7 +68,7 @@ router.get('/huellaCarbono/:distancia/:peso', async (req, res) => {
 });
 
 
-//Calcular huella carbono en G
+//Calcular huella carbono en G, comprobado con Postman
 router.get('/huellaCarbonoCosto/:idUsuario/:idProducto', async (req, res) => {
     axios.get('http://localhost:5004/mapa/coordenadasUsuario/' + req.params.idUsuario).then((respuesta) => {
         const latitudUsuario = respuesta.data.latitud;
