@@ -52,6 +52,19 @@ router.get("/direccionUsuario/:id", async (req, res) => {
         .catch((error) => console.log(error))
 
 });
+
+//Get distancia en KM entre dos coordenadas
+router.get('/distancia/:lat1/:lon1/:lat2/:lon2', async (req, res) => {
+    const { lat1, lon1, lat2, lon2 } = req.params;
+    try {
+        const respuesta = await axios.get(`https://router.project-osrm.org/route/v1/driving/${lon1},${lat1};${lon2},${lat2}?overview=false`)
+        const { distance } = respuesta.data.routes[0]
+        res.json({ distance })
+    } catch (error) {
+        console.log(error)
+    }
+
+});
 module.exports = router;
 
 
