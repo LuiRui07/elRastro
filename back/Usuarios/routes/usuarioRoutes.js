@@ -74,7 +74,7 @@ router.get("/direccion/:direccion", (req, res) => {
       if (data.length === 0) {
         return res.json({ message: "No se ha encontrado ningún usuario con esa direccion." });
       }
-      res.json(data);
+      res.json(data); 
     })
     .catch((error) => res.json({ message: error }));
 });
@@ -97,7 +97,7 @@ router.get("/compradores/:productoId", (req, res) => {
     var puja = null;
     for(let i = 0; i < data.length; i++){
       puja = data[i].pujaMasAlta;
-      axios.get('http://localhost:5000/pujas/' + puja._id)
+      axios.get('http://localhost:5003/pujas/' + puja._id)
       .then((response) => {
         const {data} = response;
         const {message} = data;
@@ -148,5 +148,8 @@ router.get('/propietario/:productoId', (req, res) => {
     res.json(data);
   })
 })
+
+//get usuarios a x distancia de ti, ESPERAR A QUE SE HAGA EL DE DISTANCIA CON EL SERVICIO EXTERNO
+
 
 module.exports = router
