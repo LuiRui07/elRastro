@@ -51,9 +51,9 @@ router.delete("/:id", (req, res) => {
 // update , comprobado con Postman
 router.put("/:id", (req, res) => {
   const { id } = req.params;
-  const { vendedor,descripcion , precioInicial, precioActual, categorias, fechaDeCreacion, nombre } = req.body;
+  const { vendedor, pujaGanadora, descripcion , precioInicial, categorias, fechaDeCreacion, nombre, fechaDeCierre, peso } = req.body;
   productosSchema
-    .updateOne({ _id: id }, { $set: { vendedor,descripcion , precioInicial, precioActual, categorias, fechaDeCreacion, nombre} })
+    .updateOne({ _id: id }, { $set: { vendedor, pujaGanadora, descripcion , precioInicial, categorias, fechaDeCreacion, nombre, fechaDeCierre, peso} })
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });

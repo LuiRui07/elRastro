@@ -81,30 +81,22 @@ router.get("/direccion/:direccion", (req, res) => {
 
 //LLAMADAS EXTERNAS-------------------------------------------------------------------------------
 
-//get compradores de un articulo con indentificador x, REVISAR
+//get subastadores de un articulo con indentificador x, REVISAR
 router.get("/compradores/:productoId", (req, res) => {
   const { productoId } = req.params;
-  axios.get('http://localhost:5001/productos/' + productoId)
+  axios.get('http://localhost:5003/pujas')
   .then((response) => {
     const {data} = response;
     const {message} = data;
-    if(data.length === 0){
-      return res.json({message: 'No se ha encontrado ningún producto con ese id.'})
-    }else if(data.length > 1){
-      return res.json({message: 'Hay más de un producto con ese id.'})
+    var pujadores = [];
+    var pujador = null;
+    for(let i = 0; i < data.length; i++){ 
+      if (data[i].producto == productoId){
+        pujador = data[i].comprador;
+        pujadores.push(pujador);
+      }
     }
-    var compradores = [];
-    var puja = null;
-    for(let i = 0; i < data.length; i++){
-      puja = data[i].pujaMasAlta;
-      axios.get('http://localhost:5003/pujas/' + puja._id)
-      .then((response) => {
-        const {data} = response;
-        const {message} = data;
-        compradores.push(data[0].comprador);
-      }) 
-    }
-    res.json(compradores);
+    res.json(pujadores);
   })
 
 });
@@ -186,7 +178,8 @@ router.get('/propietario/:productoId', (req, res) => {
       } else if (data.length > 1) {
         return res.json({ message: 'Hay más de un producto con ese id.' })
       }
-      res.json(data);
+
+      res.json(data[0].pujaGanadora.comprador);
     })
 })
 

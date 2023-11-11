@@ -6,7 +6,7 @@ const productosSchema = new mongoose.Schema({
         ref: 'usuarios',
         required: false,
         },
-    pujaMasAlta: {
+    pujaGanadora: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'pujas',
         required: false,

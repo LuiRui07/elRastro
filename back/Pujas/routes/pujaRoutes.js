@@ -70,7 +70,6 @@ router.get("/pujas-realizadas/:usuarioId", (req, res) => {
   const { usuarioId } = req.params;
   pujasSchema
     .find({ comprador: new ObjectId(usuarioId) })
-    .sort({ fecha: -1 }) //Ordena en en fecha descendente
     .then((pujasRealizadas) => {
       if (pujasRealizadas.length === 0) {
         return res.json({ message: "El usuario no ha realizado ninguna puja." });
