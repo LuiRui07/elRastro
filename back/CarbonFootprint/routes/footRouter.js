@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require("axios");
 router.use(express.json());
 const huellaModel = require("../models/huellaModel.js");
-const API_KEY = "Xm5gLqrLw95f6ujRVn9t";
+const API_KEY = "Xm5gLqrLw95f6ujRVn9tQ";
 //LLAMADAS CRUD-------------------------------------------------------------------------------
 //Get all
 router.get("/", (req, res) => {
@@ -20,7 +20,7 @@ router.get("/:id", (req, res) => {
         .then((data) => res.json(data))
         .catch((error) => res.json({ message: error }));
 });
-//Post
+//Create
 router.post("/", (req, res) => {
     const huella = huellaModel(req.body);
     huella
