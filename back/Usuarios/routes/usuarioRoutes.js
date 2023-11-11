@@ -73,7 +73,7 @@ router.get("/direccion/:direccion", (req, res) => {
       if (data.length === 0) {
         return res.json({ message: "No se ha encontrado ningún usuario con esa direccion." });
       }
-      res.json(data);
+      res.json(data); 
     })
     .catch((error) => res.json({ message: error }));
 });
@@ -84,27 +84,27 @@ router.get("/direccion/:direccion", (req, res) => {
 router.get("/compradores/:productoId", (req, res) => {
   const { productoId } = req.params;
   axios.get('http://localhost:5001/productos/' + productoId)
-    .then((response) => {
-      const { data } = response;
-      const { message } = data;
-      if (data.length === 0) {
-        return res.json({ message: 'No se ha encontrado ningún producto con ese id.' })
-      } else if (data.length > 1) {
-        return res.json({ message: 'Hay más de un producto con ese id.' })
-      }
-      var compradores = [];
-      var puja = null;
-      for (let i = 0; i < data.length; i++) {
-        puja = data[i].pujaMasAlta;
-        axios.get('http://localhost:5000/pujas/' + puja._id)
-          .then((response) => {
-            const { data } = response;
-            const { message } = data;
-            compradores.push(data[0].comprador);
-          })
-      }
-      res.json(compradores);
-    })
+  .then((response) => {
+    const {data} = response;
+    const {message} = data;
+    if(data.length === 0){
+      return res.json({message: 'No se ha encontrado ningún producto con ese id.'})
+    }else if(data.length > 1){
+      return res.json({message: 'Hay más de un producto con ese id.'})
+    }
+    var compradores = [];
+    var puja = null;
+    for(let i = 0; i < data.length; i++){
+      puja = data[i].pujaMasAlta;
+      axios.get('http://localhost:5003/pujas/' + puja._id)
+      .then((response) => {
+        const {data} = response;
+        const {message} = data;
+        compradores.push(data[0].comprador);
+      }) 
+    }
+    res.json(compradores);
+  })
 
 });
 
@@ -183,5 +183,8 @@ router.get('/propietario/:productoId', (req, res) => {
       res.json(data);
     })
 })
+
+//get usuarios a x distancia de ti, ESPERAR A QUE SE HAGA EL DE DISTANCIA CON EL SERVICIO EXTERNO
+
 
 module.exports = router
