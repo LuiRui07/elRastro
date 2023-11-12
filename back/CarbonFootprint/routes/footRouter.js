@@ -80,7 +80,7 @@ router.get('/huellaCarbonoCostoCamion/:idUsuario/:idProducto', async (req, res) 
     axios.get('http://localhost:5004/mapa/coordenadasUsuario/' + req.params.idUsuario).then((respuesta) => {
         const latitudUsuario = respuesta.data.latitud;
         const longitudUsuario = respuesta.data.longitud;
-        console.log(respuesta.data);
+        
         axios.get('http://localhost:5004/mapa/coordenadasProducto/' + req.params.idProducto).then((respuesta) => {
             console.log(respuesta.data);
 
