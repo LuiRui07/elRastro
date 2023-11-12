@@ -134,9 +134,9 @@ router.get("/distancia/:usuarioID/:distancia", async (req, res) => {
                         devolver2.push(todosLosUsuarios[i]);
                       }
                     })
-                    .catch((error) => res.json({ message: error })
+                    .catch((error) => {res.json({ message: error })});
                 }
-                ).catch((error) => res.json({ message: error })
+                ).catch((error) => res.json({ message: error }));
             }
           res.json(devolver2);
           })
