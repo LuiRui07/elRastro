@@ -410,25 +410,26 @@ router.get('/huellaCarbonoCostoTren/:idUsuario/:idProducto', async (req, res) =>
 
 router.get('/calcularHuella/:idUsuario/:idProducto/:transporte', async (req, res) => {
     const {idUsuario, idProducto, transporte} = req.params;
-    if(transporte === "camion"){
+
+    if(transporte == "camion"){
         axios.get('http/localhost:5005/huellaC/huellaCarbonoCosto/' + idUsuario + '/' + idProducto).then((respuesta) => {
             res.json(respuesta.data);
         }).catch((error) => {
             res.json({ message: error });
         })
-    }else if(transporte === "avion"){
+    }else if(transporte == "avion"){
         axios.get('http/localhost:5005/huellaC/huellaCarbonoCostoAvion/' + idUsuario + '/' + idProducto).then((respuesta) => {
             res.json(respuesta.data);
         }).catch((error) => {
             res.json({ message: error });
         })
-    }else if(transporte === "barco"){
+    }else if(transporte == "barco"){
         axios.get('http/localhost:5005/huellaC/huellaCarbonoCostoBarco/' + idUsuario + '/' + idProducto).then((respuesta) => {
             res.json(respuesta.data);
         }).catch((error) => {
             res.json({ message: error });
         })
-    }else if(transporte === "tren"){
+    }else if(transporte == "tren"){
         axios.get('http/localhost:5005/huellaC/huellaCarbonoCosto/Tren' + idUsuario + '/' + idProducto).then((respuesta) => {
             res.json(respuesta.data);
         }).catch((error) => {
