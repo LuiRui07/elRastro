@@ -45,18 +45,29 @@ router.delete('/eliminar/:public_id', async (req, res) => {
 });
 
 // Actualizar una imagen en Cloudinary
-router.put('/actualizar/:public_id', async (req, res) => {
-  const { public_id } = req.params;
+router.put('/actualizar/:public_id',upload.single('imagen'), async (req, res) => {
   try {
-    if (!req.files || !req.files.nueva_imagen) {
-      return res.status(400).json({ error: 'No se ha proporcionado una nueva imagen para actualizar' });
+    if (!req.file) {
+      return res.status(400).json({ error: 'Falta la imagen en la solicitud' });
     }
 
-    const nuevaImagen = req.files.nueva_imagen;
-    const resultado = await cloudinary.uploader.upload(nuevaImagen.tempFilePath, { public_id });
+    const public_id = req.params.public_id;
 
-    console.log(resultado); // Imprime los detalles de la imagen actualizada en la consola
-    res.json(resultado); // Devuelve los detalles de la imagen actualizada como respuesta
+    // Obtén la información de la imagen existente en Cloudinary
+    const imagenExistente = await cloudinary.api.resource(public_id);
+
+    if (!imagenExistente) {
+      return res.status(404).json({ error: 'La imagen no existe en Cloudinary' });
+    }
+
+    // Sube la nueva imagen
+    const resultado = await cloudinary.uploader.upload(req.file.path);
+
+    // Borra la imagen anterior
+    await cloudinary.uploader.destroy(public_id);
+
+    console.log(resultado); // Imprime los detalles de la nueva imagen en la consola
+    res.json(resultado); // Devuelve los detalles de la nueva imagen como respuesta
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error al actualizar la imagen en Cloudinary' });
