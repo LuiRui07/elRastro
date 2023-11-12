@@ -442,8 +442,9 @@ router.get('/calcularHuella/:idUsuario/:idProducto/:transporte', async (req, res
 })
 //Calcular precio de huella carbono en euros
 router.get("/getPrecio/:cantidadEnGramos", (req, res) => {
-    const { cantidadEnGramosDeCarbono } = req.params;
-    res.json({ precio: cantidadEnGramosDeCarbono * 0.01 });
+    console.log(req.params);
+    const { cantidadEnGramos } = req.params;
+    res.json({ precio: cantidadEnGramos * 0.01 });
 });
 
 
