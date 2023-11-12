@@ -1,6 +1,6 @@
 
 const express = require('express');
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require('cloudinary');
 const app = express();
 require("dotenv").config({ path: "./config.env" });
 
