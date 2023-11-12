@@ -4,36 +4,37 @@ const productosSchema = new mongoose.Schema({
     vendedor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'usuarios',
-        required: false,
+        required: true,
         },
     pujaGanadora: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'pujas',
-        required: false,
+        required: true,
+        nullalbe: true
         },
     descripcion: {
         type: String,
-        required: false
+        required: true
         },
     precioInicial: {
         type: Number,
-        required: false
+        required: true
         },
     categorias: {
         type: String,
-        required: false
+        required: true
     },
     fechaDeCreacion: {
         type: Date,
-        required: false
+        required: true
     },
     nombre: {
         type: String,
-        required: false
+        required: true
     },
     fechaDeCierre: {
         type: Date,
-        required: false
+        required: true
     },
     peso: {
         type: Number,

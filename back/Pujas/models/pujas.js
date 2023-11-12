@@ -10,7 +10,7 @@ const pujasSchema = new mongoose.Schema({
     producto: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'productos',
-        required: false
+        required: true
     },
     precio: {
         type: Number,
@@ -18,7 +18,7 @@ const pujasSchema = new mongoose.Schema({
     },
     fechaDeCreacion: {
         type: Date,
-        required: false
+        required: true
     }
 });
 module.exports = mongoose.model("pujas", pujasSchema);
