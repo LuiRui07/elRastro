@@ -78,16 +78,22 @@ router.get('/listarImagenes', async (req, res) => {
   }
 });
 
-//Obtener lista de imagenes en Cloudinary de un formato
-router.get('/listar/:format', async (req, res) => {
+//Obtener lista de imagenes en Cloudinary de un formato 
+router.get('/filtrar-formato/:format', async (req, res) => {
   try {
+    const format = req.params.format;
+    let resources = [];
+
     const resultado = await cloudinary.api.resources({
-      type: 'upload', // Filtra para obtener solo imágenes
-      format: req.params.format // Filtra para obtener solo imágenes de un formato específico
+        type: 'upload', 
+    }); 
+
+    const filteredResources = resultado.resources.filter(resource => {
+      return resource.format === format;
     });
 
-    console.log(resultado.resources); // Imprime la lista de imágenes en la consola
-    res.json(resultado.resources); // Devuelve la lista de imágenes como respuesta
+    console.log(filteredResources); // Imprime la lista de imágenes en la consola
+    res.json(filteredResources); // Devuelve la lista de imágenes como respuesta
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error al obtener la lista de imágenes de Cloudinary' });
@@ -96,22 +102,28 @@ router.get('/listar/:format', async (req, res) => {
 
 
 //Obtener lista de imagenes en Cloudinary de una carpeta
-router.get('/listar/:folder', async (req, res) => {
+router.get('/filtrar-carpeta/:folder', async (req, res) => {
   try {
+    const folder = req.params.folder;
+    let resources = [];
+
     const resultado = await cloudinary.api.resources({
-      type: 'upload', // Filtra para obtener solo imágenes
-      folder: req.params.folder 
+        type: 'upload', 
+    }); 
+
+    const filteredResources = resultado.resources.filter(resource => {
+      return resource.folder === folder;
     });
 
-    console.log(resultado.resources); // Imprime la lista de imágenes en la consola
-    res.json(resultado.resources); // Devuelve la lista de imágenes como respuesta
+    console.log(filteredResources); // Imprime la lista de imágenes en la consola
+    res.json(filteredResources); // Devuelve la lista de imágenes como respuesta
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error al obtener la lista de imágenes de Cloudinary' });
   }
 });
 
-//Obtener lista de imagenes en Cloudinary con un tamaño espefífico
+//Obtener lista de imagenes en Cloudinary con un tamaño espcífico
 router.get('/listar/:width/:height', async (req, res) => {
   try {
     const width = parseInt(req.params.width);
