@@ -9,7 +9,7 @@ const productosSchema = new mongoose.Schema({
     pujaGanadora: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'pujas',
-        required: true,
+        required: false,
         nullalbe: true
         },
     descripcion: {

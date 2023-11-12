@@ -1,7 +1,7 @@
 @echo off
 
 rem Define the repositories to work on
-set repositories=CarbonFootprint OpenStreetMap Productos Pujas Usuarios
+set repositories=CarbonFootprint OpenStreetMap Productos Pujas Usuarios Cloudinary
 
 rem Loop through the repositories in parallel
 for %%r in (%repositories%) do (
