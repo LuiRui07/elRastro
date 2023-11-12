@@ -150,6 +150,7 @@ router.get('/propietario/:productoId', (req, res) => {
   const { productoId } = req.params;
   axios.get('http://localhost:5001/productos/' + productoId)
     .then((response) => {
+      console.log(response.data)
       const { data } = response;
       const { message } = data;
       if (message) {
@@ -160,13 +161,9 @@ router.get('/propietario/:productoId', (req, res) => {
       } else if (data.length > 1) {
         return res.json({ message: 'Hay más de un producto con ese id.' })
       }
-    axios.get('http://localhost:5003/pujas/' + data.pujaGanadora)
-    .then((response) => {
-      const { data } = response;
-      const { message } = data;
-      
-      res.json(data.comprador);
-    })})
+      console.log(data)
+      res.json(data.vendedor); 
+    })
     
     
 })  
