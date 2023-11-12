@@ -12,6 +12,19 @@ cloudinary.config({
   api_secret: 'pLabEZCvj0zgN9yfWAJM1IvUmxA' 
 });
 
+// Obtener una imagen de Cloudinary con su id
+router.get('/obtener/:public_id', async (req, res) => { 
+  try {
+    const { public_id } = req.params; 
+    const resultado = await cloudinary.image(public_id); // Obtiene la imagen de Cloudinary
+    console.log(resultado); // Imprime los detalles de la imagen en la consola
+    res.json(resultado); // Devuelve los detalles de la imagen como respuesta
+  } catch (error) { 
+    console.error(error);
+    res.status(500).json({ error: 'Error al obtener la imagen de Cloudinary' });
+  }
+});
+
 // Subir una imagen 
 router.post('/subir', upload.single('imagen'), async (req, res) => {
   try {
