@@ -53,11 +53,11 @@ router.put("/:id", (req, res) => {
 //  con los KG, peso  
 //  con la DISTANCIA
 //   hay algun atributo en la bdd que coincida, es decir, distacia>=distanciaMIN && distancia<=distanciaMAX && peso>=pesoMIN && peso<=pesoMAX
-router.get('/huellaCarbono/:distancia/:peso', async (req, res) => {
+router.get('/huellaCarbono/:distancia/:peso/:transporte', async (req, res) => {
     const { distancia } = req.params;
     const { peso } = req.params;
     huellaModel
-        .find({ distanciaMIN: { $lte: distancia }, distanciaMAX: { $gte: distancia }, pesoMIN: { $lte: peso }, pesoMAX: { $gte: peso } })
+        .find({ distanciaMIN: { $lte: distancia }, distanciaMAX: { $gte: distancia }, pesoMIN: { $lte: peso }, pesoMAX: { $gte: peso }, metodoTransporte: req.params.transporte })
         .sort({ distancia: 1 })
         .then((data) => {
             if (data.length === 0) {
@@ -76,7 +76,7 @@ router.get('/huellaCarbono/:distancia/:peso', async (req, res) => {
 //     idUsuario es comprador,
 //     idProducto es el producto que desea comprar
 // comprobado con Postman
-router.get('/huellaCarbonoCosto/:idUsuario/:idProducto', async (req, res) => {
+router.get('/huellaCarbonoCostoCamion/:idUsuario/:idProducto', async (req, res) => {
     axios.get('http://localhost:5004/mapa/coordenadasUsuario/' + req.params.idUsuario).then((respuesta) => {
         const latitudUsuario = respuesta.data.latitud;
         const longitudUsuario = respuesta.data.longitud;
@@ -89,7 +89,7 @@ router.get('/huellaCarbonoCosto/:idUsuario/:idProducto', async (req, res) => {
                 const distancia = respuesta.data.distance;
                 axios.get('http://localhost:5001/productos/' + req.params.idProducto).then((respuesta) => {
                     const peso = respuesta.data.peso;
-                    axios.get('http://localhost:5005/huellaC/huellaCarbono/' + distancia + '/' + peso).then((respuesta) => {
+                    axios.get('http://localhost:5005/huellaC/huellaCarbono/' + distancia + '/' + peso + '/camion').then((respuesta) => {
                         if (respuesta.data.length !== 0 && respuesta.data.message !== "No se ha encontrado ningún producto con esos datos.") {
                             res.json(respuesta.data.huella);
                         } else {
@@ -141,7 +141,8 @@ router.get('/huellaCarbonoCosto/:idUsuario/:idProducto', async (req, res) => {
                                         distanciaMAX: distancia + 10,
                                         pesoMIN: peso - 2000,
                                         pesoMAX: peso + 2000,
-                                        huella: carbonFootprint
+                                        huella: carbonFootprint,
+                                        metodoTransporte: "camion"
                                     })
                                 })
                                 .catch((error) => {
@@ -171,7 +172,7 @@ router.get('/huellaCarbonoCostoAvion/:idUsuario/:idProducto', async (req, res) =
                 const distancia = respuesta.data.distance;
                 axios.get('http://localhost:5001/productos/' + req.params.idProducto).then((respuesta) => {
                     const peso = respuesta.data.peso;
-                    axios.get('http://localhost:5005/huellaC/huellaCarbono/' + distancia + '/' + peso).then((respuesta) => {
+                    axios.get('http://localhost:5005/huellaC/huellaCarbono/' + distancia + '/' + peso + '/avion').then((respuesta) => {
                         if (respuesta.data.length !== 0 && respuesta.data.message !== "No se ha encontrado ningún producto con esos datos.") {
                             res.json(respuesta.data.huella);
                         } else {
@@ -223,7 +224,8 @@ router.get('/huellaCarbonoCostoAvion/:idUsuario/:idProducto', async (req, res) =
                                         distanciaMAX: distancia + 10,
                                         pesoMIN: peso - 2000,
                                         pesoMAX: peso + 2000,
-                                        huella: carbonFootprint
+                                        huella: carbonFootprint,
+                                        metodoTransporte: "avion"
                                     })
                                 })
                                 .catch((error) => {
@@ -253,7 +255,7 @@ router.get('/huellaCarbonoCostoBarco/:idUsuario/:idProducto', async (req, res) =
                 const distancia = respuesta.data.distance;
                 axios.get('http://localhost:5001/productos/' + req.params.idProducto).then((respuesta) => {
                     const peso = respuesta.data.peso;
-                    axios.get('http://localhost:5005/huellaC/huellaCarbono/' + distancia + '/' + peso).then((respuesta) => {
+                    axios.get('http://localhost:5005/huellaC/huellaCarbono/' + distancia + '/' + peso + '/barco').then((respuesta) => {
                         if (respuesta.data.length !== 0 && respuesta.data.message !== "No se ha encontrado ningún producto con esos datos.") {
                             res.json(respuesta.data.huella);
                         } else {
@@ -305,7 +307,8 @@ router.get('/huellaCarbonoCostoBarco/:idUsuario/:idProducto', async (req, res) =
                                         distanciaMAX: distancia + 10,
                                         pesoMIN: peso - 2000,
                                         pesoMAX: peso + 2000,
-                                        huella: carbonFootprint
+                                        huella: carbonFootprint,
+                                        metodoTransporte: "barco"
                                     })
                                 })
                                 .catch((error) => {
@@ -335,7 +338,7 @@ router.get('/huellaCarbonoCostoTren/:idUsuario/:idProducto', async (req, res) =>
                 const distancia = respuesta.data.distance;
                 axios.get('http://localhost:5001/productos/' + req.params.idProducto).then((respuesta) => {
                     const peso = respuesta.data.peso;
-                    axios.get('http://localhost:5005/huellaC/huellaCarbono/' + distancia + '/' + peso).then((respuesta) => {
+                    axios.get('http://localhost:5005/huellaC/huellaCarbono/' + distancia + '/' + peso + '/tren').then((respuesta) => {
                         if (respuesta.data.length !== 0 && respuesta.data.message !== "No se ha encontrado ningún producto con esos datos.") {
                             res.json(respuesta.data.huella);
                         } else {
@@ -387,7 +390,8 @@ router.get('/huellaCarbonoCostoTren/:idUsuario/:idProducto', async (req, res) =>
                                         distanciaMAX: distancia + 10,
                                         pesoMIN: peso - 2000,
                                         pesoMAX: peso + 2000,
-                                        huella: carbonFootprint
+                                        huella: carbonFootprint,
+                                        metodoTransporte: "tren"
                                     })
                                 })
                                 .catch((error) => {
