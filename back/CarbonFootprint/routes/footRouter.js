@@ -49,7 +49,10 @@ router.put("/:id", (req, res) => {
 //LLAMADAS INTERNAS-------------------------------------------------------------------------------
 
 
-//Buscar si con los KG y con la DISTANCIA hay algun atributo en la bdd que coincida, es decir, distacia>=distanciaMIN && distancia<=distanciaMAX && peso>=pesoMIN && peso<=pesoMAX
+// Buscar si
+//  con los KG, peso  
+//  con la DISTANCIA
+//   hay algun atributo en la bdd que coincida, es decir, distacia>=distanciaMIN && distancia<=distanciaMAX && peso>=pesoMIN && peso<=pesoMAX
 router.get('/huellaCarbono/:distancia/:peso', async (req, res) => {
     const { distancia } = req.params;
     const { peso } = req.params;
@@ -68,7 +71,11 @@ router.get('/huellaCarbono/:distancia/:peso', async (req, res) => {
 });
 
 
-//Calcular huella carbono en G, comprobado con Postman
+// Calcular huella carbono en G para repartos de productos en camion
+//     params:
+//     idUsuario es comprador,
+//     idProducto es el producto que desea comprar
+// comprobado con Postman
 router.get('/huellaCarbonoCosto/:idUsuario/:idProducto', async (req, res) => {
     axios.get('http://localhost:5004/mapa/coordenadasUsuario/' + req.params.idUsuario).then((respuesta) => {
         const latitudUsuario = respuesta.data.latitud;
@@ -91,63 +98,343 @@ router.get('/huellaCarbonoCosto/:idUsuario/:idProducto', async (req, res) => {
                                 url: "https://www.carboninterface.com/api/v1/estimates",
                                 method: "POST",
                                 headers: {
-                                  Authorization: `Bearer ${API_KEY}`,
-                                  ContentType: "application/json",
+                                    Authorization: `Bearer ${API_KEY}`,
+                                    ContentType: "application/json",
                                 },
                                 data: {
-                                  type: "shipping",
-                                  weight_value: peso,
-                                  weight_unit: "g",
-                                  distance_value: distancia/1000,
-                                  distance_unit: "km",
-                                  transport_method: "truck",
+                                    type: "shipping",
+                                    weight_value: peso,
+                                    weight_unit: "g",
+                                    distance_value: distancia / 1000,
+                                    distance_unit: "km",
+                                    transport_method: "truck",
                                 },
-                              };
-                             axios(options)
-                             .then((response) => {
-                                // {
-                                //     data: {
-                                //       id: 'ad793815-eb17-43b8-bb68-73b8f4a0323b',
-                                //       type: 'estimate',
-                                //       attributes: {
-                                //         distance_value: 157,
-                                //         weight_unit: 'g',
-                                //         transport_method: 'truck',
-                                //         weight_value: 100,
-                                //         distance_unit: 'km',
-                                //         estimated_at: '2023-11-11T14:21:19.992Z',
-                                //         carbon_g: 1,
-                                //         carbon_lb: 0,
-                                //         carbon_kg: 0,
-                                //         carbon_mt: 0
-                                //       }
-                                //     }
-                                //   }
-                                //Accedemos a los g de carbono
-                               const carbonFootprint = response.data.data.attributes.carbon_g;
-                          
-                               res.json({ carbonFootprint });
-                               axios.post('http://localhost:5005/huellaC/', {
-                                distancia: distancia,
-                                peso: peso,
-                                distanciaMIN: distancia - 10,
-                                distanciaMAX: distancia + 10,
-                                pesoMIN: peso - 2000,
-                                pesoMAX: peso + 2000,
-                                huella: carbonFootprint
-                            })
-                             })
-                             .catch((error) => {
-                               console.error(error);
-                             });
-                            
-                    }})
+                            };
+                            axios(options)
+                                .then((response) => {
+                                    // {
+                                    //     data: {
+                                    //       id: 'ad793815-eb17-43b8-bb68-73b8f4a0323b',
+                                    //       type: 'estimate',
+                                    //       attributes: {
+                                    //         distance_value: 157,
+                                    //         weight_unit: 'g',
+                                    //         transport_method: 'truck',
+                                    //         weight_value: 100,
+                                    //         distance_unit: 'km',
+                                    //         estimated_at: '2023-11-11T14:21:19.992Z',
+                                    //         carbon_g: 1,
+                                    //         carbon_lb: 0,
+                                    //         carbon_kg: 0,
+                                    //         carbon_mt: 0
+                                    //       }
+                                    //     }
+                                    //   }
+                                    //Accedemos a los g de carbono
+                                    const carbonFootprint = response.data.data.attributes.carbon_g;
+
+                                    res.json({ carbonFootprint });
+                                    axios.post('http://localhost:5005/huellaC/', {
+                                        distancia: distancia,
+                                        peso: peso,
+                                        distanciaMIN: distancia - 10,
+                                        distanciaMAX: distancia + 10,
+                                        pesoMIN: peso - 2000,
+                                        pesoMAX: peso + 2000,
+                                        huella: carbonFootprint
+                                    })
+                                })
+                                .catch((error) => {
+                                    res.json({ message: error });
+                                });
+
+                        }
+                    })
+                }).catch((error) => {
+                    res.json({ message: error });
                 })
             })
         })
     })
 });
 
+router.get('/huellaCarbonoCostoAvion/:idUsuario/:idProducto', async (req, res) => {
+    axios.get('http://localhost:5004/mapa/coordenadasUsuario/' + req.params.idUsuario).then((respuesta) => {
+        const latitudUsuario = respuesta.data.latitud;
+        const longitudUsuario = respuesta.data.longitud;
+        console.log(respuesta.data);
+        axios.get('http://localhost:5004/mapa/coordenadasProducto/' + req.params.idProducto).then((respuesta) => {
+            const latitudProducto = respuesta.data.latitud;
+            const longitudProducto = respuesta.data.longitud;
+            axios.get('http://localhost:5004/mapa/distancia/' + latitudUsuario + '/' + longitudUsuario + '/' + latitudProducto + '/' + longitudProducto).then((respuesta) => {
+
+                const distancia = respuesta.data.distance;
+                axios.get('http://localhost:5001/productos/' + req.params.idProducto).then((respuesta) => {
+                    const peso = respuesta.data.peso;
+                    axios.get('http://localhost:5005/huellaC/huellaCarbono/' + distancia + '/' + peso).then((respuesta) => {
+                        if (respuesta.data.length !== 0 && respuesta.data.message !== "No se ha encontrado ningún producto con esos datos.") {
+                            res.json(respuesta.data.huella);
+                        } else {
+                            //Agregar a la bdd
+                            const options = {
+                                url: "https://www.carboninterface.com/api/v1/estimates",
+                                method: "POST",
+                                headers: {
+                                    Authorization: `Bearer ${API_KEY}`,
+                                    ContentType: "application/json",
+                                },
+                                data: {
+                                    type: "shipping",
+                                    weight_value: peso,
+                                    weight_unit: "g",
+                                    distance_value: distancia / 1000,
+                                    distance_unit: "km",
+                                    transport_method: "plane",
+                                },
+                            };
+                            axios(options)
+                                .then((response) => {
+                                    // {
+                                    //     data: {
+                                    //       id: 'ad793815-eb17-43b8-bb68-73b8f4a0323b',
+                                    //       type: 'estimate',
+                                    //       attributes: {
+                                    //         distance_value: 157,
+                                    //         weight_unit: 'g',
+                                    //         transport_method: 'truck',
+                                    //         weight_value: 100,
+                                    //         distance_unit: 'km',
+                                    //         estimated_at: '2023-11-11T14:21:19.992Z',
+                                    //         carbon_g: 1,
+                                    //         carbon_lb: 0,
+                                    //         carbon_kg: 0,
+                                    //         carbon_mt: 0
+                                    //       }
+                                    //     }
+                                    //   }
+                                    //Accedemos a los g de carbono
+                                    const carbonFootprint = response.data.data.attributes.carbon_g;
+
+                                    res.json({ carbonFootprint });
+                                    axios.post('http://localhost:5005/huellaC/', {
+                                        distancia: distancia,
+                                        peso: peso,
+                                        distanciaMIN: distancia - 10,
+                                        distanciaMAX: distancia + 10,
+                                        pesoMIN: peso - 2000,
+                                        pesoMAX: peso + 2000,
+                                        huella: carbonFootprint
+                                    })
+                                })
+                                .catch((error) => {
+                                    res.json({ message: error });
+                                });
+
+                        }
+                    })
+                }).catch((error) => {
+                    res.json({ message: error });
+                })
+            })
+        })
+    })
+});
+
+router.get('/huellaCarbonoCostoBarco/:idUsuario/:idProducto', async (req, res) => {
+    axios.get('http://localhost:5004/mapa/coordenadasUsuario/' + req.params.idUsuario).then((respuesta) => {
+        const latitudUsuario = respuesta.data.latitud;
+        const longitudUsuario = respuesta.data.longitud;
+        console.log(respuesta.data);
+        axios.get('http://localhost:5004/mapa/coordenadasProducto/' + req.params.idProducto).then((respuesta) => {
+            const latitudProducto = respuesta.data.latitud;
+            const longitudProducto = respuesta.data.longitud;
+            axios.get('http://localhost:5004/mapa/distancia/' + latitudUsuario + '/' + longitudUsuario + '/' + latitudProducto + '/' + longitudProducto).then((respuesta) => {
+
+                const distancia = respuesta.data.distance;
+                axios.get('http://localhost:5001/productos/' + req.params.idProducto).then((respuesta) => {
+                    const peso = respuesta.data.peso;
+                    axios.get('http://localhost:5005/huellaC/huellaCarbono/' + distancia + '/' + peso).then((respuesta) => {
+                        if (respuesta.data.length !== 0 && respuesta.data.message !== "No se ha encontrado ningún producto con esos datos.") {
+                            res.json(respuesta.data.huella);
+                        } else {
+                            //Agregar a la bdd
+                            const options = {
+                                url: "https://www.carboninterface.com/api/v1/estimates",
+                                method: "POST",
+                                headers: {
+                                    Authorization: `Bearer ${API_KEY}`,
+                                    ContentType: "application/json",
+                                },
+                                data: {
+                                    type: "shipping",
+                                    weight_value: peso,
+                                    weight_unit: "g",
+                                    distance_value: distancia / 1000,
+                                    distance_unit: "km",
+                                    transport_method: "ship",
+                                },
+                            };
+                            axios(options)
+                                .then((response) => {
+                                    // {
+                                    //     data: {
+                                    //       id: 'ad793815-eb17-43b8-bb68-73b8f4a0323b',
+                                    //       type: 'estimate',
+                                    //       attributes: {
+                                    //         distance_value: 157,
+                                    //         weight_unit: 'g',
+                                    //         transport_method: 'truck',
+                                    //         weight_value: 100,
+                                    //         distance_unit: 'km',
+                                    //         estimated_at: '2023-11-11T14:21:19.992Z',
+                                    //         carbon_g: 1,
+                                    //         carbon_lb: 0,
+                                    //         carbon_kg: 0,
+                                    //         carbon_mt: 0
+                                    //       }
+                                    //     }
+                                    //   }
+                                    //Accedemos a los g de carbono
+                                    const carbonFootprint = response.data.data.attributes.carbon_g;
+
+                                    res.json({ carbonFootprint });
+                                    axios.post('http://localhost:5005/huellaC/', {
+                                        distancia: distancia,
+                                        peso: peso,
+                                        distanciaMIN: distancia - 10,
+                                        distanciaMAX: distancia + 10,
+                                        pesoMIN: peso - 2000,
+                                        pesoMAX: peso + 2000,
+                                        huella: carbonFootprint
+                                    })
+                                })
+                                .catch((error) => {
+                                    res.json({ message: error });
+                                });
+
+                        }
+                    })
+                }).catch((error) => {
+                    res.json({ message: error });
+                })
+            })
+        })
+    })
+});
+
+router.get('/huellaCarbonoCostoTren/:idUsuario/:idProducto', async (req, res) => {
+    axios.get('http://localhost:5004/mapa/coordenadasUsuario/' + req.params.idUsuario).then((respuesta) => {
+        const latitudUsuario = respuesta.data.latitud;
+        const longitudUsuario = respuesta.data.longitud;
+        console.log(respuesta.data);
+        axios.get('http://localhost:5004/mapa/coordenadasProducto/' + req.params.idProducto).then((respuesta) => {
+            const latitudProducto = respuesta.data.latitud;
+            const longitudProducto = respuesta.data.longitud;
+            axios.get('http://localhost:5004/mapa/distancia/' + latitudUsuario + '/' + longitudUsuario + '/' + latitudProducto + '/' + longitudProducto).then((respuesta) => {
+
+                const distancia = respuesta.data.distance;
+                axios.get('http://localhost:5001/productos/' + req.params.idProducto).then((respuesta) => {
+                    const peso = respuesta.data.peso;
+                    axios.get('http://localhost:5005/huellaC/huellaCarbono/' + distancia + '/' + peso).then((respuesta) => {
+                        if (respuesta.data.length !== 0 && respuesta.data.message !== "No se ha encontrado ningún producto con esos datos.") {
+                            res.json(respuesta.data.huella);
+                        } else {
+                            //Agregar a la bdd
+                            const options = {
+                                url: "https://www.carboninterface.com/api/v1/estimates",
+                                method: "POST",
+                                headers: {
+                                    Authorization: `Bearer ${API_KEY}`,
+                                    ContentType: "application/json",
+                                },
+                                data: {
+                                    type: "shipping",
+                                    weight_value: peso,
+                                    weight_unit: "g",
+                                    distance_value: distancia / 1000,
+                                    distance_unit: "km",
+                                    transport_method: "train",
+                                },
+                            };
+                            axios(options)
+                                .then((response) => {
+                                    // {
+                                    //     data: {
+                                    //       id: 'ad793815-eb17-43b8-bb68-73b8f4a0323b',
+                                    //       type: 'estimate',
+                                    //       attributes: {
+                                    //         distance_value: 157,
+                                    //         weight_unit: 'g',
+                                    //         transport_method: 'truck',
+                                    //         weight_value: 100,
+                                    //         distance_unit: 'km',
+                                    //         estimated_at: '2023-11-11T14:21:19.992Z',
+                                    //         carbon_g: 1,
+                                    //         carbon_lb: 0,
+                                    //         carbon_kg: 0,
+                                    //         carbon_mt: 0
+                                    //       }
+                                    //     }
+                                    //   }
+                                    //Accedemos a los g de carbono
+                                    const carbonFootprint = response.data.data.attributes.carbon_g;
+
+                                    res.json({ carbonFootprint });
+                                    axios.post('http://localhost:5005/huellaC/', {
+                                        distancia: distancia,
+                                        peso: peso,
+                                        distanciaMIN: distancia - 10,
+                                        distanciaMAX: distancia + 10,
+                                        pesoMIN: peso - 2000,
+                                        pesoMAX: peso + 2000,
+                                        huella: carbonFootprint
+                                    })
+                                })
+                                .catch((error) => {
+                                    res.json({ message: error });
+                                });
+
+                        }
+                    })
+                }).catch((error) => {
+                    res.json({ message: error });
+                })
+            })
+        })
+    })
+});
+
+router.get('/calcularHuella/:idUsuario/:idProducto/:transporte', async (req, res) => {
+    const {idUsuario, idProducto, transporte} = req.params;
+    if(transporte === "camion"){
+        axios.get('http/localhost:5005/huellaC/huellaCarbonoCosto/' + idUsuario + '/' + idProducto).then((respuesta) => {
+            res.json(respuesta.data);
+        }).catch((error) => {
+            res.json({ message: error });
+        })
+    }else if(transporte === "avion"){
+        axios.get('http/localhost:5005/huellaC/huellaCarbonoCostoAvion/' + idUsuario + '/' + idProducto).then((respuesta) => {
+            res.json(respuesta.data);
+        }).catch((error) => {
+            res.json({ message: error });
+        })
+    }else if(transporte === "barco"){
+        axios.get('http/localhost:5005/huellaC/huellaCarbonoCostoBarco/' + idUsuario + '/' + idProducto).then((respuesta) => {
+            res.json(respuesta.data);
+        }).catch((error) => {
+            res.json({ message: error });
+        })
+    }else if(transporte === "tren"){
+        axios.get('http/localhost:5005/huellaC/huellaCarbonoCosto/Tren' + idUsuario + '/' + idProducto).then((respuesta) => {
+            res.json(respuesta.data);
+        }).catch((error) => {
+            res.json({ message: error });
+        })
+    }else{
+        res.json({message: "El transporte no es válido"})
+    }
+
+})
 //Calcular precio de huella carbono en euros
 router.get("/getPrecio/:cantidadEnGramos", (req, res) => {
     const { cantidadEnGramosDeCarbono } = req.params;
