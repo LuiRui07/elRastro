@@ -29,6 +29,10 @@ const huellaModel = new mongoose.Schema({
     huella: {
         type: Number,
         required: true
-    }
+    },
+    metodoTransporte: {
+        type: String,
+        required: true
+    },
 });
 module.exports = mongoose.model("carbonos", huellaModel);
