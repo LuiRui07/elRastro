@@ -171,4 +171,6 @@ router.get('/propietario/:productoId', (req, res) => {
     
 })  
 
+
+
 module.exports = router

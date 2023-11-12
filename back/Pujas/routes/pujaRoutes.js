@@ -130,8 +130,8 @@ router.get("/puja-usuario/:nombre", async (req, res) => {
 router.get("/puja-producto/:nombre", async (req, res) => {
   const { nombre } = req.params;
   let devolver = [];
-  await axios.get(`http://localhost:5001/productos/productos-por-nombre/${nombre}`).then(async (response) => {
-
+  await axios.get(`http://localhost:5001/productos/productos-por-nombre/${nombre}`)
+  .then(async (response) => {
     for (let i = 0; i < response.data.length; i++) {
       const { _id } = response.data[i];
       await pujasSchema
@@ -146,15 +146,11 @@ router.get("/puja-producto/:nombre", async (req, res) => {
             devolver.push(agregar);
           }
         })
-
     }
-
-
   }).catch((error) => res.json({ message: error }));
 
-
   if (devolver.length === 0) {
-    return res.json({ message: "No hay pujas para productos ccon este nombre." });
+    return res.json({ message: "No hay pujas para productos con este nombre." });
   } else {
     res.json(devolver);
   }
