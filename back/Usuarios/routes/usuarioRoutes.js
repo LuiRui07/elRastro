@@ -93,7 +93,10 @@ router.get("/compradores/:productoId", (req, res) => {
     for(let i = 0; i < data.length; i++){ 
       if (data[i].producto == productoId){
         pujador = data[i].comprador;
-        pujadores.push(pujador);
+        usuariosSchema.findById(pujador)
+        .then((data) => {
+          pujadores.push(data);
+        })
       }
     }
     res.json(pujadores);
@@ -161,8 +164,10 @@ router.get('/propietario/:productoId', (req, res) => {
       } else if (data.length > 1) {
         return res.json({ message: 'Hay más de un producto con ese id.' })
       }
-      console.log(data)
-      res.json(data.vendedor); 
+      usuariosSchema.findById(data.vendedor)
+        .then((data) => {
+          res.json(data);
+        })
     })
     
     
