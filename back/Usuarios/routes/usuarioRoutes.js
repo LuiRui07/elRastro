@@ -97,28 +97,10 @@ router.get("/compradores/:productoId", (req, res) => {
       }
     }
     res.json(pujadores);
-  })
+  })  
 
 });
 
-
-router.get('/propietarioPorID/:productoId', (req, res) => {
-  const { productoId } = req.params;
-  axios.get('http://localhost:5001/productos/' + productoId)
-    .then((response) => {
-      const { data } = response;
-      const { message } = data;
-      if (message) {
-        return res.json({ message: message })
-      }
-      if (data.length === 0) {
-        return res.json({ message: 'No se ha encontrado ningún producto con ese id.' })
-      } else if (data.length > 1) {
-        return res.json({ message: 'Hay más de un producto con ese id.' })
-      }
-      res.json(data[0].vendedor);
-    })
-})
 //get usuarios a x distancia de ti, ESPERAR A QUE SE HAGA EL DE DISTANCIA CON EL SERVICIO EXTERNO, VAMOS A REVISAR
 router.get("/distancia/:usuarioID/:distancia", async (req, res) => {
   const { distancia } = req.params;
@@ -178,12 +160,15 @@ router.get('/propietario/:productoId', (req, res) => {
       } else if (data.length > 1) {
         return res.json({ message: 'Hay más de un producto con ese id.' })
       }
-
-      res.json(data[0].pujaGanadora.comprador);
-    })
-})
-
-//get usuarios a x distancia de ti, ESPERAR A QUE SE HAGA EL DE DISTANCIA CON EL SERVICIO EXTERNO
-
+    axios.get('http://localhost:5003/pujas/' + data.pujaGanadora)
+    .then((response) => {
+      const { data } = response;
+      const { message } = data;
+      
+      res.json(data.comprador);
+    })})
+    
+    
+})  
 
 module.exports = router
