@@ -13,7 +13,7 @@ const pujaRoutes = require("./routes/pujaRoutes.js")
 app.use('/pujas', pujaRoutes);
 mongoose.connect(
   process.env.ATLAS_URI).then(()=>
-    console.log("Hemos conectado con mongoDB, BOMBA")
+    console.log("Hemos conectado con mongoDB")
   ).catch((error)=>
     console.error(error)
   )

@@ -12,7 +12,7 @@ const usuarioRouter = require("./routes/usuarioRoutes.js")
 app.use('/usuarios', usuarioRouter);
 mongoose.connect(
   process.env.ATLAS_URI).then(()=>
-    console.log("Hemos conectado con mongoDB, BOMBA")
+    console.log("Hemos conectado con mongoDB")
   ).catch((error)=>
     console.error(error)
   )

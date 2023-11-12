@@ -12,7 +12,7 @@ const productoRoutes = require("./routes/productoRoutes.js")
 app.use('/productos', productoRoutes);
 mongoose.connect(
   process.env.ATLAS_URI).then(()=>
-    console.log("Hemos conectado con mongoDB, BOMBA")
+    console.log("Hemos conectado con mongoDB")
   ).catch((error)=>
     console.error(error)
   )

@@ -12,7 +12,7 @@ const huellaRouter = require("./routes/footRouter.js")
 app.use('/huellaC',huellaRouter );
 mongoose.connect(
   process.env.ATLAS_URI).then(()=>
-    console.log("Hemos conectado con mongoDB, BOMBA")
+    console.log("Hemos conectado con mongoDB")
   ).catch((error)=>
     console.error(error)
   )
