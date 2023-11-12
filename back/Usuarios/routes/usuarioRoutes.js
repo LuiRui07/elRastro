@@ -81,7 +81,7 @@ router.get("/direccion/:direccion", (req, res) => {
 
 //LLAMADAS EXTERNAS-------------------------------------------------------------------------------
 
-//get subastadores de un articulo con indentificador x, REVISAR
+//get subastadores de un articulo con indentificador x, comprobado con Postman
 router.get("/compradores/:productoId", (req, res) => {
   const { productoId } = req.params;
   axios.get('http://localhost:5003/pujas')
@@ -101,7 +101,7 @@ router.get("/compradores/:productoId", (req, res) => {
 
 });
 
-//get usuarios a x distancia de ti, ESPERAR A QUE SE HAGA EL DE DISTANCIA CON EL SERVICIO EXTERNO, VAMOS A REVISAR
+//get usuarios a x distancia de ti, ESPERAR A QUE SE HAGA EL DE DISTANCIA CON EL SERVICIO EXTERNO, comprobado con Postman
 router.get("/distancia/:usuarioID/:distancia", async (req, res) => {
   const { distancia } = req.params;
   const devolver2 = [];
