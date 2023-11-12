@@ -15,4 +15,4 @@ app.use('/mapa', productoRoutes);
 app.get("/",(req,res) =>{
   res.send("Esta es la API de OpenStreetMap")}
 )
-app.listen(port, console.log("Servidor de las calls de Mapa escuchando en el puerto ", port))
+app.listen(port, console.log("Servidor de OpenStreetMap escuchando en el puerto ", port))
