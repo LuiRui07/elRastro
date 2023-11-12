@@ -8,11 +8,12 @@ router.get('/direccionCoordenadas/:direccion', async (req, res) => {
     const { direccion } = req.params;
     try {
         const respuesta = await axios.get(`https://nominatim.openstreetmap.org/search?q=${direccion}&format=json&limit=1`)
+
         const lat = respuesta.data[0].lat
         const lon = respuesta.data[0].lon
         res.json({ lat, lon })
     } catch (error) {
-        console.log(error)
+        res.json({ message: error });
     }
 
 });
@@ -25,7 +26,7 @@ router.get('/coordenadasDireccion/:lat/:lon', async (req, res) => {
         const { road, house_number, postcode, city, state, country } = respuesta.data.address
         res.json({ road, house_number, postcode, city, state, country })
     } catch (error) {
-        console.log(error)
+        res.json({ message: error });
     }
 
 });
@@ -49,9 +50,9 @@ router.get("/coordenadasUsuario/:id", async (req, res) => {
                     const longitud = respuesta.data.lon;
                     res.json({ latitud, longitud })
                 })
-                .catch((error) => console.log(error))
+                .catch((error) => res.json({ message: error }));
         })
-        .catch((error) => console.log(error))
+        .catch((error) => res.json({ message: error }));
 
 });
 
@@ -64,7 +65,7 @@ router.get('/distancia/:lat1/:lon1/:lat2/:lon2', async (req, res) => {
         const { distance } = respuesta.data.routes[0]
         res.json({ distance })
     } catch (error) {
-        console.log(error)
+        res.json({ message: error });
     }
 
 });
@@ -87,8 +88,7 @@ router.get("/direccionUsuario/:id", async (req, res) => {
 
         res.json({ direccion });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: "Error al obtener la dirección del usuario." });
+        res.json({ message: error });
     }
 });
 
@@ -97,18 +97,16 @@ router.get("/direccionUsuario/:id", async (req, res) => {
 router.get('/coordenadasProducto/:id', async (req, res) => {
     try {
          const responseUsuario = await axios.get(`http://localhost:5002/usuarios/propietario/${req.params.id}`);
-         const vendedorId = responseUsuario.data.vendedor;
- 
+         const vendedorId = responseUsuario.data;
          const responseDireccionUsuario = await axios.get(`http://localhost:5004/mapa/direccionUsuario/${vendedorId}`);
          const { direccion } = responseDireccionUsuario.data;
- 
+        console.log(direccion);
          const responseCoordenadas = await axios.get(`http://localhost:5004/mapa/direccionCoordenadas/${direccion}`);
          const { lat, lon } = responseCoordenadas.data;
  
          res.json({ latitud: lat, longitud: lon });
      } catch (error) {
-         console.error(error);
-         res.status(500).json({ error: "Error al obtener las coordenadas del producto." });
+        res.json({ message: error });
      }
  });
 module.exports = router;
