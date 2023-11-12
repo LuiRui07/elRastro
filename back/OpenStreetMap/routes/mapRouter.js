@@ -100,7 +100,6 @@ router.get('/coordenadasProducto/:id', async (req, res) => {
          const vendedorId = responseUsuario.data._id;
          const responseDireccionUsuario = await axios.get(`http://localhost:5004/mapa/direccionUsuario/${vendedorId}`);
          const { direccion } = responseDireccionUsuario.data;
-        console.log(direccion);
          const responseCoordenadas = await axios.get(`http://localhost:5004/mapa/direccionCoordenadas/${direccion}`);
          const { lat, lon } = responseCoordenadas.data;
  

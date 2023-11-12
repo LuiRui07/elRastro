@@ -134,9 +134,9 @@ router.get("/distancia/:usuarioID/:distancia", async (req, res) => {
                         devolver2.push(todosLosUsuarios[i]);
                       }
                     })
-                    .catch((error) => console.log(error))
+                    .catch((error) => res.json({ message: error })
                 }
-                ).catch((error) => console.log(error))
+                ).catch((error) => res.json({ message: error })
             }
           res.json(devolver2);
           })
@@ -153,7 +153,6 @@ router.get('/propietario/:productoId', (req, res) => {
   const { productoId } = req.params;
   axios.get('http://localhost:5001/productos/' + productoId)
     .then((response) => {
-      console.log(response.data)
       const { data } = response;
       const { message } = data;
       if (message) {
