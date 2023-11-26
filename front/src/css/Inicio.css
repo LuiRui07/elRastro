@@ -2,12 +2,22 @@
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
-    background-color: #282c34;
+    background-color: grey;
+  }
+
+  ul{
+    list-style-type: none;
+    margin-top: 5%;
   }
   
   .navbar {
     background-color: #333; /* Color de fondo de la barra de navegación */
-    margin-top:auto; /* Asegura que la barra de navegación esté pegada al límite superior */
+    margin-top:auto;
+    margin-bottom: 10%;
+  } 
+
+  img{
+    margin-left: 3%;
   }
   
   .navbar a {
@@ -16,17 +26,13 @@ body {
     color: #f2f2f2; /* Color del texto de los enlaces */
     text-align: center;
     padding: 14px 16px;
-    text-decoration: none;
+    padding-left: 5%;
+    padding-right: 5%;
+    text-decoration:dotted;
   }
   
   .navbar a:hover {
     background-color: #ddd; /* Cambia el color de fondo al pasar el mouse sobre un enlace */
     color: black; /* Cambia el color del texto al pasar el mouse sobre un enlace */
   }
-  
-  
-  .App-header {
-    background-color: #282c34;
-    padding: 20px;
-    color: white;
-  }
+
