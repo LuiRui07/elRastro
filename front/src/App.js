@@ -1,14 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import Inicio from './pages/Inicio';
+
+import './css/App.css';
 
 function App() {
-  return (
+return (
     <div className="App">
       <header className="App-header">
-        <h1>elRastro</h1>
+        <Inicio></Inicio>
       </header>
     </div>
-  );
+);
+
 }
 
 export default App;
