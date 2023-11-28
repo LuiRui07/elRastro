@@ -2,7 +2,7 @@
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
-    background-color: grey;
+    background-color: rgb(209, 209, 209);
   }
 
   ul{
@@ -11,28 +11,32 @@ body {
   }
   
   .navbar {
-    background-color: #333; /* Color de fondo de la barra de navegación */
+    background-color: #343a40; /* Color de fondo de la barra de navegación */
     margin-top:auto;
-    margin-bottom: 10%;
+    margin-bottom: 1px;
   } 
 
   img{
     margin-left: 3%;
   }
+
+  .elRastro{
+    padding-top: 5%;
+    padding-bottom: 3%;
+  }
   
   .navbar a {
     float: left;
-    display: block;
     color: #f2f2f2; /* Color del texto de los enlaces */
     text-align: center;
     padding: 14px 16px;
     padding-left: 5%;
     padding-right: 5%;
-    text-decoration:dotted;
   }
   
   .navbar a:hover {
     background-color: #ddd; /* Cambia el color de fondo al pasar el mouse sobre un enlace */
     color: black; /* Cambia el color del texto al pasar el mouse sobre un enlace */
+    border-radius: 2%;
   }
 
