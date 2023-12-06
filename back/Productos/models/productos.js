@@ -1,6 +1,11 @@
 const mongoose = require("mongoose")
 
 const productosSchema = new mongoose.Schema({
+    imagenes: [
+        {
+          type: String,
+        },
+      ],
     vendedor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'usuarios',

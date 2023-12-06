@@ -49,11 +49,12 @@ function Inicio() {
         <div className="d-flex flex-row overflow-x-auto overflow-y-hidden ">
           {
             articulos.map((articulo, index) => (
-              <a className="col-md-5 text-decoration-none text-colour-black cartaProductos" href={`/paginaConcreta/${articulo._id}`} >
-                <div className=" " key={index}>
+              <a className="col-md-5 text-decoration-none text-colour-black cartaProductos" href={`/paginaConcreta/${articulo._id}`} key={index}>
+                <div className=" " >
                   <div className="row g-0">
                     <div className="col-md-10 mt-4 item-center">
-                      <img src={Logo} className="img-fluid rounded-start float-start" alt="..." />
+                      {/* Muestra la primera imagen asociada al artículo */}
+                      {articulo.imagenes.length > 0 && <img src={articulo.imagenes[0]} className="img-fluid rounded-start float-start" alt="..." />}
                     </div>
                     <div className="col-md-6 d-flex flex-column text-start distancia">
                       <h5 className="tipoLetraPrecios fw-bolder text-body">{articulo.precioInicial} euros</h5>
@@ -69,6 +70,5 @@ function Inicio() {
     </div>
   );
 }
-
 
 export default Inicio;
