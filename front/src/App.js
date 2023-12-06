@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Inicio from './pages/Inicio';
-
-import './css/App.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import './css/Inicio.css';
 
 function App() {
 return (

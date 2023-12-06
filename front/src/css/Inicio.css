@@ -1,42 +1,136 @@
 
+
 body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: rgb(209, 209, 209);
-  }
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: rgb(209, 209, 209);
+}
 
-  ul{
-    list-style-type: none;
-    margin-top: 5%;
-  }
-  
-  .navbar {
-    background-color: #343a40; /* Color de fondo de la barra de navegación */
-    margin-top:auto;
-    margin-bottom: 1px;
-  } 
+ul {
+  list-style-type: none;
+  margin-top: 5%;
+}
 
-  img{
-    margin-left: 3%;
-  }
+.navbar {
+  background-color: #343a40;
+  /* Color de fondo de la barra de navegación */
 
-  .elRastro{
-    padding-top: 5%;
-    padding-bottom: 3%;
-  }
-  
-  .navbar a {
-    float: left;
-    color: #f2f2f2; /* Color del texto de los enlaces */
-    text-align: center;
-    padding: 14px 16px;
-    padding-left: 5%;
-    padding-right: 5%;
-  }
-  
-  .navbar a:hover {
-    background-color: #ddd; /* Cambia el color de fondo al pasar el mouse sobre un enlace */
-    color: black; /* Cambia el color del texto al pasar el mouse sobre un enlace */
-    border-radius: 2%;
-  }
+  margin-bottom: 1px;
+}
 
+img {
+  margin-left: 3%;
+}
+
+
+
+.navbar a {
+  color: #f2f2f2;
+  /* Color del texto de los enlaces */
+  text-decoration: none;
+
+
+
+}
+
+.navbar a:hover {
+  font-weight: bold;
+  border-bottom: 2px solid white;
+  border-radius: 2%;
+}
+
+.textoBlanco {
+  color: white;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.tituloElRastro{
+      font-family: 'Pacifico', sans-serif;
+      font-weight: 700;
+      font-size: 4rem;
+      color: #212529;
+      margin-bottom: 1rem;
+      text-align: center;
+}
+
+.tipoLetraEphesis{
+      font-family: 'Ephesis', cursive;
+      font-weight: 700;
+      font-size: 3rem;
+      color: #212529;
+      margin-bottom: 1rem;
+
+}
+
+.tipoLetraMonse{
+     font-family: 'Montserrat Alternates', sans-serif;
+      color: #212529;
+
+}
+
+.tipoLetraPrecios{
+  font-family: 'Merienda', cursive;
+
+}
+
+.carrousel{
+  margin-top: 5%;
+  margin-bottom: 5%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.centrarh1{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+}
+
+.distancia{
+  margin-left: 2.5%;
+  margin-top: 2.5%;
+}
+
+.cartaProductos{
+  transform: scale(1);
+  transition: 0.5s  ease-in-out;
+  margin-left: 0;
+  margin-bottom: 0;
+
+}
+
+.cartaProductos:hover{
+  transform: scale(1.1);
+  margin-left: 1%;
+  margin-bottom: 1%;
+}
+
+.leaflet-container {
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
+}
+
+.centrarConMargenes{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tarjetaProducto{
+  border: 1px solid #eceff1;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+
+}

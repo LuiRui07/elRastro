@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import '../css/Inicio.css';
 import '../components/SearchBar';
 import SearchBar from '../components/SearchBar';
 import Logo from '../media/logo.jpeg';
 import UserImage from '../media/user.jpg';
-
+import Navbar from '../components/Navbar';
+import smoothState from "smoothstate";
 
 
 
 function Inicio() {
-  const [data, setData] = useState(null);
+  const [articulos, setData] = useState([]);
+
+
 
   useEffect(() => {
     axios.get('http://localhost:5001/productos')
       .then(response => {
-        if (response.data !== null){
-          setData(response.data); 
+        if (response.data !== null) {
+          setData(response.data);
           console.log('Datos del backend:', response.data);
         }
       })
@@ -25,41 +28,47 @@ function Inicio() {
       });
   }, []);
 
+  const handleSearch = (searchTerm) => {
+
+  };
+
   return (
-    <div style={{ textAlign: 'center'}}>
-      <nav className="navbar" style={{alignItems: 'center'  }}>
-        <img src={Logo} style={{ width: '80px', height: '80px', borderRadius: '90px', marginRight: 'auto' }} alt="Logo" />
-        <a style={{ color: 'white' }}>Buzon</a>
-        <a style={{ color: 'white' }}>Perfil</a>
-        <a href='/'>
-          <img src={UserImage} style={{ width: '50px', height: '50px', borderRadius: '90px', marginRight: "1%" }} alt="User" />
-        </a>
-      </nav>
-      <nav className='navbar'>
-        <a style={{color: "white"}}>Categorias </a>
-        <a style={{color: "white"}}>Coches </a>
-        <a style={{color: "white"}}>Motos </a>
-        <a style={{color: "white"}}>Moda </a>
-        <a style={{color: "white"}}>Tecnología </a>
-      </nav>
- 
+    <div style={{ textAlign: 'center' }} className='d-flex flex-column align-items-centerr'>
+      <Navbar />
+
       <header className="elRastro">
-        <h1>elRastro</h1>
-        <p>
-          Bienvenido a elRastro
+        <h1 className='mt-4 tituloElRastro'>elRastro</h1>
+        <p className=' tipoLetraEphesis'>
+          Bienvenido a elRastro, tu sitio de compra y venta de productos de segunda mano favorito.
         </p>
       </header>
-        <SearchBar/>
-        <ul>
-           {data && data.map((producto, index) => (
-            <li key= {index}>{producto.nombre}</li>
-           ))}
+      <SearchBar onSearch={handleSearch} />
 
-        </ul>
-     
-
+      <h1 className='tipoLetraEphesis text-start w-75  centrarh1'>Lo mejor al mejor precio</h1>
+      <div className="mt-4 w-75 carrousel ">
+        <div className="d-flex flex-row overflow-x-auto overflow-y-hidden ">
+          {
+            articulos.map((articulo, index) => (
+              <a className="col-md-5 text-decoration-none text-colour-black cartaProductos" href={`/paginaConcreta/${articulo._id}`} >
+                <div className=" " key={index}>
+                  <div className="row g-0">
+                    <div className="col-md-10 mt-4 item-center">
+                      <img src={Logo} className="img-fluid rounded-start float-start" alt="..." />
+                    </div>
+                    <div className="col-md-6 d-flex flex-column text-start distancia">
+                      <h5 className="tipoLetraPrecios fw-bolder text-body">{articulo.precioInicial} euros</h5>
+                      <p className="fw-normal tipoLetraPrecios text-body-tertiary">{articulo.descripcion}</p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
     </div>
   );
 }
+
 
 export default Inicio;
