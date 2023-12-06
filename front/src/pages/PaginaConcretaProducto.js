@@ -5,8 +5,11 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import UserImage from '../media/user.jpg';
+import Estrellas from '../components/Estrellas';
+
 
 const PaginaConcretaProducto = () => {
+    const [categorias, setCategorias] = useState([]); // ['Electronica', 'Informatica', 'Hogar'
     const [articulo, setArticulo] = useState({});
     const [vendedor, setVendedor] = useState({});
     const [latitud, setLatitud] = useState(0);
@@ -18,6 +21,7 @@ const PaginaConcretaProducto = () => {
             .then(response => {
                 if (response.data !== null) {
                     setArticulo(response.data);
+                    setCategorias(response.data.categorias.split(','));
                     console.log('Datos del backend:', response.data);
                 }
             })
@@ -32,17 +36,16 @@ const PaginaConcretaProducto = () => {
                 if (response.data !== null) {
                     setLatitud(response.data.latitud);
                     setLongitud(response.data.longitud);
+                    console.log('Datos del backend:', response.data);
                 }
             })
             .catch(error => {
                 console.error('Error al obtener datos del backend:', error);
             });
-    }, []);
+    }, [articulo]);
 
     useEffect(() => {
-
-        console.log(articulo);
-        axios.get(`http://localhost:5002/usuarios/${articulo.idVendedor}`)
+        axios.get(`http://localhost:5002/usuarios/${articulo.vendedor}`)
             .then(response => {
                 if (response.data !== null) {
                     setVendedor(response.data);
@@ -51,40 +54,62 @@ const PaginaConcretaProducto = () => {
             })
             .catch(error => {
                 console.error('Error al obtener datos del backend:', error);
-            })} , []);
+            })
+    }, [articulo]);
 
-        return (
-            <div>
-                <Navbar />
-
-                <div className='w-50 bg-white centrarConMargenes mt-4 tarjetaProducto'>
-                    <div>
+    return (
+        <div>
+            <Navbar />
+            <div className='w-50 bg-white centrarConMargenes mt-4 tarjetaProducto'>
+                <div className='d-flex flex-row justify-content-between align-items-center'>
+                    <div className='d-flex flew-column align-items-center '>
+                        <img src={UserImage} className='fotoProfile' alt="User" />
                         <div>
-                            <img src={UserImage} style={{ width: '50px', height: '50px', borderRadius: '90px', marginRight: "1%" }} alt="User" />
-                            <p></p>
+                            <h5 className='fs-4 fw-bolder ml-4 mr-4' >{vendedor.nombreCompleto}</h5>
+                            <Estrellas valoracion={4} />
                         </div>
-                    </div>
-                    <div>
 
                     </div>
                     <div>
-                        <h1>{articulo.nombre}</h1>
+                        <button class="button-36" role="button">Contactar</button>
                     </div>
                 </div>
-                <div>
-                    <iframe
-                        width="600"
-                        height="450"
-                        frameborder="0"
-                        style={{ border: 0 }}
-                        src={`https://www.openstreetmap.org/export/embed.html?bbox=${longitud},${latitud}&layer=mapnik`}
-                        allowfullscreen
-                    ></iframe>
+                <div className='containerFoto'>
+                    <img src={UserImage} className='fotoProducto' alt="Producto" />
+                </div>
+                <div className='d-flex flex-justify-center align-items-center'>
+                    <div className='d-flex flex-column  border-bottom w-100'>
+                        <h1>{articulo.precioInicial} €</h1>
+                        <p className='fs-4 fw-bolder ml-4 mr-4' >{articulo.nombre}</p>
+                        {categorias.map((categoria, index) => (
+                            <p className='fs-4 fw-bolder ml-4 mr-4' >{categoria}</p>
+                        ))
+                        }
+                    </div>
+
+
+                </div>
+                <div className='d-flex flex-column  border-bottom w-100'>
+                    <p className='fs-4 fw-bolder ml-4 mr-4' >{articulo.descripcion}</p>
+                </div>
+                <div className='d-flex flex-column  border-bottom w-100'>
+                    <p className='fs-4 fw-bolder ml-4 mr-4'>Localizacion</p>
+                    <p className=' ml-4 mr-4' >{vendedor.ciudad}</p>
                 </div>
             </div>
+            <div className='mapa'>
+                <iframe
+
+                    width="100%"
+                    height="1000"
+                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${longitud},${latitud}&layer=mapnik`}
+                    allowfullscreen
+                ></iframe>
+            </div>
+        </div>
 
 
-        );
-    };
+    );
+};
 
-    export default PaginaConcretaProducto;
+export default PaginaConcretaProducto;
