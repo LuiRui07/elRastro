@@ -15,6 +15,10 @@ const mensajesSchema = new mongoose.Schema({
         ref: 'usuarios',
         required: true,
         },
+    fechaEnvio : {
+        type: Date,
+        required: true,
+        },
 });
 
 module.exports = mongoose.model("productos", productosSchema);

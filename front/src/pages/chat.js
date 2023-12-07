@@ -9,14 +9,51 @@ import Navbar from '../components/Navbar';
 
 
 const Chat = () => {
-    const [messages, setMessages] = useState([]);
-    const [newMessage, setNewMessage] = useState('');
+    const [Vendedor, setVendedor] = useState({});
+    const [Comprador, setComprador] = useState({});
+    const [mensajes, setMensajes] = useState([]);
+    const idComprador = useParams().id;
+    const idVendedor = useParams().id;
   
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      setMessages([...messages, { text: newMessage, sender: 'comprador' }]);
-      setNewMessage('');
-    };
+    useEffect(() => {
+        Axios.get(`http://localhost:5002/usuarios/${idComprador}`)
+            .then(response => {
+                if (response.data !== null) {
+                    setComprador(response.data);
+                    console.log('Datos del backend:', response.data);
+                }
+            })
+            .catch(error => {
+                console.error('Error al obtener datos del backend:', error);
+            });
+    }, []);
+
+    useEffect(() => {
+        Axios.get(`http://localhost:5002/usuarios/${idVendedor}`)
+            .then(response => {
+                if (response.data !== null) {
+                    setVendedor(response.data);
+                    console.log('Datos del backend:', response.data);
+                }
+            })
+            .catch(error => {
+                console.error('Error al obtener datos del backend:', error);
+            });
+    }, []);
+
+    useEffect(() => {
+        Axios.get(`http://localhost:5007/mensajes/${idComprador}/${idVendedor}`)
+            .then(response => {
+                if (response.data !== null) {
+                    setMensajes(response.data);
+                    console.log('Datos del backend:', response.data);
+                }
+            })
+            .catch(error => {
+                console.error('Error al obtener datos del backend:', error);
+            });
+    }, []);
+
   
     return (
       <div>

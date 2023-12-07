@@ -38,6 +38,19 @@ router.get("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
+router.get("/mensajes/:idComprador/:idVendedor", (req, res) => {
+  const { idComprador, idVendedor } = req.params;
+  mensajesSchema
+    .find({ idComprador: { $regex: idComprador, $options: "i" } , idVendedor: { $regex: idVendedor, $options: "i" }})
+    .then((data) =>{
+      if(data){
+        res.json(data)
+      }else{
+        res.json({message: 'No se ha encontrado ningún producto con ese id.'})
+      }})
+    .catch((error) => res.json({ message: error }));
+});
+
 
 // delete , comprobado con Postman
 router.delete("/:id", (req, res) => {
