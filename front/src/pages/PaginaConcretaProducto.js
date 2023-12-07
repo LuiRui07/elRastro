@@ -71,7 +71,7 @@ const PaginaConcretaProducto = () => {
 
                     </div>
                     <div>
-                        <button class="button-36" role="button">Contactar</button>
+                    <a href={`/chat/${vendedor._id}`}><button class="button-36" role="button">Contactar</button></a>
                     </div>
                 </div>
                 <div className='containerFoto'>
