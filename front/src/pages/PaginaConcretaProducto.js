@@ -97,11 +97,11 @@ const PaginaConcretaProducto = () => {
                     <p className=' ml-4 mr-4' >{vendedor.ciudad}</p>
                 </div>
             </div>
-            <div className='mapa'>
+            <div className='mapa' >
                 <iframe
 
-                    width="100%"
-                    height="1000"
+                    width="50%"
+                    height="500"
                     src={`https://www.openstreetmap.org/export/embed.html?bbox=${longitud},${latitud}&layer=mapnik`}
                     allowfullscreen
                 ></iframe>
