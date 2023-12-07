@@ -78,7 +78,7 @@ const PaginaConcretaProducto = () => {
 
                     </div>
                     <div>
-                        <button class="button-36" role="button">Contactar</button>
+                    <a href={`/chat/${vendedor._id}`}><button class="button-36" role="button">Contactar</button></a>
                     </div>
                 </div>
                 <div className='w-75 centrarConMargenes mt-4 d-flex flex-row'>
@@ -121,11 +121,11 @@ const PaginaConcretaProducto = () => {
                     <p className=' ml-4 mr-4' >{vendedor.ciudad}</p>
                 </div>
             </div>
-            <div className='mapa'>
+            <div className='mapa' >
                 <iframe
 
-                    width="100%"
-                    height="1000"
+                    width="50%"
+                    height="500"
                     src={`https://www.openstreetmap.org/export/embed.html?bbox=${longitud},${latitud}&layer=mapnik`}
                     allowfullscreen
                 ></iframe>
