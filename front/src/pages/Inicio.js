@@ -9,10 +9,9 @@ import Navbar from '../components/Navbar';
 import smoothState from "smoothstate";
 
 
-
 function Inicio() {
   const [articulos, setData] = useState([]);
-
+  
 
 
   useEffect(() => {
@@ -49,6 +48,7 @@ function Inicio() {
         <div className="d-flex flex-row overflow-x-auto overflow-y-hidden ">
           {
             articulos.map((articulo, index) => (
+              
               <a className="col-md-5 text-decoration-none text-colour-black cartaProductos" href={`/paginaConcreta/${articulo._id}`} key={index}>
                 <div className=" " >
                   <div className="row g-0">

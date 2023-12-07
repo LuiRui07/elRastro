@@ -6,7 +6,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import UserImage from '../media/user.jpg';
 import Estrellas from '../components/Estrellas';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 const PaginaConcretaProducto = () => {
     const [categorias, setCategorias] = useState([]); // ['Electronica', 'Informatica', 'Hogar'
@@ -14,14 +15,20 @@ const PaginaConcretaProducto = () => {
     const [vendedor, setVendedor] = useState({});
     const [latitud, setLatitud] = useState(0);
     const [longitud, setLongitud] = useState(0);
+    const [imagenes, setImagenes] = useState([]);
     const id = useParams().id;
+    const [imagenActual, setImagenActual] = useState(0);
 
+    const handleClickImagen = (index) => {
+        setImagenActual(index);
+    };
     useEffect(() => {
         Axios.get(`http://localhost:5001/productos/${id}`)
             .then(response => {
                 if (response.data !== null) {
                     setArticulo(response.data);
                     setCategorias(response.data.categorias.split(','));
+                    setImagenes(response.data.imagenes);
                     console.log('Datos del backend:', response.data);
                 }
             })
@@ -74,9 +81,26 @@ const PaginaConcretaProducto = () => {
                         <button class="button-36" role="button">Contactar</button>
                     </div>
                 </div>
-                <div className='containerFoto'>
-                    <img src={UserImage} className='fotoProducto' alt="Producto" />
+                <div className='w-75 centrarConMargenes mt-4 d-flex flex-row'>
+                    <div className='d-flex flex-row col-md-4 overflow-x-auto'>
+                        <div className='d-flex flex-column overflow-y-auto overflow-x-hidden'>
+                            {imagenes.map((imagen, index) => (
+                                <img
+                                    key={index}
+                                    src={imagen}
+                                    alt={`Imagen ${index + 1}`}
+                                    className={`imagen ${index === imagenActual ? 'active imagenesLateral' : 'imagenesLateral'}`}
+                                    onClick={() => handleClickImagen(index)}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                    <div className='d-flex flex-column col-md-8  imagenCentralGrande'>
+                        <img src={imagenes[imagenActual]} alt={`Imagen ${imagenActual + 1}`} className='imagen' />
+
+                    </div>
                 </div>
+
                 <div className='d-flex flex-justify-center align-items-center'>
                     <div className='d-flex flex-column  border-bottom w-100'>
                         <h1>{articulo.precioInicial} €</h1>
@@ -107,15 +131,8 @@ const PaginaConcretaProducto = () => {
                 ></iframe>
             </div>
 
-            <div className='w-75 centrarConMargenes mt-4'>
-                <h2>Imágenes del Producto</h2>
-                <div className='d-flex flex-row'>
-                    {articulo.imagenes && articulo.imagenes.map((imagen, index) => (
-                    <img key={index} src={imagen} alt={`Imagen ${index + 1}`} style={{ width: '150px', height: '150px', marginRight: '10px' }} />
-                    ))}
-                    </div>
-                </div>
-            </div>
+
+        </div>
 
 
     );

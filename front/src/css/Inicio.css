@@ -205,3 +205,23 @@ img {
   padding: 20px;
   margin-top: 5%;
 }
+
+.imagenesLateral {
+  overflow-x: hidden;
+  height: 140px;
+  width: 125px;
+  border-radius: 1rem;
+  margin-top: 5%;
+}
+
+.imagenesLateral:hover{
+  transform: scale(1.1);
+  margin-left: 1%;
+  margin-bottom: 1%;
+}
+
+
+.imagenCentralGrande {
+  border-radius: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
