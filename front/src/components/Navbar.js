@@ -127,7 +127,9 @@ const Navbar = () => {
                 </div>
 
             </nav>
-
+            <Link to="/SubirProducto" style={{ color: 'white' }}>
+                Subir Producto
+                </Link>
         </div>
     )
 }
