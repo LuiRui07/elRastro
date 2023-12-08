@@ -42,14 +42,32 @@ router.delete("/:id", (req, res) => {
 // update, comprobado con Postman
 router.put("/:id", (req, res) => {
   const { id } = req.params;
-  const { nombreCompleto, calle, numero, codigoPostal, ciudad, provincia, pais} = req.body;
+  const { nombreCompleto, calle, numero, codigoPostal, ciudad, provincia, pais, valoraciones, numeroValoraciones} = req.body;
   usuariosSchema
-    .updateOne({ _id: id }, { $set: { nombreCompleto, calle, numero, codigoPostal, ciudad, provincia, pais} })
+    .updateOne({ _id: id }, { $set: { nombreCompleto, calle, numero, codigoPostal, ciudad, provincia, pais,valoraciones, numeroValoraciones} })
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
 
 //LLAMADAS INTERNAS-------------------------------------------------------------------------------
+//agregar valoracion a usuario, teniendo las anteriores, multiplicando la media por l;a cantidad de valoraciones que tenga  y despues sumando la nueva multiplicacion para despues dividir por el numero de valoraciones mas uno, tambien aumentando el numeor de valoraciones
+router.put("/valoracion/:id", (req, res) => {
+  const { id } = req.params;
+  const { valoracionEnviar } = req.body;
+  usuariosSchema
+    .findById(id)
+    .then((data) => {
+      const { valoracion, numeroValoraciones } = data;
+      const nuevaValoracion = (valoracion * numeroValoraciones + valoracionEnviar) / (numeroValoraciones + 1);
+      console.log(nuevaValoracion);
+      usuariosSchema
+        .updateOne({ _id: id }, { $set: { valoracion: nuevaValoracion, numeroValoraciones: numeroValoraciones + 1 } })
+        .then((data) => res.json(data))
+        .catch((error) => res.json({ message: error }));
+    })
+    .catch((error) => res.json({ message: error }));
+});
+
 // get por parte de nombre, comprobado con Postman
 router.get("/nombre/:nombre", (req, res) => {
   const { nombre } = req.params;

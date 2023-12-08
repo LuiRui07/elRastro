@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 
-const ValoracionEstrellas = ({ valoracion }) => {
-  const [valoracionActual, setValoracionActual] = useState(valoracion);
+const ValoracionEstrellas = ({ valoracion, numeroValoraciones }) => {
 
-  const handleClick = (rating) => {
-    setValoracionActual(rating);
-  };
+  console.log('ValoracionEstrellas:', valoracion);
   return (
     <div style={{ width: 200 }}>
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -14,9 +11,11 @@ const ValoracionEstrellas = ({ valoracion }) => {
             key={rating}
             style={{ fontSize: '20px', marginRight: '10px' }}
           >
-            {rating <= valoracionActual ? '★' : '☆'}
+            {rating <= valoracion ? '★' : '☆'}
           </span>
+
         ))}
+        <p> ({numeroValoraciones})</p>
       </div>
     </div>
   );

@@ -30,6 +30,14 @@ const usuariosSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    valoracion: {
+        type: Number,
+        required: true
+    },
+    numeroValoraciones: {
+        type: Number,
+        required: true
+    },
     
 });
 module.exports = mongoose.model("usuarios", usuariosSchema);

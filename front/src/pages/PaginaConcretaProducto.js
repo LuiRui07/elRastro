@@ -6,19 +6,19 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import UserImage from '../media/user.jpg';
 import Estrellas from '../components/Estrellas';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import EstrellasDejarValoracion from '../components/EstrellasDejarValoracion';
 const PaginaConcretaProducto = () => {
     const [categorias, setCategorias] = useState([]); // ['Electronica', 'Informatica', 'Hogar'
     const [articulo, setArticulo] = useState({});
     const [vendedor, setVendedor] = useState({});
     const [latitud, setLatitud] = useState(0);
     const [longitud, setLongitud] = useState(0);
+    const [position, setPosition] = useState([0, 0]); // [latitud, longitud
     const [imagenes, setImagenes] = useState([]);
     const id = useParams().id;
     const [imagenActual, setImagenActual] = useState(0);
-
     const handleClickImagen = (index) => {
         setImagenActual(index);
     };
@@ -43,6 +43,9 @@ const PaginaConcretaProducto = () => {
                 if (response.data !== null) {
                     setLatitud(response.data.latitud);
                     setLongitud(response.data.longitud);
+                    setPosition([response.data.latitud, response.data.longitud]);
+
+
                     console.log('Datos del backend:', response.data);
                 }
             })
@@ -73,12 +76,12 @@ const PaginaConcretaProducto = () => {
                         <img src={UserImage} className='fotoProfile' alt="User" />
                         <div>
                             <h5 className='fs-4 fw-bolder ml-4 mr-4' >{vendedor.nombreCompleto}</h5>
-                            <Estrellas valoracion={4} />
+                            <Estrellas valoracion={vendedor.valoracion} numeroValoraciones={vendedor.numeroValoraciones} />
                         </div>
 
                     </div>
                     <div>
-                    <a href={`/chat/${vendedor._id}`}><button class="button-36" role="button">Contactar</button></a>
+                        <a href={`/chat/${vendedor._id}`}><button class="button-36" role="button">Contactar</button></a>
                     </div>
                 </div>
                 <div className='w-75 centrarConMargenes mt-4 d-flex flex-row'>
@@ -121,14 +124,23 @@ const PaginaConcretaProducto = () => {
                     <p className=' ml-4 mr-4' >{vendedor.ciudad}</p>
                 </div>
             </div>
-            <div className='mapa' >
-                <iframe
+            <div className='mapa' id="mapa" >
+                {position[0] !== 0 && position[1] !== 0 && (
+                    <MapContainer center={position} zoom={13} style={{ height: '400px', width: '100%' }}>
+                        <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">
+                            OpenStreetMap</a> contributors'
+                        />
+                        <Marker position={position}>
+                            <Popup>{articulo.nombre}</Popup>
+                        </Marker>
+                    </MapContainer>
+                )}
 
-                    width="50%"
-                    height="500"
-                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${longitud},${latitud}&layer=mapnik`}
-                    allowfullscreen
-                ></iframe>
+                <div className='d-flex flex-row justify-content-between align-items-center'>
+                    <EstrellasDejarValoracion idUsuario={vendedor._id} idVendedor={vendedor._id} />
+                </div>
             </div>
 
 
