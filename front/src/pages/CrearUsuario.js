@@ -76,21 +76,21 @@ const CrearUsuario = () => {
             <h1>Crear Usuario</h1>
             <form onSubmit={funcionGuardar}>
                 <label>Nombre completo</label>
-                <input type="text" name="nombreCompleto" />
+                <input type="text" name="nombreCompleto" required  />
                 <label>Calle</label>
-                <input type="text" name="calle" />
+                <input type="text" name="calle" required />
                 <label>Numero</label>
-                <input type="text" name="numero" />
+                <input type="text" name="numero" required />
                 <label>Codigo Postal</label>
-                <input type="text" name="codigoPostal" />
+                <input type="text" name="codigoPostal" required />
                 <label>Ciudad</label>
-                <input type="text" name="ciudad" />
+                <input type="text" name="ciudad" required />
                 <label>Provincia</label>
-                <input type="text" name="provincia" />
+                <input type="text" name="provincia" required />
                 <label>Pais</label>
-                <input type="text" name="pais" />
+                <input type="text" name="pais" required />
                 <lablel>Correo</lablel>
-                <input type="text" name="correo" />
+                <input type="text" name="correo" required />
 
                 <button>Crear</button>
             </form>
