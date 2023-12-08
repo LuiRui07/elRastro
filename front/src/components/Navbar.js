@@ -1,14 +1,43 @@
 import Logo from '../media/logo.jpeg';
 import UserImage from '../media/user.jpg';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useState, useEffect, useCallback } from 'react';
+import {jwtDecode} from 'jwt-decode';
+import { UserContext } from '../hooks/UserContentHook';
+import { useContext } from 'react'; 
+const Navbar = () => {
+    const user = useContext(UserContext);
+    function handleCallbackResponse(response) {
+        console.log(response.credential);
+        var userObject = jwtDecode(response.credential);
+        user.setUser({
+            email: userObject.email,
+            name: userObject.name,
+            picture: userObject.picture
+        });
+        console.log(userObject);
+    }
+    useEffect(() => {
+        google.accounts.id.initialize({
+            client_id: '71937643255-t87vgiaf2pignoee98j3uej1q648cp5r.apps.googleusercontent.com',
+            callback: handleCallbackResponse,
+        }
+        );
+        google.accounts.id.renderButton(
+            document.getElementById("sigInDiv"),
+            { theme: "outline", size: "large", text: "signIn", width: "300px", height: "50px" }
+        );
+        google.accounts.id.prompt();
 
-const navbar = () => {
+    }, [])
     return (
         <div style={{ textAlign: 'center' }}>
             <nav className="navbar" style={{ alignItems: 'center' }}>
-            <Link to="/">
-            <img src={Logo} style={{ width: '80px', height: '80px', borderRadius: '90px' }} alt="Logo" />
-            </Link>                {/* <a style={{ color: 'white' }}>Buzon</a>
+                {user.user != null ? <a style={{ color: 'white' }}>Bienvenido {user.user.name}</a> : <div id="sigInDiv"></div>}
+                <Link to="/">
+                    <img src={Logo} style={{ width: '80px', height: '80px', borderRadius: '90px' }} alt="Logo" />
+                </Link>                {/* <a style={{ color: 'white' }}>Buzon</a>
                 <a style={{ color: 'white' }}>Perfil</a>
                 <a href='/'>
                     <img src={UserImage} style={{ width: '50px', height: '50px', borderRadius: '90px', marginRight: "1%" }} alt="User" />
@@ -96,10 +125,11 @@ const navbar = () => {
                         </ul>
                     </div>
                 </div>
+
             </nav>
 
         </div>
     )
 }
 
-export default navbar
+export default Navbar
