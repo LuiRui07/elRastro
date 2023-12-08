@@ -1,7 +1,7 @@
 @echo off
 
 rem Define the repositories to work on
-set repositories=CarbonFootprint OpenStreetMap Productos Pujas Usuarios Cloudinary
+set repositories=CarbonFootprint OpenStreetMap Productos Pujas Usuarios Cloudinary Mensajes
 
 rem Obtén la ubicación del archivo de lote
 set script_dir=%~dp0

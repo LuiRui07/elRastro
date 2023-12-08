@@ -10,23 +10,9 @@ import Navbar from '../components/Navbar';
 
 const Chat = () => {
     const [Vendedor, setVendedor] = useState({});
-    const [Comprador, setComprador] = useState({});
     const [mensajes, setMensajes] = useState([]);
-    const idComprador = useParams().id;
     const idVendedor = useParams().id;
-  
-    useEffect(() => {
-        Axios.get(`http://localhost:5002/usuarios/${idComprador}`)
-            .then(response => {
-                if (response.data !== null) {
-                    setComprador(response.data);
-                    console.log('Datos del backend:', response.data);
-                }
-            })
-            .catch(error => {
-                console.error('Error al obtener datos del backend:', error);
-            });
-    }, []);
+    newMessage = '';
 
     useEffect(() => {
         Axios.get(`http://localhost:5002/usuarios/${idVendedor}`)
@@ -42,7 +28,7 @@ const Chat = () => {
     }, []);
 
     useEffect(() => {
-        Axios.get(`http://localhost:5007/mensajes/${idComprador}/${idVendedor}`)
+        Axios.get(`http://localhost:5007/mensajes/${idDestinatario}`)
             .then(response => {
                 if (response.data !== null) {
                     setMensajes(response.data);
@@ -60,9 +46,9 @@ const Chat = () => {
         <Navbar />
         <div className="w-50 bg-white centrarConMargenes mt-4 tarjetaChat">
           <div className="containerChat">
-            {messages.map((message, index) => (
-              <div key={index} className={message.sender === 'comprador' ? 'mensajeComprador' : 'mensajeVendedor'}>
-                <p>{message.text}</p>
+            {mensajes.map((mensaje, index) => (
+              <div key={index} className={mensaje.idDestinatario === idVendedor ? 'mensajeVendedor' : 'mensajeComprador'}>
+                <p>{mensaje.texto}</p>
               </div>
             ))}
           </div>

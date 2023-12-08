@@ -1,16 +1,11 @@
 const mongoose = require("mongoose")
 
 const mensajesSchema = new mongoose.Schema({
-    mensajes: {
+    texto: {
           type: String,
           required: true
         },
-    vendedor: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'usuarios',
-        required: true,
-        },
-    comprador: {
+    destinatario: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'usuarios',
         required: true,
@@ -21,4 +16,4 @@ const mensajesSchema = new mongoose.Schema({
         },
 });
 
-module.exports = mongoose.model("productos", productosSchema);
+module.exports = mongoose.model("mensajes", mensajesSchema);

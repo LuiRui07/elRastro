@@ -9,8 +9,8 @@ const port = process.env.PORT;
 app.use(express.json());
 app.use(cors());
 
-const productoRoutes = require("./routes/productoRoutes.js")
-app.use('/productos', productoRoutes);
+const mensajeRoutes = require("./routes/mensajesRoutes.js")
+app.use('/mensajes', mensajeRoutes);
 mongoose.connect(
   process.env.ATLAS_URI).then(()=>
     console.log("Hemos conectado con mongoDB")

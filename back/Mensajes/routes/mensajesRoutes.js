@@ -38,10 +38,10 @@ router.get("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-router.get("/mensajes/:idComprador/:idVendedor", (req, res) => {
-  const { idComprador, idVendedor } = req.params;
+router.get("/mensajes/:idDestinatario", (req, res) => {
+  const { idDestinatario} = req.params;
   mensajesSchema
-    .find({ idComprador: { $regex: idComprador, $options: "i" } , idVendedor: { $regex: idVendedor, $options: "i" }})
+    .find({ idDestinatario: { $regex: idDestinatario, $options: "i" }})
     .then((data) =>{
       if(data){
         res.json(data)
@@ -50,7 +50,6 @@ router.get("/mensajes/:idComprador/:idVendedor", (req, res) => {
       }})
     .catch((error) => res.json({ message: error }));
 });
-
 
 // delete , comprobado con Postman
 router.delete("/:id", (req, res) => {
