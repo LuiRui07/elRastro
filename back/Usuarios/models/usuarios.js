@@ -38,6 +38,11 @@ const usuariosSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    correo: {
+        type: String,
+        required: true,
+        unique: true
+    },
     
 });
 module.exports = mongoose.model("usuarios", usuariosSchema);

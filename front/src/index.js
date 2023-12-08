@@ -10,6 +10,7 @@ import { Routes } from 'react-router-dom';
 import {UserProvider} from './hooks/UserContentHook';
 import SubirProducto from './pages/SubirProducto';
 import Chat from './pages/chat';
+import CrearUsuario from './pages/CrearUsuario';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
@@ -20,6 +21,7 @@ root.render(
           <Route path="/paginaConcreta/:id" element={<PaginaConcretaProducto />} />
           <Route path="/SubirProducto" element={<SubirProducto />} />
           <Route path="/chat/:id" element={<Chat />} />
+          <Route path="/crearUsuario" element={<CrearUsuario />} />
         </Routes>
       </Router>
       </UserProvider>

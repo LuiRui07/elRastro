@@ -11,14 +11,29 @@ const Navbar = () => {
     const user = useContext(UserContext);
 
     function handleCallbackResponse(response) {
-        console.log(response.credential);
         var userObject = jwtDecode(response.credential);
-        user.setUser({
-            email: userObject.email,
-            name: userObject.name,
-            picture: userObject.picture
-        });
-        console.log(userObject);
+        axios.get('http://localhost:5002/usuarios/correo/' + userObject.email)
+            .then((response) => {
+                const { data } = response;
+                const { message } = data;
+                if (message === "No se ha encontrado ningún usuario con ese correo.") {
+                    //Por hacer, es pra registrarse, hacer un desvio de pagina a /crearUsuario
+                    user.setUser({
+                        email: userObject.email,
+                    });
+                    window.location.href = "http://localhost:3000/crearUsuario";
+                    return
+                } else {
+                    user.setUser({
+                        id: data[0]._id,
+                        email: userObject.email,
+                        name: userObject.name,
+                        picture: userObject.picture
+                    });
+                }
+            })
+            .catch((error) => console.log(error));
+
     }
 
     useEffect(() => {
@@ -34,8 +49,7 @@ const Navbar = () => {
           document.getElementById('sigInDiv'),
           { theme: 'outline', size: 'large', text: 'signIn', width: '300px', height: '50px' }
         );
-  
-        window.google.accounts.id.prompt();
+        console.log(user.user);
 
       } else {
         console.error("El objeto 'google' no está disponible.");

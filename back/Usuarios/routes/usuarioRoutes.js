@@ -7,11 +7,23 @@ const usuarios = require("../models/usuarios.js");
 // create, comprobado con Postman 
 router.post("/", (req, res) => {
   const user = usuariosSchema(req.body);
-  user
-    .save()
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error }));
+  axios.get('http://localhost:5002/usuarios/correo/' + user.correo).then((response) => {
+    const { data } = response;
+    const { message } = data;
+    if (message === "No se ha encontrado ningún usuario con ese correo.") {
+      user
+        .save()
+        .then((data) => res.json(data))
+        .catch((error) => res.json({ message: error }));
+    } else {
+      return res.json({ message: "Ya existe un usuario con ese correo." });
+    }
+  }
+  ).catch((error) => res.json({ message: error }));
 });
+
+
+
 
 // get all, comprobado con Postman
 router.get("/", (req, res) => {
@@ -50,6 +62,23 @@ router.put("/:id", (req, res) => {
 });
 
 //LLAMADAS INTERNAS-------------------------------------------------------------------------------
+
+// get por correo, comprobado con Postman
+router.get("/correo/:correo", (req, res) => {
+  const { correo } = req.params;
+  usuariosSchema
+    .find({ correo: { $regex: correo, $options: "i" } })
+    .then((data) => {
+      if (data.length === 0) {
+        return res.json({ message: "No se ha encontrado ningún usuario con ese correo." });
+      } else if(data.length > 1){
+        return res.json({ message: "Hay más de un usuario con ese correo." });
+      }
+      res.json(data);
+    })
+    .catch((error) => res.json({ message: error }));
+});
+
 //agregar valoracion a usuario, teniendo las anteriores, multiplicando la media por l;a cantidad de valoraciones que tenga  y despues sumando la nueva multiplicacion para despues dividir por el numero de valoraciones mas uno, tambien aumentando el numeor de valoraciones
 router.put("/valoracion/:id", (req, res) => {
   const { id } = req.params;
