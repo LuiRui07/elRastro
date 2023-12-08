@@ -61,6 +61,7 @@ const CrearUsuario = () => {
                                 email: data.correo,
                                 name: data.nombreCompleto,
                             });
+                            localStorage.setItem("id", data._id);
                             window.location.href = "http://localhost:3000/";}
                         
                       })
