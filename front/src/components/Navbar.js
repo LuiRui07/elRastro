@@ -6,8 +6,10 @@ import { useState, useEffect, useCallback } from 'react';
 import {jwtDecode} from 'jwt-decode';
 import { UserContext } from '../hooks/UserContentHook';
 import { useContext } from 'react'; 
+
 const Navbar = () => {
     const user = useContext(UserContext);
+
     function handleCallbackResponse(response) {
         console.log(response.credential);
         var userObject = jwtDecode(response.credential);
@@ -18,24 +20,33 @@ const Navbar = () => {
         });
         console.log(userObject);
     }
-    useEffect(() => {
-        google.accounts.id.initialize({
-            client_id: '71937643255-t87vgiaf2pignoee98j3uej1q648cp5r.apps.googleusercontent.com',
-            callback: handleCallbackResponse,
-        }
-        );
-        google.accounts.id.renderButton(
-            document.getElementById("sigInDiv"),
-            { theme: "outline", size: "large", text: "signIn", width: "300px", height: "50px" }
-        );
-        google.accounts.id.prompt();
 
-    }, [])
+    useEffect(() => {
+    // Verificar si el objeto 'google' está disponible
+    if (window.google && window.google.accounts && window.google.accounts.id) {
+        // Inicializar Google Sign-In
+        window.google.accounts.id.initialize({
+          client_id: '71937643255-t87vgiaf2pignoee98j3uej1q648cp5r.apps.googleusercontent.com',
+          callback: handleCallbackResponse,
+        });
+  
+        window.google.accounts.id.renderButton(
+          document.getElementById('sigInDiv'),
+          { theme: 'outline', size: 'large', text: 'signIn', width: '300px', height: '50px' }
+        );
+  
+        window.google.accounts.id.prompt();
+
+      } else {
+        console.error("El objeto 'google' no está disponible.");
+      }
+    }, [handleCallbackResponse])
+
     return (
         <div style={{ textAlign: 'center' }}>
             <nav className="navbar" style={{ alignItems: 'center' }}>
-                {user.user != null ? <a style={{ color: 'white' }}>Bienvenido {user.user.name}</a> : <div id="sigInDiv"></div>}
-                <Link to="/">
+                {user.user != null ? <a style={{ color: 'white', paddingLeft: "2%" }}>Bienvenido {user.user.name}</a> : <div id="sigInDiv" style={{paddingLeft: "2%"}}></div>}
+                <Link to="/" style={{paddingRight: "2%"}}>
                     <img src={Logo} style={{ width: '80px', height: '80px', borderRadius: '90px' }} alt="Logo" />
                 </Link>                {/* <a style={{ color: 'white' }}>Buzon</a>
                 <a style={{ color: 'white' }}>Perfil</a>

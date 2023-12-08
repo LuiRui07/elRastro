@@ -26,7 +26,7 @@ const SearchBar = ({ onSearch }) => {
     <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       {/* The width: '100%' above ensures that the bar spans the full width. */}
       <TextField
-        label="Busca por nombre que desees"
+        label="¿Qué estas buscando?"
         variant="outlined"
         value={searchTerm}
         onChange={handleInputChange}

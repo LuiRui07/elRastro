@@ -7,12 +7,12 @@ import Logo from '../media/logo.jpeg';
 import UserImage from '../media/user.jpg';
 import Navbar from '../components/Navbar';
 import smoothState from "smoothstate";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 function Inicio() {
   const [articulos, setData] = useState([]);
-  
-
 
   useEffect(() => {
     axios.get('http://localhost:5001/productos')
@@ -34,16 +34,15 @@ function Inicio() {
   return (
     <div style={{ textAlign: 'center' }} className='d-flex flex-column align-items-centerr'>
       <Navbar />
-
       <header className="elRastro">
         <h1 className='mt-4 tituloElRastro'>elRastro</h1>
-        <p className=' tipoLetraEphesis'>
+        <p className=' tipoLetraTrebuchet'>
           Bienvenido a elRastro, tu sitio de compra y venta de productos de segunda mano favorito.
         </p>
       </header>
       <SearchBar onSearch={handleSearch} />
 
-      <h1 className='tipoLetraEphesis text-start w-75  centrarh1'>Lo mejor al mejor precio</h1>
+      <h1 className='tipoLetraTrebuchet text-start w-75  centrarh1'>Lo mejor al mejor precio:</h1>
       <div className="mt-4 w-75 carrousel ">
         <div className="d-flex flex-row overflow-x-auto overflow-y-hidden ">
           {

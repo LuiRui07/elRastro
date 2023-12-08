@@ -4,7 +4,7 @@ const ValoracionEstrellas = ({ valoracion, numeroValoraciones }) => {
 
   console.log('ValoracionEstrellas:', valoracion);
   return (
-    <div style={{ width: 200 }}>
+    <div style={{ width: '200', paddingLeft: '10%'}}>
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         {[1, 2, 3, 4, 5].map((rating) => (
           <span
