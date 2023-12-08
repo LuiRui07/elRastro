@@ -4,6 +4,7 @@ import { UserContext } from '../hooks/UserContentHook';
 import { useContext } from 'react';
 import Swal from 'sweetalert2'
 import { useState } from 'react';
+import estilosCrearUsuario from '../css/estilosCrearUsuario.css';
 const CrearUsuario = () => {
     const user = useContext(UserContext);
     const [showAlert, setShowAlert] = useState(false);
