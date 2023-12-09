@@ -21,4 +21,4 @@ mongoose.connect(
 app.get("/",(req,res) =>{
   res.send("Esta es la API")}
 )
-app.listen(port, console.log("Servidor de Productos escuchando en el puerto ", port))
+app.listen(port, console.log("Servidor de Mensajes escuchando en el puerto ", port))

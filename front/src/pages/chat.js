@@ -17,7 +17,7 @@ const Chat = () => {
       }, []);
     
       const cargarMensajes = () => {
-        Axios.get(`http://localhost:5007/mensajes/${idVendedor}`)
+        Axios.get(`http://localhost:5000/mensajes/${idVendedor}`)
           .then(response => {
             if (response.data !== null) {
               setMensajes(response.data);
@@ -29,7 +29,7 @@ const Chat = () => {
       };
 
     const enviarMensaje = () => {
-        Axios.post(`http://localhost:5007/mensajes`, {
+        Axios.post(`http://localhost:5000/mensajes`, {
             destinatario: idVendedor,
             texto: nuevoMensaje,
             fechaEnvio: Date.now()
@@ -48,10 +48,10 @@ const Chat = () => {
           <Navbar />
           <div className="containerChat">
             <div className="mensajes">
-              {Array.isArray(mensajes) && mensajes.length > 0 ? (
+              {mensajes.length > 0 ? (
                 mensajes.map((mensaje, index) => (
-                  <div key={index} className={mensaje.remitente === idVendedor ? 'mensaje enviado' : 'mensaje recibido'}>
-                    {mensaje.contenido}
+                  <div key={index} className={mensaje.destinatario === idVendedor ? 'mensaje enviado' : 'mensaje recibido'}>
+                    {mensaje.texto}
                   </div>
                 ))
               ) : (

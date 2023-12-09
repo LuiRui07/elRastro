@@ -24,33 +24,20 @@ router.get("/", (req, res) => {
 
 });
 
-// get por id, comprobado con Postman
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   mensajesSchema
-    .findById(id)
-    .then((data) =>{
-      if(data){
-        res.json(data)
-      }else{
-        res.json({message: 'No se ha encontrado ningún producto con ese id.'})
-      }})
-    .catch((error) => res.json({ message: error }));
+      .find({ destinatario: id })
+      .sort({ fecha: -1 })
+      .then((data) => {
+          if (data) {
+              res.json(data);
+          } else {
+              res.json({ message: 'No se ha encontrado ningún mensaje con ese id.' });
+          }
+      })
+      .catch((error) => res.json({ message: error }));
 });
-
-router.get("/mensajes/:idDestinatario", (req, res) => {
-  const { idDestinatario} = req.params;
-  mensajesSchema
-    .find({ idDestinatario: { $regex: idDestinatario, $options: "i" }})
-    .then((data) =>{
-      if(data){
-        res.json(data)
-      }else{
-        res.json({message: 'No se ha encontrado ningún producto con ese id.'})
-      }})
-    .catch((error) => res.json({ message: error }));
-});
-
 // delete , comprobado con Postman
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
