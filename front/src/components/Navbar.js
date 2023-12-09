@@ -6,6 +6,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { UserContext } from '../hooks/UserContentHook';
 import { useContext } from 'react';
+import AddButton from '../media/thin-add-button-svgrepo-com.svg';
 
 const Navbar = () => {
     const user = useContext(UserContext);
@@ -58,11 +59,18 @@ const Navbar = () => {
 
     return (
         <div style={{ textAlign: 'center' }}>
-            <nav className="navbar" style={{ alignItems: 'center' }}>
+            <nav className="navbar" style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', padding: '1%'}}>
                 {user.user != null ? <a style={{ color: 'white', paddingLeft: "2%" }}>Bienvenido {user.user.name}</a> : <div id="sigInDiv" style={{ paddingLeft: "2%" }}></div>}
-                <Link to="/" style={{ paddingRight: "2%" }}>
-                    <img src={Logo} style={{ width: '80px', height: '80px', borderRadius: '90px' }} alt="Logo" />
-                </Link>                {/* <a style={{ color: 'white' }}>Buzon</a>
+                
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Link to="/SubirProducto" style={{ color: 'white', paddingRight: '20%'}}>
+                       <img src={AddButton} style={{ width: '50px', height: '50px', borderRadius: '90px'}} alt="SubirProducto" />
+                    </Link>
+
+                    <Link to="/" style={{ paddingRight: "2%" }}>
+                        <img src={Logo} style={{ width: '80px', height: '80px', borderRadius: '90px' }} alt="Logo" />
+                    </Link>    
+                </div>        {/* <a style={{ color: 'white' }}>Buzon</a>
                 <a style={{ color: 'white' }}>Perfil</a>
                 <a href='/'>
                     <img src={UserImage} style={{ width: '50px', height: '50px', borderRadius: '90px', marginRight: "1%" }} alt="User" />
@@ -152,9 +160,6 @@ const Navbar = () => {
                 </div>
 
             </nav>
-            <Link to="/SubirProducto" style={{ color: 'white' }}>
-                Subir Producto
-            </Link>
         </div>
     )
 }

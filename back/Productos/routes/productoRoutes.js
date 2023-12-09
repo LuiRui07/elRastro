@@ -8,11 +8,23 @@ router.use(express.json());
 //LLAMADAS CRUD-------------------------------------------------------------------------------
 // create, comprobado con Postman
 router.post("/", (req, res) => {
-  const user = productosSchema(req.body);
-  user
-    .save()
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error }));
+  try {
+    // Asegúrate de que req.body.vendedor sea un ObjectId válido
+    const vendedorObjectId = new ObjectId(req.body.vendedor);
+
+    // Crea un nuevo producto con las propiedades del cuerpo de la solicitud
+    const nuevoProducto = new productosSchema({
+      ...req.body,
+      vendedor: vendedorObjectId,
+    });
+
+    // Guarda el producto en la base de datos
+    const productoGuardado =  nuevoProducto.save();
+
+    res.json(productoGuardado);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 // get all, comprobado con Postman

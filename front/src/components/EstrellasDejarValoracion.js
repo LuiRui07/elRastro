@@ -48,8 +48,8 @@ const ValoracionEstrellasDejarValoracion = ({ idUsuario, idVendedor }) => {
             {rating <= valoracionActual ? '★' : '☆'}
           </span>
         ))}
-        <input type="text" class="valoracion-input" placeholder="Deja aquí tu valoración (es opcional) " />
-        <button onClick={funcionLlamar} class="btn btn-primary">Enviar</button>
+        <input type="text" className="valoracion-input" placeholder="Deja aquí tu valoración (es opcional) " />
+        <button onClick={funcionLlamar} className="btn btn-primary">Enviar</button>
       </div>
     </div>
   );
