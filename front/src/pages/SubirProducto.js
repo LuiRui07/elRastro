@@ -76,9 +76,9 @@ const SubirProducto = () => {
 
   const categoriasDefault = [
     "Coches", "Motos", "Motor y Accesorios",
-    "Móviles y Tecnología", "Informatica y Electronica", "TV, Audio y Foto", "Consolas y VideoJuegos", "Electrodomesticos",
-    "Hogar y Jardin", "Construccion y reformas", "Industria y Agricultura",
-    "Moda y Accesorios", "Coleccionismo", "Deporte y Ocio", "Cine, Libros y Musica", "Empleo", "Otro"
+    "Móviles y Tecnología", "Informática y Electrónica", "TV, Audio y Foto", "Consolas y VideoJuegos", "Electrodomésticos",
+    "Hogar y Jardin", "Construcción y reformas", "Industria y Agricultura",
+    "Moda y Accesorios", "Coleccionismo", "Deporte y Ocio", "Cine, Libros y Música", "Empleo", "Otro"
   ];
 
   return (

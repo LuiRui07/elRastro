@@ -97,12 +97,32 @@ const Navbar = () => {
                     >
                         Categoria
                     </a>
-                    <a className={"text-light tipoLetraMonse"}> Coches </a>
-                    <a className={"text-light tipoLetraMonse"}> Motos </a>
-                    <a className={"text-light tipoLetraMonse"}> Moda </a>
-                    <a className={"text-light tipoLetraMonse"}> Tecnología </a>
-                    <a className={"text-light tipoLetraMonse"}> Deporte </a>
-                    <a className={"text-light tipoLetraMonse"}> Hogar </a>
+                    <a className={"text-light tipoLetraMonse"}>
+                    <Link to="/category/coches" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        Coches
+                    </Link>
+                    </a>
+                    <a className={"text-light tipoLetraMonse"}>
+                    <Link to="/category/motos" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        Motos
+                    </Link>
+                    </a>
+                    <a className={"text-light tipoLetraMonse"}> 
+                    <Link to="/category/moda%20y%20accesorios" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        Moda
+                    </Link> </a>
+                    <a className={"text-light tipoLetraMonse"}> 
+                    <Link to="/category/móviles%20y%20tecnología" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        Tecnología
+                    </Link> </a>
+                    <a className={"text-light tipoLetraMonse"}> 
+                    <Link to="/category/deporte%20y%20ocio" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        Deporte
+                    </Link> </a>
+                    <a className={"text-light tipoLetraMonse"}> 
+                    <Link to="/category/hogar%20y%20jardin" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        Hogar y Jardin
+                    </Link> </a>
                 </div>
                 <div
                     className='w-100'
@@ -127,35 +147,101 @@ const Navbar = () => {
 
                         <ul className=" w-100 d-flex  text-start flex-column mt-4 none"
                         >
-                            <li className='text-light tipoLetraMonse'>Coches</li>
-                            <li className='text-light tipoLetraMonse'>TV, Audio y Foto</li>
-                            <li className='text-light tipoLetraMonse'>Consolas y VideoJuegos</li>
-                            <li className='text-light tipoLetraMonse'>Coleccionismo</li>
-                            <li className='text-light tipoLetraMonse'>Otro</li>
+                            <li className='text-light tipoLetraMonse'>
+                            <Link to="/category/coches" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                Coches
+                            </Link></li>
+                            <li className='text-light tipoLetraMonse'>
+                            <Link to="/category/tv,%20audio%20y%20foto" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                TV, Audio y Foto
+                            </Link>
+                            </li>
+                            <li className='text-light tipoLetraMonse'>
+                            <Link to="/category/consolas%20y%20videojuegos" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                Consolas y VideoJuegos
+                            </Link>
+                            </li>
+                            <li className='text-light tipoLetraMonse'>
+                            <Link to="/category/coleccionismo" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                Coleccionismo
+                            </Link>
+                            </li>
+                            <li className='text-light tipoLetraMonse'>
+                            <Link to="/category/otro" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                Otro
+                            </Link>
+                            </li>
 
                         </ul>
 
                         <ul className=" w-100 d-flex   text-start flex-column mt-4"
                         >
-                            <li className='text-light tipoLetraMonse'>Motos</li>
-                            <li className='text-light tipoLetraMonse'>Moviles y Tecnología</li>
-                            <li className='text-light tipoLetraMonse'>Hogar y Jardin</li>
-                            <li className='text-light tipoLetraMonse'>Construccion y reformas</li>
+                            <li className='text-light tipoLetraMonse'>
+                            <Link to="/category/motos" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                Motos
+                            </Link>
+                            </li>
+                            <li className='text-light tipoLetraMonse'>
+                            <Link to="/category/móviles%20y%20tecnología" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                Móviles y Tecnología
+                            </Link>
+                            </li>
+                            <li className='text-light tipoLetraMonse'>
+                            <Link to="/category/hogar%20y%20jardin" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                Hogar y Jardin
+                            </Link>
+                            </li>
+                            <li className='text-light tipoLetraMonse'>
+                            <Link to="/category/construcción%20y%20reformas" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                Construcción y Reformas
+                            </Link>
+                            </li>
                         </ul>
 
                         <ul className=" w-100 d-flex  text-start flex-column mt-4"
                         >
-                            <li className='text-light tipoLetraMonse'>Motor y Accesorios</li>
-                            <li className='text-light tipoLetraMonse'>Informatica y Electronica</li>
-                            <li className='text-light tipoLetraMonse'>Electrodomesticos</li>
-                            <li className='text-light tipoLetraMonse'>Industria y Agricultura</li>
+                            <li className='text-light tipoLetraMonse'>
+                            <Link to="/category/motor%20y%20accesorios" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                Motor y Accesorios
+                            </Link>
+                            </li>
+                            <li className='text-light tipoLetraMonse'>
+                            <Link to="/category/informática%20y%20electrónica" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                Informática y Electrónica
+                            </Link>
+                            </li>
+                            <li className='text-light tipoLetraMonse'>
+                            <Link to="/category/electrodomésticos" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                Electrodomésticos
+                            </Link>
+                            </li>
+                            <li className='text-light tipoLetraMonse'>
+                            <Link to="/category/industria%20y%20agricultura" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                Industria y Agricultura
+                            </Link>
+                            </li>
                         </ul>
                         <ul className=" w-100 d-flex  text-start flex-column mt-4"
                         >
-                            <li className='text-light tipoLetraMonse'>Moda y Accesorios</li>
-                            <li className='text-light tipoLetraMonse'>Deporte y Ocio</li>
-                            <li className='text-light tipoLetraMonse'>Cine, Libros y Musica</li>
-                            <li className='text-light tipoLetraMonse'>Empleo</li>
+                            <li className='text-light tipoLetraMonse'>
+                            <Link to="/category/moda%20y%20accesorios" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                Moda y Accesorios
+                            </Link>
+                            </li>
+                            <li className='text-light tipoLetraMonse'>
+                            <Link to="/category/deporte%20y%20ocio" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                Deporte y ocio
+                            </Link>
+                            </li>
+                            <li className='text-light tipoLetraMonse'>
+                            <Link to="/category/cine,%20libros%20y%20música" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                Cine, Libros y Música
+                            </Link>
+                            </li>
+                            <li className='text-light tipoLetraMonse'>
+                            <Link to="/category/empleo" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                Empleo
+                            </Link></li>
                         </ul>
                     </div>
                 </div>

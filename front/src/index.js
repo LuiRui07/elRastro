@@ -11,6 +11,8 @@ import {UserProvider} from './hooks/UserContentHook';
 import SubirProducto from './pages/SubirProducto';
 import Chat from './pages/chat';
 import CrearUsuario from './pages/CrearUsuario';
+import ProductoCategoria from './pages/ProductoCategoria';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
@@ -22,6 +24,7 @@ root.render(
           <Route path="/SubirProducto" element={<SubirProducto />} />
           <Route path="/chat/:id" element={<Chat />} />
           <Route path="/crearUsuario" element={<CrearUsuario />} />
+          <Route path='/category/:categoria' element={<ProductoCategoria />} />
         </Routes>
       </Router>
       </UserProvider>
