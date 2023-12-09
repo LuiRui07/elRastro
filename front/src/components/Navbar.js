@@ -63,10 +63,11 @@ const Navbar = () => {
                 {user.user != null ? <a style={{ color: 'white', paddingLeft: "2%" }}>Bienvenido {user.user.name}</a> : <div id="sigInDiv" style={{ paddingLeft: "2%" }}></div>}
                 
                 <div style={{ display: 'flex', alignItems: 'center' }}>
+                {user.user != null && 
                     <Link to="/SubirProducto" style={{ color: 'white', paddingRight: '20%'}}>
                        <img src={AddButton} style={{ width: '50px', height: '50px', borderRadius: '90px'}} alt="SubirProducto" />
                     </Link>
-
+                }
                     <Link to="/" style={{ paddingRight: "2%" }}>
                         <img src={Logo} style={{ width: '80px', height: '80px', borderRadius: '90px' }} alt="Logo" />
                     </Link>    

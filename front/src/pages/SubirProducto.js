@@ -39,7 +39,7 @@ const SubirProducto = () => {
     Promise.all(cloudinaryUploadPromises)
       .then((imagenesUrls) => {
         const producto = {
-          vendedor: user._id,
+          vendedor: user.id,
           pujaGanadora: null,
           descripcion: descripcion,
           precioInicial: precioInicial,
@@ -81,36 +81,45 @@ const SubirProducto = () => {
     "Moda y Accesorios", "Coleccionismo", "Deporte y Ocio", "Cine, Libros y Musica", "Empleo", "Otro"
   ];
 
- return (
+  return (
     <div>
-      <NavBar />
-      <h1 className='Subir'>Subir Producto</h1>
-      <form onSubmit={funcionGuardar}>
-        <input placeholder="Nombre del Artículo" type="text" name="nombre" required />
-        <input id='desc' placeholder="Descripción" type="text" name="descripcion" required/>
-        <input placeholder="Precio Inicial :" type="number" name="precioInicial" required /> €
-        <input placeholder="Peso" type="number" name="peso" required /> g
-        <label >Categoría:</label>
-        <div>
-        <select className='SelectCategoria' name="categorias" required>
-          <option value="" disabled>
-              Selecciona una categoría
-          </option>
-          {categoriasDefault.map((categorias) => (
-              <option key={categorias} value={categorias}>
-                {categorias}
-              </option>
-          ))}
-        </select>
-        <label>Fecha de Cierre:</label>
-        <input placeholder="Hola" type="datetime-local" name="fechaDeCierre" required/>
+    <NavBar />
+    <div className="container-lg mt-4 mb-5">
+      <div className="card"style={{ width: "100%"}}>
+        <div className="card-header">
+          
         </div>
-        <label>Imágenes (Máximo 5): </label>
-        <input type="file" name="imagenes" multiple required />
-        <button style={{marginLeft:"2%"}}type="submit">Subir Producto</button>
-        </form>
+        <div className="card-body">
+          <h1 className="card-title Subir" style={{textAlign: "center"}}>Subir Producto</h1>
+          <form onSubmit={funcionGuardar}>
+            <input placeholder="Nombre del Artículo" type="text" name="nombre" required />
+            <input id="desc" placeholder="Descripción" type="text" name="descripcion" required />
+            <input id="chico" placeholder="Precio Inicial :" type="number" name="precioInicial" required /> €
+            <input id="chico" placeholder="Peso" type="number" name="peso" required /> g
+            <label id="subir">Categoría:</label>
+            <div>
+              <select className="SelectCategoria" name="categorias" required>
+                <option value="" disabled>
+                  Selecciona una categoría
+                </option>
+                {categoriasDefault.map((categorias) => (
+                  <option key={categorias} value={categorias}>
+                    {categorias}
+                  </option>
+                ))}
+              </select>
+              <label id="subir">Fecha de Cierre:</label>
+              <input placeholder="Hola" type="datetime-local" name="fechaDeCierre" required />
+            </div>
+            <label id="subir">Imágenes (Máximo 5): </label>
+            <input type="file" name="imagenes" multiple required />
+            <button className="btn btn-primary" style={{ marginLeft: "2%" }} type="submit">Subir Producto</button>
+          </form>
+        </div>
+      </div>
     </div>
-);
+    </div>
+  );  
 };
 
 export default SubirProducto;

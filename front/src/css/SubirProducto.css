@@ -10,10 +10,15 @@ input{
 }
 
 input#desc{
-    height: 100px !important;
+    height: 200px !important;
+    margin-left: 10%;
 }
 
-label{
+input#chico{
+    width: 20% !important;
+}
+
+label#subir{
     margin-left: 2%;
     margin-top: 2%;
     width: 40%;
