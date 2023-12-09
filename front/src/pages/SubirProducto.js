@@ -3,6 +3,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import NavBar from '../components/Navbar.js';
 import { UserContext } from '../hooks/UserContentHook';
+import '../css/SubirProducto.css';
 
 const SubirProducto = () => {
   const user = useContext(UserContext);
@@ -83,18 +84,15 @@ const SubirProducto = () => {
  return (
     <div>
       <NavBar />
-      <h1>Subir Producto</h1>
+      <h1 className='Subir'>Subir Producto</h1>
       <form onSubmit={funcionGuardar}>
-        <label>Nombre:</label>
-        <input type="text" name="nombre" required/>
-        <label>Descripción:</label>
-        <input type="text" name="descripcion" required/>
-        <label>Precio Inicial (euros):</label>
-        <input type="number" name="precioInicial" required />
-        <label> Peso (gramos):</label>
-        <input type="number" name="peso" required />
-        <label>Categoría:</label>
-        <select name="categorias" required>
+        <input placeholder="Nombre del Artículo" type="text" name="nombre" required />
+        <input id='desc' placeholder="Descripción" type="text" name="descripcion" required/>
+        <input placeholder="Precio Inicial :" type="number" name="precioInicial" required /> €
+        <input placeholder="Peso" type="number" name="peso" required /> g
+        <label >Categoría:</label>
+        <div>
+        <select className='SelectCategoria' name="categorias" required>
           <option value="" disabled>
               Selecciona una categoría
           </option>
@@ -105,10 +103,11 @@ const SubirProducto = () => {
           ))}
         </select>
         <label>Fecha de Cierre:</label>
-        <input type="datetime-local" name="fechaDeCierre" required/>
+        <input placeholder="Hola" type="datetime-local" name="fechaDeCierre" required/>
+        </div>
         <label>Imágenes (Máximo 5): </label>
         <input type="file" name="imagenes" multiple required />
-        <button type="submit">Subir Producto</button>
+        <button style={{marginLeft:"2%"}}type="submit">Subir Producto</button>
         </form>
     </div>
 );
