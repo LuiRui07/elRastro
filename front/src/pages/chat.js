@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import axios from 'axios';
 import UserImage from '../media/user.jpg';
+import '../css/chat.css';
 
 const Chat = () => {
     const [mensajes, setMensajes] = useState([]);
@@ -50,7 +51,7 @@ const Chat = () => {
             <div className="mensajes">
               {mensajes.length > 0 ? (
                 mensajes.map((mensaje, index) => (
-                  <div key={index} className={mensaje.destinatario === idVendedor ? 'mensaje enviado' : 'mensaje recibido'}>
+                  <div key={index} className={mensaje.destinatario === idVendedor ? 'enviado' : 'recibido'}>
                     {mensaje.texto}
                   </div>
                 ))

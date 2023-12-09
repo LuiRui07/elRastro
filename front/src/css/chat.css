@@ -1,0 +1,59 @@
+.containerChat {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+.mensajes{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    max-width: 70%; /* Ancho máximo para el contenedor de mensajes */
+    justify-content: flex-end;
+   
+  }
+  
+.enviado {
+    background-color: #4780b5;
+    text-align: right;
+    align-self: flex-end;
+    border-radius: 50px; /* Bordes circulares */
+    border: 1px solid #000; /* Contorno negro */
+    margin-bottom: 2px;
+    display: inline-block;
+  }
+  
+.recibido {
+    background-color: #ffffffc7;
+    text-align: left;
+    align-self: flex-start;
+    border-radius: 50px; /* Bordes circulares */
+    border: 1px solid #000; /* Contorno negro */
+    margin-bottom: 2px;
+    display: inline-block;
+  }
+
+.nuevo-mensaje {
+    display: flex;
+    align-items: center;
+  }
+
+  textarea {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-right: 10px;
+    max-width: calc(100% - 20px); /* Ajusta el ancho para dejar espacio para el botón */
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
