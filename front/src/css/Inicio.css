@@ -228,6 +228,14 @@ img {
   margin-bottom: 1%;
 }
 
+.imagenProducto{
+  width: 360px;
+  height: 480px;
+  border-radius: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+
+}
 
 .imagenCentralGrande {
   border-radius: 1rem;
