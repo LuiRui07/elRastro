@@ -94,7 +94,7 @@ const Navbar = () => {
                             <a className="d-none d-md-block" style={{ color: 'white', paddingLeft: '2%', marginLeft: '1%' }}>
                                 Bienvenido <br /> {user.user.name}
                             </a>
-                            <button onClick={cerrarSesion} className="btn btn-danger d-none d-md-block" style={{ marginLeft: '1%' }}>Cerrar Sesión</button>
+                            <button onClick={cerrarSesion} className="btn d-md-block" style={{ marginLeft: '17%', marginTop: '8%', width: '70%' }}>Cerrar Sesión</button>
                         </div>
                     ) : (
 <></>                    )}
