@@ -92,4 +92,16 @@ async function getValoracion(req, res, next) {
   next();
 }
 
+//Obtener valoracion que ha dejado una persona a otra
+router.get('/valoracion/:idVendedor/:idComprador', async (req, res) => {
+  const { idVendedor, idComprador } = req.params;
+    console.log('idVendedor:', idVendedor);
+    console.log('idComprador:', idComprador);
+    const valoracion = await Valoracion.findOne({ vendedor: idVendedor, comprador: idComprador })
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ message: error }));
+
+
+});
+
 module.exports = router;

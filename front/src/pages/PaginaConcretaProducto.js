@@ -112,6 +112,7 @@ const PaginaConcretaProducto = () => {
         axios.get(`http://localhost:5002/usuarios/${articulo.vendedor}`)
             .then(response => {
                 if (response.data !== null) {
+
                     setVendedor(response.data);
                     console.log('Datos del backend:', response.data);
                 }
@@ -208,9 +209,9 @@ const PaginaConcretaProducto = () => {
                     <p>Cargando mapa...</p>
                 )}
                 
-                <div className='d-flex flex-row justify-content-between align-items-center'>
-                    <EstrellasDejarValoracion idUsuario={vendedor._id} idVendedor={vendedor._id} />
-                </div>
+                {(user.user != null && vendedor._id != null && <div className='d-flex flex-row justify-content-between align-items-center'>
+                    <EstrellasDejarValoracion idUsuario={user.user.id} idVendedor={vendedor._id} />
+                </div>)}
             </div>
 
 
