@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 
 const ValoracionEstrellas = ({ valoracion, numeroValoraciones }) => {
-
-  console.log('ValoracionEstrellas:', valoracion);
   return (
     <div style={{ width: '200', paddingLeft: '10%'}}>
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
