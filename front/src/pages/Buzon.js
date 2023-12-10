@@ -2,11 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import '../css/Inicio.css';
 import '../components/SearchBar';
-import SearchBar from '../components/SearchBar';
-import Logo from '../media/logo.jpeg';
-import UserImage from '../media/user.jpg';
 import Navbar from '../components/Navbar';
-import smoothState from "smoothstate";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserContext } from '../hooks/UserContentHook';
 
@@ -33,19 +29,23 @@ function Buzon() {
   };
 
   return (
-    <div style={{ textAlign: 'center' }} className='d-flex flex-column align-items-centerr'>
-      <Navbar />
-      mensajes
-      {mensajes !== null ? mensajes.map((mensaje, index) => (
-        <div className="card" key={index}>
+    <div style={{ textAlign: 'center' }}>
+    <Navbar />
+    <h2>Mensajes</h2>
+    {mensajes !== null ? (
+      mensajes.map((mensaje, index) => (
+        <div className="card" key={index} onClick={() => window.location.href = `/chat/${mensaje.idVendedor}/${mensaje.idProducto}`}>
           <div className="card-body">
-            <h5 className="card-title">{mensaje.titulo}</h5>
-            <h6 className="card-subtitle mb-2 text-muted">{mensaje.fecha}</h6>
+            <h5 className="card-title">{mensaje.texto}</h5>
+            <h6 className="card-subtitle mb-2 text-muted">{mensaje.fechaEnvio}</h6>
             <p className="card-text">{mensaje.mensaje}</p>
           </div>
-        </div>)) : (<p>No hay mensajes</p> 
-      )}
-      </div>
+        </div>
+      ))
+    ) : (
+      <p>No hay mensajes</p>
+    )}
+  </div>
   );
 }
 
