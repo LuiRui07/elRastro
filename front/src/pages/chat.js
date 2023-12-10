@@ -21,7 +21,7 @@ const Chat = () => {
     
       const cargarMensajes = () => {
         console.log(idProducto, idVendedor, localStorage.getItem("id"))
-        Axios.get(`http://localhost:5010/mensajes/mensajes/${idProducto}/${idVendedor}/${localStorage.getItem("id")} `)
+        Axios.get(`http://localhost:5010/mensajes/${idProducto}/${idVendedor}/${localStorage.getItem("id")} `)
           .then(response => {
             console.log(response.data);
             if (response.data !== null) {
