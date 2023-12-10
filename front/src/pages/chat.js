@@ -10,15 +10,16 @@ import '../css/chat.css';
 
 const Chat = () => {
     const [mensajes, setMensajes] = useState([]);
+    const [destinatario, setDestinatario] = useState([]);
     const idRemitente = useParams().idRemitente;
     const idDestinatario = useParams().idDestinatario;
     const idProducto = useParams().idProducto;
     const [nuevoMensaje, setNuevoMensaje] = useState('');
 
     useEffect(() => {
-        console.log(idRemitente, idProducto, idDestinatario);
-        cargarMensajes();
-      }, [idProducto, idRemitente, idDestinatario]);
+      cargarMensajes();
+      cargarDestinatario();
+    }, [idProducto, idRemitente, idDestinatario]);  
     
     const cargarMensajes = () => {
         console.log(idProducto, idRemitente, idDestinatario)
@@ -32,6 +33,19 @@ const Chat = () => {
           .catch(error => {
             console.error('Error al obtener datos del backend:', error);
           });
+    };
+
+    const cargarDestinatario = () => {
+      axios.get(`http://localhost:5002/usuarios/${idDestinatario}`)
+        .then(response => {
+          console.log(response.data);
+          if (response.data !== null) {
+            setDestinatario(response.data);
+          }
+        })
+        .catch(error => {
+          console.error('Error al obtener datos del backend:', error);
+        });
     };
 
     const enviarMensaje = () => {
@@ -52,8 +66,9 @@ const Chat = () => {
       };
   
       return (
-        <div>
+        <div style={{alignItems: 'center'}}>
           <Navbar />
+          <h1 style={{marginLeft: '20%', marginTop: '5%', marginBottom: '0'}} >{destinatario.nombreCompleto}</h1>
           <div className="containerChat">
             <div className="mensajes">
               {mensajes.length > 0 ? (
