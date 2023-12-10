@@ -12,13 +12,14 @@ const valoracionesSchema = new mongoose.Schema({
         ref: 'usuarios',
         required: false,
         },
-        comentario: {
+    comentario: {
             type: String,
             required: true
         },
-        valoracion: {
-            type: Number,
+    valoracion: {
+            type: Number, //maximum 5
             required: true
+
         }
 });
 module.exports = mongoose.model("valoraciones", valoracionesSchema);
