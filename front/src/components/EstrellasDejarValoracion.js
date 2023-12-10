@@ -37,8 +37,8 @@ const ValoracionEstrellasDejarValoracion = ({ idUsuario, idVendedor }) => {
 
 
   return (
-    <div style={{ width: 200 }}>
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+    <div>
+      <div>
         {[1, 2, 3, 4, 5].map((rating) => (
           <span
             key={rating}
@@ -48,8 +48,8 @@ const ValoracionEstrellasDejarValoracion = ({ idUsuario, idVendedor }) => {
             {rating <= valoracionActual ? '★' : '☆'}
           </span>
         ))}
-        <input type="text" className="valoracion-input" placeholder="Deja aquí tu valoración (es opcional) " />
-        <button onClick={funcionLlamar} className="btn btn-primary">Enviar</button>
+        <input type="text" placeholder="Deja aquí tu valoración (opcional) " />
+        <button style={{marginLeft: '3%'}} onClick={funcionLlamar} className="btn btn-primary">Enviar</button>
       </div>
     </div>
   );

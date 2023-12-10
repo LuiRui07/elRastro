@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the repositories to work on
-repositories=("CarbonFootprint" "OpenStreetMap" "Productos" "Pujas" "Usuarios" "Cloudinary")
+repositories=("CarbonFootprint" "OpenStreetMap" "Productos" "Pujas" "Usuarios" "Cloudinary" "Mensajes" "OAuth" "Valoraciones")
 
 # Get the absolute path to the script directory
 script_dir="$(cd "$(dirname "$0")" && pwd)"
