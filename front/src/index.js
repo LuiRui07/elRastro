@@ -12,6 +12,7 @@ import SubirProducto from './pages/SubirProducto';
 import Chat from './pages/chat';
 import CrearUsuario from './pages/CrearUsuario';
 import ProductoCategoria from './pages/ProductoCategoria';
+import Buzon from './pages/Buzon';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -25,6 +26,7 @@ root.render(
           <Route path="/chat/:id/:idProducto" element={<Chat />} />
           <Route path="/crearUsuario" element={<CrearUsuario />} />
           <Route path='/category/:categoria' element={<ProductoCategoria />} />
+          <Route path='/buzon' element={<Buzon />} />
         </Routes>
       </Router>
       </UserProvider>

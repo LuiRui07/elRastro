@@ -9,6 +9,8 @@ import { useContext } from 'react';
 import AddButton from '../media/thin-add-button-svgrepo-com.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import MailBox from '../media/mailbox-svgrepo-com.svg';
+
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const user = useContext(UserContext);
@@ -67,18 +69,19 @@ const Navbar = () => {
                     
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                 {user.user != null &&
+                        <div style={{display: 'flex',alignItems: 'center'}}>
                         <Link to="/SubirProducto" style={{ color: 'white', paddingRight: '20%' }}>
                             Subir Producto
                             <img src={AddButton} style={{ width: '50px', height: '50px', borderRadius: '90px' }} alt="SubirProducto" />
                         </Link>
+                        <Link style={{marginLeft:'1%', marginRight: '10%'}} to="/Buzon">
+                            <img src={MailBox} style={{ width: '50px', height: '50px', borderRadius: '90px' }} alt="Buzon" />
+                        </Link>
+                        </div>
                     }
                 {user.user != null ? <a className="d-none d-md-block" style={{ color: 'white', paddingLeft: "2%" }}> Bienvenido <br/> {user.user.name}</a> : <div id="sigInDiv" className='d-none d-md-block' style={{ paddingLeft: "2%" }}></div>}
                 </div>
-                    {/* <a style={{ color: 'white' }}>Buzon</a>
-                <a style={{ color: 'white' }}>Perfil</a>
-                <a href='/'>
-                    <img src={UserImage} style={{ width: '50px', height: '50px', borderRadius: '90px', marginRight: "1%" }} alt="User" />
-                </a> */}
+                    {}
                 <div className="d-block d-md-none mr-2" onClick={() => setMenuOpen(!menuOpen)}>
                     <FontAwesomeIcon icon={faBars} size="2x" style={{ color: 'white' }} />
                 </div>
