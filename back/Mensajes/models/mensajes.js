@@ -6,11 +6,13 @@ const mensajesSchema = new mongoose.Schema({
         required: true
     },
     remitente: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'usuarios',
         required: true,
     },
     destinatario: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'usuarios',
         required: true,
     },
     fechaEnvio: {
@@ -18,7 +20,8 @@ const mensajesSchema = new mongoose.Schema({
         required: true,
     },
     productoId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'productos',
         required: true,
     },
 

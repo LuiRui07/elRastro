@@ -8,11 +8,25 @@ router.use(express.json());
 //LLAMADAS CRUD-------------------------------------------------------------------------------
 // create, comprobado con Postman
 router.post("/", (req, res) => {
-  const user = mensajesSchema(req.body);
-  user
-    .save()
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error }));
+  try {
+    
+    const remitenteObjectId = new ObjectId(req.body.remitente);
+    const destinatarioObjectId = new ObjectId(req.body.destinatario);
+    const productoObjectId = new ObjectId(req.body.productoId);
+    
+    const nuevoMensaje = new mensajesSchema({
+      ...req.body,
+      remitente: remitenteObjectId,
+      destinatario: destinatarioObjectId,
+      productoId: productoObjectId,
+    });
+
+    const mensajeGuardado =  nuevoMensaje.save();
+
+    res.json(mensajeGuardado);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 // get all, comprobado con Postman
