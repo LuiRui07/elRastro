@@ -25,28 +25,62 @@ function MisProductos() {
   }}, []);
 
   return (
-    <div style={{ textAlign: 'center' }}>
-    <Navbar />
-    <h2>Tus Productos a la venta.</h2>
-    {productos.length > 0 ? (  
-      productos.map((producto, index) => (         
-        <a className="col-md-4 text-decoration-none text-colour-black cartaProductos" href={`/paginaConcreta/${producto._id}`} key={index}>
-          <div className="card mb-4 tarjetaProducto">
-            <img src={producto.imagenes.length > 0 ? producto.imagenes[0] : 'imagenPorDefecto.jpg'} className="card-img-top imagenProducto" alt="..." />
-            <div className="card-body">
-              <h5 className="card-title tipoLetraPrecios fw-bolder">{producto.nombre}</h5>
-              <p className="card-text fw-normal tipoLetraPrecios text-body-tertiary" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                {producto.precioInicial} €
-              </p>
-            </div>
-          </div>
-        </a>
-      ))
-    ) : (
-      <p>No has publicado nada. ¡Anímate!</p>
-    )}
-  </div>
-  );
+    <div >
+      <Navbar />
+        {/* Asegúrate de ajustar el título según tus necesidades */}
+        {productos.length > 0 && (
+            <h1 className='mt-4 tituloElRastro'>Tus Productos: </h1>
+        )}
+
+
+    {/* La sección de productos relacionados con la categoría */}
+    <div className="mt-4 w-75 carrousel">
+        <div className="d-flex flex-row overflow-x-auto overflow-y-hidden">
+            {productos.length > 0 ? (
+                productos.map((articulo, index) => (
+                    <a
+                        className="col-md-5 text-decoration-none text-colour-black cartaProductos"
+                        href={`/paginaConcreta/${articulo._id}`}
+                        key={index}
+                    >
+                        <div className=" ">
+                            <div className="row g-0">
+                                <div className="col-md-10 mt-4 item-center">
+                                    {articulo.imagenes.length > 0 && (
+                                        <img
+                                            src={articulo.imagenes[0]}
+                                            className="imagenProducto"
+                                            alt="..."
+                                        />
+                                    )}
+                                </div>
+                                <div className="col-md-6 d-flex flex-column text-start distancia">
+                                    <h5 className="tipoLetraPrecios fw-bolder text-body">
+                                        {articulo.precioInicial} euros
+                                    </h5>
+                                    <p
+                                        className="fw-normal tipoLetraPrecios text-body-tertiary"
+                                        style={{
+                                            display: "-webkit-box",
+                                            WebkitLineClamp: 2,
+                                            WebkitBoxOrient: "vertical",
+                                            overflow: "hidden",
+                                        }}
+                                    >
+                                        {articulo.descripcion}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                ))
+            ) : (
+                <h1 className='mt-4 tituloElRastro'>Aún no has subido nada. ¡Anímate!</h1>
+            )}
+        </div>
+    </div>
+    </div>
+    );
 }
 
 export default MisProductos;

@@ -80,6 +80,6 @@ const ProductoCategoria = () => {
     </div>
     </div>
     );
-    }
+}
 
 export default ProductoCategoria;
