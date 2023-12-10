@@ -52,8 +52,6 @@ const Navbar = () => {
                 document.getElementById('sigInDiv'),
                 { theme: 'outline', size: 'large', text: 'signIn', width: '300px', height: '50px' }
             );
-            console.log(user.user);
-
         } else {
             console.error("El objeto 'google' no está disponible.");
         }

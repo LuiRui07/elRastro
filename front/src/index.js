@@ -22,7 +22,7 @@ root.render(
           <Route path="/" element={<App />} />
           <Route path="/paginaConcreta/:id" element={<PaginaConcretaProducto />} />
           <Route path="/SubirProducto" element={<SubirProducto />} />
-          <Route path="/chat/:id" element={<Chat />} />
+          <Route path="/chat/:id/:idProducto" element={<Chat />} />
           <Route path="/crearUsuario" element={<CrearUsuario />} />
           <Route path='/category/:categoria' element={<ProductoCategoria />} />
         </Routes>
