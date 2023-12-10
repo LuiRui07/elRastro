@@ -24,6 +24,7 @@ img {
   text-decoration: none;
 }
 
+
 .navbar a:hover {
   font-weight: bold;
   border-bottom: 2px solid white;
@@ -137,8 +138,8 @@ img {
 
 .fotoProfile{
   border-radius: 50%;
-  width: 100px;
-  height: 100px;
+  width: 10vw;
+  height : 10vw;
   margin-left: auto;
   margin-right: auto;
   margin-top: 5%;
@@ -211,8 +212,8 @@ img {
 
 .imagenesLateral {
   overflow-x: hidden;
-  height: 140px;
-  width: 125px;
+  height: 30%;
+  width: 40%;
   border-radius: 1rem;
   margin-top: 5%;
 }
@@ -234,6 +235,17 @@ img {
 .imagenCentralGrande {
   border-radius: 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 80%;
+}
+
+.imagenC{
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  border-radius: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+
 }
 
 .valoracion-input {

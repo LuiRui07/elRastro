@@ -24,14 +24,13 @@ const ProductoCategoria = () => {
   }, [categoria]);
 
   return (
-    <div style={{ textAlign: 'center' }} className='d-flex flex-column align-items-center'>
+    <div >
       <Navbar />
-    <header className="elRastro">
         {/* Asegúrate de ajustar el título según tus necesidades */}
         {articulos.length > 0 && (
             <h1 className='mt-4 tituloElRastro'>Productos relacionados con: {categoria}</h1>
         )}
-    </header>
+
 
     {/* La sección de productos relacionados con la categoría */}
     <div className="mt-4 w-75 carrousel">

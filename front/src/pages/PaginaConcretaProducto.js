@@ -72,7 +72,7 @@ const PaginaConcretaProducto = () => {
     return (
         <div>
             <Navbar />
-            <div className='w-50 bg-white centrarConMargenes mt-4 tarjetaProducto'>
+            <div className='col-md-6 col-12 bg-white centrarConMargenes mt-4 tarjetaProducto'>
                 <div className='d-flex flex-row justify-content-between align-items-center'>
                     <div className='d-flex flew-column align-items-center '>
                         <img src={UserImage} className='fotoProfile' alt="User" />
@@ -88,7 +88,7 @@ const PaginaConcretaProducto = () => {
                 </div>
 
                 <div className='w-75 centrarConMargenes mt-4 d-flex flex-row'>
-                    <div className='d-flex flex-row col-md-4 overflow-x-auto'>
+                    <div className='d-flex flex-row col-4 overflow-x-auto'>
                         <div className='d-flex flex-column overflow-y-auto overflow-x-hidden'>
                             {imagenes.map((imagen, index) => (
                                 <img
@@ -101,8 +101,8 @@ const PaginaConcretaProducto = () => {
                             ))}
                         </div>
                     </div>
-                    <div className='d-flex flex-column col-md-8  imagenCentralGrande'>
-                        <img src={imagenes[imagenActual]} alt={`Imagen ${imagenActual + 1}`} className='imagen' />
+                    <div className='d-flex  col-8  imagenCentralGrande'>
+                        <img src={imagenes[imagenActual]} alt={`Imagen ${imagenActual + 1}`} className='imagenC' />
 
                     </div>
                 </div>
