@@ -26,7 +26,15 @@ router.post('/', async (req, res) => {
     comentario: req.body.comentario,
     valoracion: req.body.valoracion
   });
-
+  axios.put(`http://localhost:5002/usuarios/valoracion/${req.body.vendedor}`, {
+    valoracionEnviar: req.body.valoracion
+  }).then(response => {
+    if (response.data !== null) {
+      console.log('Datos del backend:', response.data);
+    }
+  }).catch(error => {
+    console.error('Error al obtener datos del backend:', error);
+  });
   try {
     const newValoracion = await valoracion.save();
     res.status(201).json(newValoracion);
@@ -95,8 +103,6 @@ async function getValoracion(req, res, next) {
 //Obtener valoracion que ha dejado una persona a otra
 router.get('/valoracion/:idVendedor/:idComprador', async (req, res) => {
   const { idVendedor, idComprador } = req.params;
-    console.log('idVendedor:', idVendedor);
-    console.log('idComprador:', idComprador);
     const valoracion = await Valoracion.findOne({ vendedor: idVendedor, comprador: idComprador })
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));

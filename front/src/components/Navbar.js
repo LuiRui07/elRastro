@@ -16,6 +16,12 @@ const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const user = useContext(UserContext);
 
+    const cerrarSesion = () => {
+        user.setUser(null);
+        localStorage.removeItem("id");
+        window.location.href = "http://localhost:3000/";
+    }
+
     function handleCallbackResponse(response) {
         var userObject = jwtDecode(response.credential);
         axios.get('http://localhost:5002/usuarios/correo/' + userObject.email)
@@ -55,6 +61,8 @@ const Navbar = () => {
                 document.getElementById('sigInDiv'),
                 { theme: 'outline', size: 'large', text: 'signIn', width: '300px', height: '50px' }
             );
+            console.log(user.user);
+
         } else {
             console.error("El objeto 'google' no está disponible.");
         }
@@ -69,31 +77,34 @@ const Navbar = () => {
 
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     {user.user && (
-                    <div style={{ display: 'flex', marginLeft: '1%' }}>
-                        <Link to="/SubirProducto" style={{ color: 'white', textDecoration: 'none'}}>
-                        <img src={AddButton} style={{ width: '50px', height: '50px', borderRadius: '90px' }} alt="SubirProducto" />
-                        </Link>
-                        <Link to="/Buzon" style={{ marginRight: '1%', textDecoration: 'none' }}>
-                        <img src={MailBox} style={{ width: '50px', height: '50px', borderRadius: '90px' }} alt="Buzon" />
-                        </Link>
-                        <Link to="/MisProductos" style={{ textDecoration: 'none' }}>
-                        <img src={Package} style={{ width: '50px', height: '50px' }} alt="Package" />
-                        </Link>
-                        {user.user ? (
-                        <a className="d-none d-md-block" style={{ color: 'white', paddingLeft: '2%', marginLeft: '1%' }}>
-                            Bienvenido <br /> {user.user.name}
-                        </a>
-                        ) : (
-                        <div id="sigInDiv" className='d-none d-md-block'></div>
-                        )}
-                    </div>
+                        <div style={{ display: 'flex', marginLeft: '1%' }}>
+                            <Link to="/SubirProducto" style={{ color: 'white', textDecoration: 'none' }}>
+                                <img src={AddButton} style={{ width: '50px', height: '50px', borderRadius: '90px' }} alt="SubirProducto" />
+                            </Link>
+                            <Link to="/Buzon" style={{ marginRight: '1%', textDecoration: 'none' }}>
+                                <img src={MailBox} style={{ width: '50px', height: '50px', borderRadius: '90px' }} alt="Buzon" />
+                            </Link>
+                            <Link to="/MisProductos" style={{ textDecoration: 'none' }}>
+                                <img src={Package} style={{ width: '50px', height: '50px' }} alt="Package" />
+                            </Link>
+                        </div>
                     )}
+                    {user.user ? (
+                        <div>
+                            <a className="d-none d-md-block" style={{ color: 'white', paddingLeft: '2%', marginLeft: '1%' }}>
+                                Bienvenido <br /> {user.user.name}
+                            </a>
+                            <button onClick={cerrarSesion} className="btn btn-danger d-none d-md-block" style={{ marginLeft: '1%' }}>Cerrar Sesión</button>
+                        </div>
+                    ) : (
+<></>                    )}
 
+                    {(user.user == null && <div id="sigInDiv" className="d-none d-md-block"></div>)}
                     <div className="d-block d-md-none mr-2" onClick={() => setMenuOpen(!menuOpen)}>
-                    <FontAwesomeIcon icon={faBars} size="2x" style={{ color: 'white' }} />
+                        <FontAwesomeIcon icon={faBars} size="2x" style={{ color: 'white' }} />
                     </div>
                 </div>
-                </nav>
+            </nav>
             {menuOpen && (
                 <div className="d-flex flex-column">
                     {/* Incluye las categorías aquí */}
