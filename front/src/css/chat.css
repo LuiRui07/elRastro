@@ -5,7 +5,9 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 5%;
   }
+
 .mensajes{
     display: flex;
     flex-direction: column;
@@ -13,23 +15,27 @@
     max-width: 70%; /* Ancho máximo para el contenedor de mensajes */
     justify-content: flex-end;
   }
-  
-.enviado {
-    background-color: #afd5f4;
-    text-align: right;
-    align-self: flex-end;
-    border: 1px solid #000; /* Contorno negro */
-    margin-bottom: 2px;
+
+  #mensaje {
+    border: 1px solid #ccc;
+    margin-bottom: 8px;
     display: inline-block;
+    max-width: 70%; /* Limita el ancho de la burbuja */
+    padding: 10px;
+    word-wrap: break-word; /* Rompe palabras largas */
+    border-radius: 10px;
   }
   
-.recibido {
-    background-color: #ffb7b7c7;
+  .enviado {
+    background-color: #dcf8c6;
+    text-align: right;
+    align-self: flex-end;
+  }
+  
+  .recibido {
+    background-color: #fff;
     text-align: left;
     align-self: flex-start;
-    border: 1px solid #000; /* Contorno negro */
-    margin-bottom: 2px;
-    display: inline-block;
   }
 
 .nuevo-mensaje {

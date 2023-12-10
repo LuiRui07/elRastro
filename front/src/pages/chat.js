@@ -58,7 +58,7 @@ const Chat = () => {
             <div className="mensajes">
               {mensajes.length > 0 ? (
                 mensajes.map((mensaje, index) => (
-                  <div key={index} className={mensaje.remitente === idRemitente ? 'recibido' : 'enviado'}>
+                  <div key={index} id="mensaje"className={mensaje.remitente === idRemitente ? 'enviado' : 'recibido'}>
                     {mensaje.texto}
                   </div>
                 ))
