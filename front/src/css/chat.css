@@ -12,24 +12,21 @@
     margin-bottom: 20px;
     max-width: 70%; /* Ancho máximo para el contenedor de mensajes */
     justify-content: flex-end;
-   
   }
   
 .enviado {
-    background-color: #4780b5;
+    background-color: #afd5f4;
     text-align: right;
     align-self: flex-end;
-    border-radius: 50px; /* Bordes circulares */
     border: 1px solid #000; /* Contorno negro */
     margin-bottom: 2px;
     display: inline-block;
   }
   
 .recibido {
-    background-color: #ffffffc7;
+    background-color: #ffb7b7c7;
     text-align: left;
     align-self: flex-start;
-    border-radius: 50px; /* Bordes circulares */
     border: 1px solid #000; /* Contorno negro */
     margin-bottom: 2px;
     display: inline-block;
