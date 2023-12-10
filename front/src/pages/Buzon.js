@@ -24,10 +24,6 @@ function Buzon() {
       });
   }}, []);
 
-  const handleSearch = (searchTerm) => {
-
-  };
-
   return (
     <div style={{ textAlign: 'center' }}>
     <Navbar />
@@ -37,7 +33,16 @@ function Buzon() {
         <div className="card" key={index} onClick={() => window.location.href = `/chat/${mensaje.idVendedor}/${mensaje.idProducto}`}>
           <div className="card-body">
             <h5 className="card-title">{mensaje.texto}</h5>
-            <h6 className="card-subtitle mb-2 text-muted">{mensaje.fechaEnvio}</h6>
+            <h6 className="card-subtitle mb-2 text-muted">
+              {new Date(mensaje.fechaEnvio).toLocaleDateString("es-ES", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                second: "numeric",
+              })}
+            </h6>
             <p className="card-text">{mensaje.mensaje}</p>
           </div>
         </div>

@@ -16,6 +16,7 @@ import { jwtDecode } from 'jwt-decode';
 
 const PaginaConcretaProducto = () => {
     const user = useContext(UserContext);
+    
     function handleCallbackResponse(response) {
         var userObject = jwtDecode(response.credential);
         axios.get('http://localhost:5002/usuarios/correo/' + userObject.email)
@@ -134,7 +135,7 @@ const PaginaConcretaProducto = () => {
 
                     </div>
                     <div>
-                        {localStorage.id != null ? <a href={`/chat/${vendedor._id}/${articulo._id}`}><button className="button-36" role="button">Contactar</button></a> :  <div id="sigInDiv" className='d-none d-md-block' style={{ paddingLeft: "2%" }}></div>}
+                        {localStorage.id != null  ? <a href={`/chat/${vendedor._id}/${articulo._id}`}><button className="button-36" role="button">Contactar</button></a> :  <div id="sigInDiv" className='d-none d-md-block' style={{ paddingLeft: "2%" }}></div>}
                     </div>
                 </div>
 

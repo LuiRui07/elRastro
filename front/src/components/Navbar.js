@@ -77,8 +77,8 @@ const Navbar = () => {
                     <Link style={{ marginLeft: '1%', paddingRight: '20%', textDecoration: 'none' }} to="/Buzon">
                         <img src={MailBox} style={{ width: '50px', height: '50px', borderRadius: '90px' }} alt="Buzon" />
                     </Link>
-                    <Link style={{ marginLeft: '1%', marginRight: '20%', textDecoration: 'none' }} to="/Buzon">
-                        <img src={Package} style={{ width: '50px', height: '50px' }} alt="Buzon" />
+                    <Link style={{ marginLeft: '1%', marginRight: '20%', textDecoration: 'none' }} to="/MisProductos">
+                        <img src={Package} style={{ width: '50px', height: '50px' }} alt="Package" />
                     </Link>
                     </div>
                     }
