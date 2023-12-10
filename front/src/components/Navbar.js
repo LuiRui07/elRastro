@@ -63,32 +63,37 @@ const Navbar = () => {
     return (
         <div style={{ textAlign: 'center' }}>
             <nav className="navbar" style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', padding: '1%' }}>
+                <Link to="/" style={{ paddingRight: '2%' }} className=''>
+                    <img src={Logo} style={{ width: '80px', height: '80px', borderRadius: '90px' }} alt="Logo" />
+                </Link>
 
-                    <Link to="/" style={{ paddingRight: "2%" }} className=''>
-                        <img src={Logo} style={{ width: '80px', height: '80px', borderRadius: '90px' }} alt="Logo" />
-                    </Link>
-                    
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                {user.user != null &&
-                    <div style={{ display: 'flex', alignItems: 'center', paddingRight: '10%' }}>
-                    <Link to="/SubirProducto" style={{ color: 'white', paddingRight: '20%', textDecoration: 'none' }}>
+                    {user.user && (
+                    <div style={{ display: 'flex', alignItems: 'center', marginLeft: '1%' }}>
+                        <Link to="/SubirProducto" style={{ color: 'white', textDecoration: 'none'}}>
                         <img src={AddButton} style={{ width: '50px', height: '50px', borderRadius: '90px' }} alt="SubirProducto" />
-                    </Link>
-                    <Link style={{ marginLeft: '1%', paddingRight: '20%', textDecoration: 'none' }} to="/Buzon">
+                        </Link>
+                        <Link to="/Buzon" style={{ marginRight: '1%', textDecoration: 'none' }}>
                         <img src={MailBox} style={{ width: '50px', height: '50px', borderRadius: '90px' }} alt="Buzon" />
-                    </Link>
-                    <Link style={{ marginLeft: '1%', marginRight: '20%', textDecoration: 'none' }} to="/MisProductos">
+                        </Link>
+                        <Link to="/MisProductos" style={{ textDecoration: 'none' }}>
                         <img src={Package} style={{ width: '50px', height: '50px' }} alt="Package" />
-                    </Link>
+                        </Link>
+                        {user.user ? (
+                        <a className="d-none d-md-block" style={{ color: 'white', paddingLeft: '2%', marginLeft: '1%' }}>
+                            Bienvenido <br /> {user.user.name}
+                        </a>
+                        ) : (
+                        <div id="sigInDiv" className='d-none d-md-block'></div>
+                        )}
                     </div>
-                    }
-                {user.user != null ? <a className="d-none d-md-block" style={{ color: 'white', paddingLeft: "2%" }}> Bienvenido <br/> {user.user.name}</a> : <div id="sigInDiv" className='d-none d-md-block' style={{ paddingLeft: "2%" }}></div>}
-                </div>
-                    {}
-                <div className="d-block d-md-none mr-2" onClick={() => setMenuOpen(!menuOpen)}>
+                    )}
+
+                    <div className="d-block d-md-none mr-2" onClick={() => setMenuOpen(!menuOpen)}>
                     <FontAwesomeIcon icon={faBars} size="2x" style={{ color: 'white' }} />
+                    </div>
                 </div>
-            </nav>
+                </nav>
             {menuOpen && (
                 <div className="d-flex flex-column">
                     {/* Incluye las categorías aquí */}
