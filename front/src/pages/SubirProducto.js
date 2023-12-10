@@ -83,43 +83,125 @@ const SubirProducto = () => {
 
   return (
     <div>
-    <NavBar />
-    <div className="container-lg mt-4 mb-5">
-      <div className="card"style={{ width: "100%"}}>
-        <div className="card-header">
-          
-        </div>
-        <div className="card-body">
-          <h1 className="card-title Subir" style={{textAlign: "center"}}>Subir Producto</h1>
-          <form onSubmit={funcionGuardar}>
-            <input placeholder="Nombre del Artículo" type="text" name="nombre" required />
-            <input id="desc" placeholder="Descripción" type="text" name="descripcion" required />
-            <input id="chico" placeholder="Precio Inicial :" type="number" name="precioInicial" required /> €
-            <input id="chico" placeholder="Peso" type="number" name="peso" required /> g
-            <label id="subir">Categoría:</label>
-            <div>
-              <select className="SelectCategoria" name="categorias" required>
-                <option value="" disabled>
-                  Selecciona una categoría
-                </option>
-                {categoriasDefault.map((categorias) => (
-                  <option key={categorias} value={categorias}>
-                    {categorias}
+      <NavBar />
+      <div className="container-lg mt-4 mb-5">
+        <div className="card" style={{ width: "100%" }}>
+          <div className="card-header"></div>
+          <div className="card-body">
+            <h1 className="card-title Subir" style={{ textAlign: "center" }}>
+              Subir Producto
+            </h1>
+            <form onSubmit={funcionGuardar}>
+              <div className="mb-3">
+                <label htmlFor="nombre" className="form-label">
+                  Nombre del Artículo
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="nombre"
+                  name="nombre"
+                  required
+                />
+              </div>
+              <div className="mb-4 ms-2" >
+                <label htmlFor="desc" className="form-label">
+                  Descripción
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="desc"
+                  name="descripcion"
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="chico" className="form-label">
+                  Precio Inicial
+                </label>
+                <div className="input-group">
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="chico"
+                    name="precioInicial"
+                    required
+                  />
+                  <span className="input-group-text">€</span>
+                </div>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="chico" className="form-label">
+                  Peso
+                </label>
+                <div className="input-group">
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="chico"
+                    name="peso"
+                    required
+                  />
+                  <span className="input-group-text">g</span>
+                </div>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="categorias" className="form-label">
+                  Categoría
+                </label>
+                <select
+                  className="form-select SelectCategoria"
+                  name="categorias"
+                  required
+                >
+                  <option value="" disabled>
+                    Selecciona una categoría
                   </option>
-                ))}
-              </select>
-              <label id="subir">Fecha de Cierre:</label>
-              <input placeholder="Hola" type="datetime-local" name="fechaDeCierre" required />
-            </div>
-            <label id="subir">Imágenes (Máximo 5): </label>
-            <input type="file" name="imagenes" multiple required />
-            <button className="btn btn-primary" style={{ marginLeft: "2%" }} type="submit">Subir Producto</button>
-          </form>
+                  {categoriasDefault.map((categorias) => (
+                    <option key={categorias} value={categorias}>
+                      {categorias}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="fechaDeCierre" className="form-label">
+                  Fecha de Cierre
+                </label>
+                <input
+                  type="datetime-local"
+                  className="form-control"
+                  name="fechaDeCierre"
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="imagenes" className="form-label">
+                  Imágenes (Máximo 5)
+                </label>
+                <input
+                  type="file"
+                  className="form-control"
+                  name="imagenes"
+                  multiple
+                  required
+                />
+              </div>
+              <button
+                className="btn btn-primary"
+                style={{ marginLeft: "2%" }}
+                type="submit"
+              >
+                Subir Producto
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-    </div>
-  );  
+  );
+    
 };
 
 export default SubirProducto;

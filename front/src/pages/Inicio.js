@@ -14,7 +14,7 @@ import { UserContext } from '../hooks/UserContentHook';
 
 function Inicio() {
   const [articulos, setData] = useState([]);
-  const [filteredArticulos, setFilteredArticulos] = useState([]);
+  const [filteredArticulos, setFilteredArticulos] = useState(articulos);
   const user = useContext(UserContext);
 
   useEffect(() => {
@@ -24,10 +24,12 @@ function Inicio() {
           if (user.user !== null) {
             const filteredData = response.data.filter((articulo) => articulo.vendedor !== user.user._id);
             setData(filteredData);
+            setFilteredArticulos(filteredData);
             console.log('Datos del backend:', filteredData);
           } else {
             console.log('Usuario no logueado');
             setData(response.data);
+            setFilteredArticulos(response.data);
             console.log('Datos del backend:', response.data);
           }  
         }
@@ -38,7 +40,7 @@ function Inicio() {
   }, []);
 
   const handleSearch = (searchTerm) => {
-    if (!searchTerm.trim()) {
+    if (!searchTerm.trim() === '') {
       // Si el término de búsqueda está vacío, muestra todos los productos
       setFilteredArticulos(articulos);
     } else {
