@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import '../css/Inicio.css';
 import '../components/SearchBar';
@@ -8,18 +8,21 @@ import UserImage from '../media/user.jpg';
 import Navbar from '../components/Navbar';
 import smoothState from "smoothstate";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { UserContext } from '../hooks/UserContentHook';
 
 
 
 function Inicio() {
   const [articulos, setData] = useState([]);
+  const user = useContext(UserContext);
 
   useEffect(() => {
     axios.get('http://localhost:5001/productos')
       .then(response => {
         if (response.data !== null) {
-          setData(response.data);
-          console.log('Datos del backend:', response.data);
+          const filteredData = response.data.filter(producto => producto.vendedor !== user.user.id);
+          setData(filteredData);
+          console.log('Datos del backend:', filteredData);
         }
       })
       .catch(error => {
