@@ -10,6 +10,7 @@ import AddButton from '../media/thin-add-button-svgrepo-com.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import MailBox from '../media/mailbox-svgrepo-com.svg';
+import Package from '../media/package-svgrepo-com.svg';
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -69,15 +70,17 @@ const Navbar = () => {
                     
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                 {user.user != null &&
-                        <div style={{display: 'flex',alignItems: 'center'}}>
-                        <Link to="/SubirProducto" style={{ color: 'white', paddingRight: '20%' }}>
-                            Subir Producto
-                            <img src={AddButton} style={{ width: '50px', height: '50px', borderRadius: '90px' }} alt="SubirProducto" />
-                        </Link>
-                        <Link style={{marginLeft:'1%', marginRight: '10%'}} to="/Buzon">
-                            <img src={MailBox} style={{ width: '50px', height: '50px', borderRadius: '90px' }} alt="Buzon" />
-                        </Link>
-                        </div>
+                    <div style={{ display: 'flex', alignItems: 'center', paddingRight: '10%' }}>
+                    <Link to="/SubirProducto" style={{ color: 'white', paddingRight: '20%', textDecoration: 'none' }}>
+                        <img src={AddButton} style={{ width: '50px', height: '50px', borderRadius: '90px' }} alt="SubirProducto" />
+                    </Link>
+                    <Link style={{ marginLeft: '1%', paddingRight: '20%', textDecoration: 'none' }} to="/Buzon">
+                        <img src={MailBox} style={{ width: '50px', height: '50px', borderRadius: '90px' }} alt="Buzon" />
+                    </Link>
+                    <Link style={{ marginLeft: '1%', marginRight: '20%', textDecoration: 'none' }} to="/Buzon">
+                        <img src={Package} style={{ width: '50px', height: '50px' }} alt="Buzon" />
+                    </Link>
+                    </div>
                     }
                 {user.user != null ? <a className="d-none d-md-block" style={{ color: 'white', paddingLeft: "2%" }}> Bienvenido <br/> {user.user.name}</a> : <div id="sigInDiv" className='d-none d-md-block' style={{ paddingLeft: "2%" }}></div>}
                 </div>
