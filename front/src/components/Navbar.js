@@ -60,18 +60,21 @@ const Navbar = () => {
     return (
         <div style={{ textAlign: 'center' }}>
             <nav className="navbar" style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', padding: '1%' }}>
-                {user.user != null ? <a className="d-none d-md-block" style={{ color: 'white', paddingLeft: "2%" }}>Bienvenido {user.user.name}</a> : <div id="sigInDiv" className='d-none d-md-block' style={{ paddingLeft: "2%" }}></div>}
 
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    {user.user != null &&
-                        <Link to="/SubirProducto" style={{ color: 'white', paddingRight: '20%' }}>
-                            <img src={AddButton} style={{ width: '50px', height: '50px', borderRadius: '90px' }} alt="SubirProducto" />
-                        </Link>
-                    }
                     <Link to="/" style={{ paddingRight: "2%" }} className=''>
                         <img src={Logo} style={{ width: '80px', height: '80px', borderRadius: '90px' }} alt="Logo" />
                     </Link>
-                </div>        {/* <a style={{ color: 'white' }}>Buzon</a>
+                    
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                {user.user != null &&
+                        <Link to="/SubirProducto" style={{ color: 'white', paddingRight: '20%' }}>
+                            Subir Producto
+                            <img src={AddButton} style={{ width: '50px', height: '50px', borderRadius: '90px' }} alt="SubirProducto" />
+                        </Link>
+                    }
+                {user.user != null ? <a className="d-none d-md-block" style={{ color: 'white', paddingLeft: "2%" }}> Bienvenido <br/> {user.user.name}</a> : <div id="sigInDiv" className='d-none d-md-block' style={{ paddingLeft: "2%" }}></div>}
+                </div>
+                    {/* <a style={{ color: 'white' }}>Buzon</a>
                 <a style={{ color: 'white' }}>Perfil</a>
                 <a href='/'>
                     <img src={UserImage} style={{ width: '50px', height: '50px', borderRadius: '90px', marginRight: "1%" }} alt="User" />

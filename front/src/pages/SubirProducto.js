@@ -39,7 +39,7 @@ const SubirProducto = () => {
     Promise.all(cloudinaryUploadPromises)
       .then((imagenesUrls) => {
         const producto = {
-          vendedor: user.id,
+          vendedor: user.user.id,
           pujaGanadora: null,
           descripcion: descripcion,
           precioInicial: precioInicial,

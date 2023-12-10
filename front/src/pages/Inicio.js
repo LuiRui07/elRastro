@@ -56,8 +56,8 @@ function Inicio() {
                           {articulo.imagenes.length > 0 && <img src={articulo.imagenes[0]} className="imagenProducto" alt="..." />}
                         </div>
                         <div className="col-md-6 d-flex flex-column text-start distancia">
-                          <h5 className="tipoLetraPrecios fw-bolder text-body">{articulo.precioInicial} euros</h5>
-                          <p className="fw-normal tipoLetraPrecios text-body-tertiary" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{articulo.descripcion}</p>
+                          <h5 className="tipoLetraPrecios fw-bolder text-body"> {articulo.nombre}</h5>
+                          <p className="fw-normal tipoLetraPrecios text-body-tertiary" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{articulo.precioInicial} €</p>
                         </div>
                       </div>
                     </div>

@@ -192,7 +192,7 @@ const PaginaConcretaProducto = () => {
                 </div>
             </div>
             <div className='mapa' id="mapa" >
-                {position[0] !== 0 && position[1] !== 0 && position[0] !== undefined ? (
+                { (position[0] !== 0 && position[1] !== 0 && position[0] !== undefined ) ? (
                     <MapContainer center={position} zoom={13} style={{ height: '400px', width: '100%' }}>
                         <TileLayer
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
