@@ -20,25 +20,24 @@ router.get("/", (req, res) => {
   mensajesSchema
     .find()
     .then((data) => res.json(data))
-    .orderBy({ fecha: -1 })
     .catch((error) => res.json({ message: error }));
-
 });
 
+// get by MensajeId, comprobado con Postman
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   mensajesSchema
-    .find({ destinatario: id })
-    .sort({ fecha: -1 })
+    .findById(id)
     .then((data) => {
       if (data) {
         res.json(data);
       } else {
-        res.json({ message: 'No se ha encontrado ningún mensaje con ese id.' });
+        res.json({ message: "No se ha encontrado ningún mensaje con ese id." });
       }
     })
     .catch((error) => res.json({ message: error }));
 });
+
 // delete , comprobado con Postman
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
@@ -51,9 +50,19 @@ router.delete("/:id", (req, res) => {
 // update , comprobado con Postman
 router.put("/:id", (req, res) => {
   const { id } = req.params;
-  const { vendedor, comprador, mensaje } = req.body;
-  productosSchema
-    .updateOne({ _id: id }, { $set: { vendedor, comprador, mensaje } })
+  const { texto, remitente, fechaEnvio, productoId } = req.body;
+  mensajesSchema
+    .updateOne(
+      { _id: id },
+      {
+        $set: {
+          texto: texto,
+          remitente: remitente,
+          fechaEnvio: fechaEnvio,
+          productoId: productoId,
+        },
+      }
+    )
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
@@ -64,7 +73,7 @@ router.get("/mensajes/:idProducto/:idUsuario/:idComprador", (req, res) => {
   const idComprador = req.params.idComprador;
   const idProducto = req.params.idProducto;
   console.log(idUsuario, idComprador, idProducto);
-  const mensajes = mensajesSchema.find({ enviador: { $in: [idUsuario, idComprador] }, productoId: idProducto }).sort({ fecha: -1 });
+  const mensajes = mensajesSchema.find({ remitente: { $in: [idUsuario, idComprador] }, productoId: idProducto }).sort({ fecha: -1 });
 
   mensajes.then((data) => {
     if (data.length) {
