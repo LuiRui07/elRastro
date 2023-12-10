@@ -24,7 +24,7 @@ root.render(
           <Route path="/" element={<App />} />
           <Route path="/paginaConcreta/:id" element={<PaginaConcretaProducto />} />
           <Route path="/SubirProducto" element={<SubirProducto />} />
-          <Route path="/chat/:id/:idProducto" element={<Chat />} />
+          <Route path="/chat/:idProducto/:idDestinatario/:idRemitente" element={<Chat />} />
           <Route path="/crearUsuario" element={<CrearUsuario />} />
           <Route path='/category/:categoria' element={<ProductoCategoria />} />
           <Route path='/buzon' element={<Buzon />} />

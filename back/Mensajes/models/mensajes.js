@@ -9,6 +9,10 @@ const mensajesSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    destinatario: {
+        type: String,
+        required: true,
+    },
     fechaEnvio: {
         type: Date,
         required: true,
