@@ -35,7 +35,7 @@ const Chat = () => {
 
     const enviarMensaje = () => {
         Axios.post(`http://localhost:5010/mensajes`, {
-            enviador: localStorage.getItem("id"),
+            remitente: localStorage.getItem("id"),
             texto: nuevoMensaje,
             fechaEnvio: Date.now(),
             productoId: idProducto,
