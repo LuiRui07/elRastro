@@ -91,7 +91,7 @@ router.get("/buzon/:idUsuario", async (req, res) => {
 });
 
 //Get mensajes relacionados a un producto del vendedor y del comprador
-{/*router.get("/mensajes/:idProducto/:idUsuario/:idComprador", (req, res) => {
+router.get("/mensajes/:idProducto/:idUsuario/:idComprador", (req, res) => {
   const idUsuario = req.params.idUsuario;
   const idComprador = req.params.idComprador;
   const idProducto = req.params.idProducto;
@@ -105,7 +105,7 @@ router.get("/buzon/:idUsuario", async (req, res) => {
       res.json({ message: "No se ha encontrado ningún mensaje con ese id." });
     }
   });
-});*/}
+});
 
 module.exports = router;
 
