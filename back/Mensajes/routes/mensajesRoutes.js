@@ -58,6 +58,29 @@ router.put("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
+//Get mensajes relacionados a un usuario
+router.get("/buzon/:idUsuario", async (req, res) => {
+  try {
+    const idUsuario = req.params.idUsuario;
+
+    // Espera a que se complete la solicitud axios antes de continuar
+    const response = await axios.get('http://localhost:5001/productos/productos-ofertados/' + idUsuario);
+    const productos = response.data;
+
+    // Consulta los mensajes relacionados con los productos obtenidos
+    const mensajes = await mensajesSchema.find({ productoId: { $in: productos } }).sort({ fecha: -1 });
+
+    if (mensajes.length) {
+      res.json(mensajes);
+    } else {
+      res.json({ message: "No existen mensajes para este usuario" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
+});
+
 //Get mensajes relacionados a un producto del vendedor y del comprador
 router.get("/mensajes/:idProducto/:idUsuario/:idComprador", (req, res) => {
   const idUsuario = req.params.idUsuario;

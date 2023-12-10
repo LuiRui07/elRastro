@@ -20,9 +20,15 @@ function Inicio() {
     axios.get('http://localhost:5001/productos')
       .then(response => {
         if (response.data !== null) {
-          const filteredData = response.data.filter(producto => producto.vendedor !== user.user.id);
-          setData(filteredData);
-          console.log('Datos del backend:', filteredData);
+          if (user.user !== null) {
+            const filteredData = response.data.filter((articulo) => articulo.vendedor !== user.user._id);
+            setData(filteredData);
+            console.log('Datos del backend:', filteredData);
+          } else {
+            console.log('Usuario no logueado');
+            setData(response.data);
+            console.log('Datos del backend:', response.data);
+          }  
         }
       })
       .catch(error => {
