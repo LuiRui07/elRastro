@@ -22,7 +22,7 @@ function Inicio() {
       .then(response => {
         if (response.data !== null) {
           if (user.user !== null) {
-            const filteredData = response.data.filter((articulo) => articulo.vendedor !== user.user._id);
+            const filteredData = response.data.filter((articulo) => articulo.vendedor !== user.user.id);
             setData(filteredData);
             setFilteredArticulos(filteredData);
             console.log('Datos del backend:', filteredData);
