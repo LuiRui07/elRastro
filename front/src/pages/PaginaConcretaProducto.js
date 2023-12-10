@@ -10,8 +10,58 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L, { LatLng } from 'leaflet';
 import EstrellasDejarValoracion from '../components/EstrellasDejarValoracion';
 import '../css/PaginaConcretaProducto.css';
+import { UserContext } from '../hooks/UserContentHook';
+import { useContext } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
 const PaginaConcretaProducto = () => {
+    const user = useContext(UserContext);
+    function handleCallbackResponse(response) {
+        var userObject = jwtDecode(response.credential);
+        axios.get('http://localhost:5002/usuarios/correo/' + userObject.email)
+            .then((response) => {
+                const { data } = response;
+                const { message } = data;
+                if (message === "No se ha encontrado ningún usuario con ese correo.") {
+                    //Por hacer, es pra registrarse, hacer un desvio de pagina a /crearUsuario
+                    user.setUser({
+                        email: userObject.email,
+                    });
+                    window.location.href = "http://localhost:3000/crearUsuario";
+                    return
+                } else {
+                    user.setUser({
+                        id: data[0]._id,
+                        email: userObject.email,
+                        name: userObject.name
+                    });
+                    localStorage.setItem("id", data[0]._id);
+                }
+            })
+            .catch((error) => console.log(error));
+
+    }
+
+    useEffect(() => {
+        // Verificar si el objeto 'google' está disponible
+        if (window.google && window.google.accounts && window.google.accounts.id) {
+            // Inicializar Google Sign-In
+            window.google.accounts.id.initialize({
+                client_id: '71937643255-t87vgiaf2pignoee98j3uej1q648cp5r.apps.googleusercontent.com',
+                callback: handleCallbackResponse,
+            });
+
+            window.google.accounts.id.renderButton(
+                document.getElementById('sigInDiv'),
+                { theme: 'outline', size: 'large', text: 'signIn', width: '300px', height: '50px' }
+            );
+            console.log(user.user);
+
+        } else {
+            console.error("El objeto 'google' no está disponible.");
+        }
+    }, [handleCallbackResponse])
+
     const [categorias, setCategorias] = useState([]); // ['Electronica', 'Informatica', 'Hogar'
     const [articulo, setArticulo] = useState({});
     const [vendedor, setVendedor] = useState({});
@@ -21,6 +71,7 @@ const PaginaConcretaProducto = () => {
     const [imagenes, setImagenes] = useState([]);
     const id = useParams().id;
     const [imagenActual, setImagenActual] = useState(0);
+    
     const handleClickImagen = (index) => {
         setImagenActual(index);
     };
@@ -83,7 +134,7 @@ const PaginaConcretaProducto = () => {
 
                     </div>
                     <div>
-                        <a href={`/chat/${vendedor._id}`}><button className="button-36" role="button">Contactar</button></a>
+                        {localStorage.id != null ? <a href={`/chat/${vendedor._id}`}><button className="button-36" role="button">Contactar</button></a> :  <div id="sigInDiv" className='d-none d-md-block' style={{ paddingLeft: "2%" }}></div>}
                     </div>
                 </div>
 
