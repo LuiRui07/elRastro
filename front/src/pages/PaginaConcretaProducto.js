@@ -136,7 +136,7 @@ const PaginaConcretaProducto = () => {
 
                     </div>
                     <div>
-                        {localStorage.id != null  ? <a href={`/chat/${vendedor._id}/${articulo._id}`}><button className="button-36" role="button">Contactar</button></a> :  <div id="sigInDiv" className='d-none d-md-block' style={{ paddingLeft: "2%" }}></div>}
+                        {localStorage.id != null  ? <a href={`/chat/${articulo._id}/${vendedor._id}/${localStorage.id}`}><button className="button-36" role="button">Contactar</button></a> :  <div id="sigInDiv" className='d-none d-md-block' style={{ paddingLeft: "2%" }}></div>}
                     </div>
                 </div>
 

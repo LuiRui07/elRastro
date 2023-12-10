@@ -6,8 +6,11 @@ const mensajesSchema = new mongoose.Schema({
         required: true
     },
     remitente: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'usuarios',
+        type: String,
+        required: true,
+    },
+    destinatario: {
+        type: String,
         required: true,
     },
     fechaEnvio: {
@@ -15,8 +18,7 @@ const mensajesSchema = new mongoose.Schema({
         required: true,
     },
     productoId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'productos',
+        type: String,
         required: true,
     },
 

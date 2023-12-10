@@ -10,18 +10,19 @@ import '../css/chat.css';
 
 const Chat = () => {
     const [mensajes, setMensajes] = useState([]);
-    const idVendedor = useParams().id;
+    const idRemitente = useParams().idRemitente;
+    const idDestinatario = useParams().idDestinatario;
     const idProducto = useParams().idProducto;
     const [nuevoMensaje, setNuevoMensaje] = useState('');
 
     useEffect(() => {
-        console.log(idVendedor, idProducto);
+        console.log(idRemitente, idProducto, idDestinatario);
         cargarMensajes();
-      }, [idProducto, idVendedor]);
+      }, [idProducto, idRemitente, idDestinatario]);
     
       const cargarMensajes = () => {
-        console.log(idProducto, idVendedor, localStorage.getItem("id"))
-        Axios.get(`http://localhost:5010/mensajes/mensajes/${idProducto}/${idVendedor}/${localStorage.getItem("id")} `)
+        console.log(idProducto, idRemitente, idDestinatario)
+        Axios.get(`http://localhost:5010/mensajes/${idProducto}/${idRemitente}/${idDestinatario} `)
           .then(response => {
             console.log(response.data);
             if (response.data !== null) {
@@ -35,7 +36,8 @@ const Chat = () => {
 
     const enviarMensaje = () => {
         Axios.post(`http://localhost:5010/mensajes`, {
-            enviador: localStorage.getItem("id"),
+            remitente: idRemitente,
+            destinatario: idDestinatario,
             texto: nuevoMensaje,
             fechaEnvio: Date.now(),
             productoId: idProducto,
@@ -56,7 +58,7 @@ const Chat = () => {
             <div className="mensajes">
               {mensajes.length > 0 ? (
                 mensajes.map((mensaje, index) => (
-                  <div key={index} className={mensaje.enviador === idVendedor ? 'recibido' : 'enviado'}>
+                  <div key={index} className={mensaje.remitente === idRemitente ? 'recibido' : 'enviado'}>
                     {mensaje.texto}
                   </div>
                 ))

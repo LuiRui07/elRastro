@@ -50,7 +50,7 @@ router.delete("/:id", (req, res) => {
 // update , comprobado con Postman
 router.put("/:id", (req, res) => {
   const { id } = req.params;
-  const { texto, remitente, fechaEnvio, productoId } = req.body;
+  const { texto, remitente, fechaEnvio, productoId, destinatario } = req.body;
   mensajesSchema
     .updateOne(
       { _id: id },
@@ -58,6 +58,7 @@ router.put("/:id", (req, res) => {
         $set: {
           texto: texto,
           remitente: remitente,
+          destinatario: destinatario,
           fechaEnvio: fechaEnvio,
           productoId: productoId,
         },
@@ -91,12 +92,12 @@ router.get("/buzon/:idUsuario", async (req, res) => {
 });
 
 //Get mensajes relacionados a un producto del vendedor y del comprador
-router.get("/mensajes/:idProducto/:idUsuario/:idComprador", (req, res) => {
-  const idUsuario = req.params.idUsuario;
-  const idComprador = req.params.idComprador;
+router.get("/:idProducto/:idRemitente/:idDestinatario", (req, res) => {
+  const idRemitente = req.params.idRemitente;
+  const idDestinatario = req.params.idDestinatario;
   const idProducto = req.params.idProducto;
-  console.log(idUsuario, idComprador, idProducto);
-  const mensajes = mensajesSchema.find({ remitente: { $in: [idUsuario, idComprador] }, productoId: idProducto }).sort({ fecha: -1 });
+  console.log(idRemitente, idDestinatario, idProducto);
+  const mensajes = mensajesSchema.find({ remitente: { $in: [idDestinatario, idRemitente] }, productoId: idProducto, destinatario: { $in: [idDestinatario, idRemitente] } }).sort({ fecha: -1 });
 
   mensajes.then((data) => {
     if (data.length) {
