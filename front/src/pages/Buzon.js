@@ -30,7 +30,7 @@ function Buzon() {
     <h1 class="display-2" style={{marginTop: "2%", marginBottom: "2%"}}>Mensajes</h1>
     {mensajes !== null ? (
       mensajes.map((mensaje, index) => (
-        <div className="card" key={index} onClick={() => window.location.href = `/chat/${mensaje.remitente}/${mensaje.idProducto}`}>
+        <div className="card" key={index} onClick={() => window.location.href = `/chat/${mensaje.productoId}/${mensaje.remitente}/${mensaje.destinatario}`}>
           <div className="card-body">
             <h5 className="card-title">{mensaje.texto}</h5>
             <h6 className="card-subtitle mb-2 text-muted">

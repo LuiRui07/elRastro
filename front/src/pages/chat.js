@@ -20,9 +20,9 @@ const Chat = () => {
         cargarMensajes();
       }, [idProducto, idRemitente, idDestinatario]);
     
-      const cargarMensajes = () => {
+    const cargarMensajes = () => {
         console.log(idProducto, idRemitente, idDestinatario)
-        Axios.get(`http://localhost:5010/mensajes/${idProducto}/${idRemitente}/${idDestinatario} `)
+        axios.get(`http://localhost:5010/mensajes/${idProducto}/${idRemitente}/${idDestinatario} `)
           .then(response => {
             console.log(response.data);
             if (response.data !== null) {
@@ -32,10 +32,10 @@ const Chat = () => {
           .catch(error => {
             console.error('Error al obtener datos del backend:', error);
           });
-      };
+    };
 
     const enviarMensaje = () => {
-        Axios.post(`http://localhost:5010/mensajes`, {
+        axios.post(`http://localhost:5010/mensajes`, {
             remitente: idRemitente,
             destinatario: idDestinatario,
             texto: nuevoMensaje,

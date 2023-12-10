@@ -69,26 +69,18 @@ router.put("/:id", (req, res) => {
 });
 
 //Get mensajes relacionados a un usuario, comprobado con Postman
-router.get("/buzon/:idUsuario", async (req, res) => {
-  try {
-    const idUsuario = req.params.idUsuario;
-
-    // Espera a que se complete la solicitud axios antes de continuar
-    const response = await axios.get('http://localhost:5001/productos/productos-ofertados/' + idUsuario);
-    const productos = response.data;
-
-    // Consulta los mensajes relacionados con los productos obtenidos
-    const mensajes = await mensajesSchema.find({ productoId: { $in: productos } }).sort({ fecha: -1 });
-
-    if (mensajes.length) {
-      res.json(mensajes);
-    } else {
-      res.json({ message: "No existen mensajes para este usuario" });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error interno del servidor" });
-  }
+router.get("/buzon/:idDestinatario", async (req, res) => {
+    const id  = req.params.idDestinatario;
+    mensajesSchema
+      .find({ destinatario: id }).sort({ fechaEnvio: -1 })
+      .then((data) => {
+        if (data) {
+          res.json(data);
+        } else {
+          res.json({ message: "No tienes mensajes" });
+        }
+      })
+      .catch((error) => res.json({ message: error }));
 });
 
 //Get mensajes relacionados a un producto del vendedor y del comprador
