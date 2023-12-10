@@ -28,7 +28,7 @@ function MisProductos() {
     <div style={{ textAlign: 'center' }}>
     <Navbar />
     <h2>Tus Productos a la venta.</h2>
-    {productos !== null ? (  
+    {productos.length > 0 ? (  
       productos.map((producto, index) => (         
         <a className="col-md-4 text-decoration-none text-colour-black cartaProductos" href={`/paginaConcreta/${producto._id}`} key={index}>
           <div className="card mb-4 tarjetaProducto">

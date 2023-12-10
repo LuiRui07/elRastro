@@ -14,6 +14,7 @@ import { UserContext } from '../hooks/UserContentHook';
 
 function Inicio() {
   const [articulos, setData] = useState([]);
+  const [filteredArticulos, setFilteredArticulos] = useState([]);
   const user = useContext(UserContext);
 
   useEffect(() => {
@@ -37,7 +38,16 @@ function Inicio() {
   }, []);
 
   const handleSearch = (searchTerm) => {
-
+    if (!searchTerm.trim()) {
+      // Si el término de búsqueda está vacío, muestra todos los productos
+      setFilteredArticulos(articulos);
+    } else {
+      // Filtra los productos por coincidencia con el término de búsqueda
+      const filteredData = articulos.filter((articulo) =>
+        articulo.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredArticulos(filteredData);
+    }
   };
 
   return (
@@ -55,8 +65,7 @@ function Inicio() {
           <div className="mt-4 w-75 carrousel ">
             <div className="d-flex flex-row overflow-x-auto overflow-y-hidden ">
               {
-                articulos.map((articulo, index) => (
-                  
+                filteredArticulos.map((articulo, index) => (
                   <a className="col-md-5 text-decoration-none text-colour-black cartaProductos" href={`/paginaConcreta/${articulo._id}`} key={index}>
                     <div className=" " >
                       <div className="row g-0">
