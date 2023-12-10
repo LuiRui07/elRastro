@@ -25,11 +25,10 @@ function MisProductos() {
   }}, []);
 
   return (
-    <div >
+    <div style={{ textAlign: 'center' }} >
       <Navbar />
-        {/* Asegúrate de ajustar el título según tus necesidades */}
         {productos.length > 0 && (
-            <h1 className='mt-4 tituloElRastro'>Tus Productos: </h1>
+            <h1 class="display-2" style={{marginTop: "2%", marginBottom: "2%"}}>Tus Productos</h1>
         )}
 
 

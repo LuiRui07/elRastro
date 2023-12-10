@@ -69,7 +69,7 @@ const Navbar = () => {
 
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     {user.user && (
-                    <div style={{ display: 'flex', alignItems: 'center', marginLeft: '1%' }}>
+                    <div style={{ display: 'flex', marginLeft: '1%' }}>
                         <Link to="/SubirProducto" style={{ color: 'white', textDecoration: 'none'}}>
                         <img src={AddButton} style={{ width: '50px', height: '50px', borderRadius: '90px' }} alt="SubirProducto" />
                         </Link>

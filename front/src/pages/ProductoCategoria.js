@@ -55,7 +55,7 @@ const ProductoCategoria = () => {
                                 </div>
                                 <div className="col-md-6 d-flex flex-column text-start distancia">
                                     <h5 className="tipoLetraPrecios fw-bolder text-body">
-                                        {articulo.precioInicial} euros
+                                        {articulo.nombre} 
                                     </h5>
                                     <p
                                         className="fw-normal tipoLetraPrecios text-body-tertiary"
@@ -66,7 +66,7 @@ const ProductoCategoria = () => {
                                             overflow: "hidden",
                                         }}
                                     >
-                                        {articulo.descripcion}
+                                        {articulo.precioInicial} €
                                     </p>
                                 </div>
                             </div>
