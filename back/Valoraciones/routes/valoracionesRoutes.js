@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const Valoracion = require('../models/valoraciones');
 const axios = require('axios');
-// Obtener todas las valoraciones
+// Obtener todas las valoraciones, comprobado con Postman
 router.get('/', async (req, res) => {
   try {
     const valoraciones = await Valoracion.find();
@@ -13,60 +13,66 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Obtener una valoración específica
+// Obtener una valoración específica, comprobado con Postman
 router.get('/:id', getValoracion, (req, res) => {
   res.json(res.valoracion);
 });
 
-// Crear una nueva valoración
+// Crear una nueva valoración, comprobado con Postman
 router.post('/', async (req, res) => {
   const valoracion = new Valoracion({
-    comprador: req.body.idUsuario,
-    vendedor: req.body.idVendedor,
+    comprador: req.body.comprador,
+    vendedor: req.body.vendedor,
     comentario: req.body.comentario,
     valoracion: req.body.valoracion
   });
-  await axios.put(`http://localhost:5002/usuarios/valoracion/${req.body.idVendedor}`, {
-    valoracionEnviar: req.body.valoracion
-  })
+
   try {
     const newValoracion = await valoracion.save();
     res.status(201).json(newValoracion);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
-});
+} );
 
-// Actualizar una valoración
-router.patch('/:id', getValoracion, async (req, res) => {
-  if (req.body.Comprador != null) {
-    res.valoracion.Comprador = req.body.Comprador;
-  }
-  if (req.body.Vendedor != null) {
-    res.valoracion.Vendedor = req.body.Vendedor;
-  }
-  if (req.body.Mensaje != null) {
-    res.valoracion.Mensaje = req.body.Mensaje;
-  }
-  if (req.body.Estrellas != null) {
-    res.valoracion.Estrellas = req.body.Estrellas;
-  }
-
+// Actualizar una valoración, comprobado con Postman
+router.put('/:id', async (req, res) => {
   try {
-    const updatedValoracion = await res.valoracion.save();
+    const valoracion = await Valoracion.findById(req.params.id);
+
+    if (!valoracion) {
+      return res.status(404).json({ message: 'La valoración no fue encontrada' });
+    }
+
+    // Actualizar los campos de la valoración con los valores proporcionados en el cuerpo de la solicitud
+    valoracion.comprador = req.body.comprador || valoracion.comprador;
+    valoracion.vendedor = req.body.vendedor || valoracion.vendedor;
+    valoracion.comentario = req.body.comentario || valoracion.comentario;
+    valoracion.valoracion = req.body.valoracion || valoracion.valoracion;
+
+    // Guardar la valoración actualizada en la base de datos
+    const updatedValoracion = await valoracion.save();
+
     res.json(updatedValoracion);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 
-// Eliminar una valoración
-router.delete('/:id', getValoracion, async (req, res) => {
+// Eliminar una valoración, comprobado con Postman
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+
   try {
-    await res.valoracion.remove();
-    res.json({ message: 'Valoración eliminada' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    const result = await Valoracion.deleteOne({ _id: id });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'La valoración no fue encontrada' });
+    }
+
+    res.json({ message: 'La valoración fue eliminada exitosamente' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
