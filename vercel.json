@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    { "source": "/huellaC/(.*)", "destination": "/CarbonFootprint/$1" },
+    { "source": "/cloudinary/(.*)", "destination": "/Cloudinary/$1" },
+    { "source": "/mensajes/(.*)", "destination": "/Mensajes/$1" },
+    { "source": "/mapa/(.*)", "destination": "/Map/$1" },
+    { "source": "/productos/(.*)", "destination": "/Productos/$1" },
+    { "source": "/pujas/(.*)", "destination": "/Pujas/$1" },
+    { "source": "/usuarios/(.*)", "destination": "/Usuarios/$1" },
+    { "source": "/valoraciones/(.*)", "destination": "/Valoraciones/$1" }
+  ]
+}
