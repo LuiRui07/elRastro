@@ -10,7 +10,7 @@ const UserProvider = ({ children }) => {
     // and set it using setUser
     const id = localStorage.getItem('id');
     if (id) {
-      axios.get('http://localhost:5002/usuarios/' + id)
+      axios.get('https://el-rastro-six.vercel.app/usuarios/' + id)
         .then((response) => {
           const { data } = response;
           const { message } = data;

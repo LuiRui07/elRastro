@@ -14,7 +14,7 @@ function Buzon() {
 
   useEffect(() => {
     if (user.user !== null) {
-    axios.get('http://localhost:5010/mensajes/buzon/' + user.user.id)
+    axios.get('https://el-rastro-six.vercel.app/mensajes/buzon/' + user.user.id)
       .then(response => {
         setData(response.data);
         console.log('Datos del backend:', response.data);

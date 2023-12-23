@@ -30,7 +30,7 @@ const SubirProducto = () => {
       formData.append('imagen', imagen);
 
       // Devolvemos la promesa de la subida de la imagen
-      return axios.post('http://localhost:5006/cloudinary/subir', formData)
+      return axios.post('https://el-rastro-six.vercel.app/cloudinary/subir', formData)
         .then((response) => response.data.secure_url);
 
     });
@@ -52,7 +52,7 @@ const SubirProducto = () => {
         };
         console.log('Producto a crear:', producto);
         // Ahora, puedes hacer la solicitud para crear el producto
-        return axios.post('http://localhost:5001/productos/', producto);
+        return axios.post('https://el-rastro-six.vercel.app/productos/', producto);
       })
       .then((response) => {
         const { data } = response;
@@ -65,7 +65,7 @@ const SubirProducto = () => {
           icon: 'success',
           confirmButtonText: 'Correcto',
           didClose: () => {
-            window.location.href = 'http://localhost:3000/';
+            window.location.href = 'https://el-rastro-six.vercel.app';
           },
         });
       })

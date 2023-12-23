@@ -19,12 +19,12 @@ const Navbar = () => {
     const cerrarSesion = () => {
         user.setUser(null);
         localStorage.removeItem("id");
-        window.location.href = "http://localhost:3000/";
+        window.location.href = "https://el-rastro-six.vercel.app";
     }
 
     function handleCallbackResponse(response) {
         var userObject = jwtDecode(response.credential);
-        axios.get('http://localhost:5002/usuarios/correo/' + userObject.email)
+        axios.get('https://el-rastro-six.vercel.app/usuarios/correo/' + userObject.email)
             .then((response) => {
                 const { data } = response;
                 const { message } = data;
@@ -33,7 +33,7 @@ const Navbar = () => {
                     user.setUser({
                         email: userObject.email,
                     });
-                    window.location.href = "http://localhost:3000/crearUsuario";
+                    window.location.href = "https://el-rastro-six.vercel.app/crearUsuario";
                     return
                 } else {
                     user.setUser({

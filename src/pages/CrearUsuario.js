@@ -34,7 +34,7 @@ const CrearUsuario = () => {
             valoracion: 0,
             numeroValoraciones: 0
         }
-        axios.post('http://localhost:5002/usuarios/', usuario)
+        axios.post('https://el-rastro-six.vercel.app/usuarios/', usuario)
             .then((response) => {
                 const { data } = response;
                 const { message } = data;
@@ -46,7 +46,7 @@ const CrearUsuario = () => {
                         icon: 'error',
                         confirmButtonText: 'Venga va',
                         didClose: () => {
-                            window.location.href = "http://localhost:3000/";
+                            window.location.href = "https://el-rastro-six.vercel.app";
                         }
                     });
                     
@@ -63,7 +63,7 @@ const CrearUsuario = () => {
                                 name: data.nombreCompleto,
                             });
                             localStorage.setItem("id", data._id);
-                            window.location.href = "http://localhost:3000/";}
+                            window.location.href = "https://el-rastro-six.vercel.app";}
                         
                       })
 

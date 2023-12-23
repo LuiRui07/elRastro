@@ -11,7 +11,7 @@ const ProductoCategoria = () => {
   const { categoria } = useParams();
 
   useEffect(() => {
-    axios.get(`http://localhost:5001/productos/productos-categoria/${categoria}`)
+    axios.get(`https://el-rastro-six.vercel.app/productos/productos-categoria/${categoria}`)
       .then(response => {
         if (response.data !== null) {
           setData(response.data);

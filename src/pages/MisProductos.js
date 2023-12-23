@@ -14,7 +14,7 @@ function MisProductos() {
 
   useEffect(() => {
     if (user.user !== null) {
-    axios.get('http://localhost:5001/productos/productos-ofertados/' + user.user.id)
+    axios.get('https://el-rastro-six.vercel.app/productos/productos-ofertados/' + user.user.id)
       .then(response => {
         setData(response.data);
         console.log('Datos del backend:', response.data);

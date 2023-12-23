@@ -18,7 +18,7 @@ function Inicio() {
   const user = useContext(UserContext);
 
   useEffect(() => {
-    axios.get('http://localhost:5001/productos')
+    axios.get('https://el-rastro-six.vercel.app/productos')
       .then(response => {
         if (response.data !== null) {
           if (user.user !== null) {

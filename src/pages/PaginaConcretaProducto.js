@@ -19,7 +19,7 @@ const PaginaConcretaProducto = () => {
     
     function handleCallbackResponse(response) {
         var userObject = jwtDecode(response.credential);
-        axios.get('http://localhost:5002/usuarios/correo/' + userObject.email)
+        axios.get('https://el-rastro-six.vercel.app/usuarios/correo/' + userObject.email)
             .then((response) => {
                 const { data } = response;
                 const { message } = data;
@@ -28,7 +28,7 @@ const PaginaConcretaProducto = () => {
                     user.setUser({
                         email: userObject.email,
                     });
-                    window.location.href = "http://localhost:3000/crearUsuario";
+                    window.location.href = "https://el-rastro-six.vercel.app/crearUsuario";
                     return
                 } else {
                     user.setUser({
@@ -77,7 +77,7 @@ const PaginaConcretaProducto = () => {
         setImagenActual(index);
     };
     useEffect(() => {
-        Axios.get(`http://localhost:5001/productos/${id}`)
+        Axios.get(`https://el-rastro-six.vercel.app/productos/${id}`)
             .then(response => {
                 if (response.data !== null) {
                     setArticulo(response.data);
@@ -92,7 +92,7 @@ const PaginaConcretaProducto = () => {
     }, []);
 
     useEffect(() => {
-        axios.get(`http://localhost:5004/mapa/coordenadasProducto/` + id)
+        axios.get(`https://el-rastro-six.vercel.app/mapa/coordenadasProducto/` + id)
             .then(response => {
                 if (response.data !== null) {
                     setLatitud(response.data.latitud);
@@ -109,7 +109,7 @@ const PaginaConcretaProducto = () => {
     }, [articulo]);
 
     useEffect(() => {
-        axios.get(`http://localhost:5002/usuarios/${articulo.vendedor}`)
+        axios.get(`https://el-rastro-six.vercel.app/usuarios/${articulo.vendedor}`)
             .then(response => {
                 if (response.data !== null) {
 

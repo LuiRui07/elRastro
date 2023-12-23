@@ -23,7 +23,7 @@ const Chat = () => {
     
     const cargarMensajes = () => {
         console.log(idProducto, idRemitente, idDestinatario)
-        axios.get(`http://localhost:5010/mensajes/${idProducto}/${idRemitente}/${idDestinatario} `)
+        axios.get(`https://el-rastro-six.vercel.app/mensajes/${idProducto}/${idRemitente}/${idDestinatario} `)
           .then(response => {
             console.log(response.data);
             if (response.data !== null) {
@@ -36,7 +36,7 @@ const Chat = () => {
     };
 
     const cargarProducto = () => {
-      axios.get(`http://localhost:5001/productos/${idProducto}`)
+      axios.get(`https://el-rastro-six.vercel.app/productos/${idProducto}`)
         .then(response => {
           console.log(response.data);
           if (response.data !== null) {
@@ -49,7 +49,7 @@ const Chat = () => {
     };
 
     const enviarMensaje = () => {
-        axios.post(`http://localhost:5010/mensajes`, {
+        axios.post(`https://el-rastro-six.vercel.app/mensajes`, {
             remitente: idRemitente,
             destinatario: idDestinatario,
             texto: nuevoMensaje,
