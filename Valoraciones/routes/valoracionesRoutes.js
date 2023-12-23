@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
     comentario: req.body.comentario,
     valoracion: req.body.valoracion
   });
-  axios.put(`http://localhost:5002/usuarios/valoracion/${req.body.vendedor}`, {
+  axios.put(`https://el-rastro-six.vercel.app/usuarios/valoracion/${req.body.vendedor}`, {
     valoracionEnviar: req.body.valoracion
   }).then(response => {
     if (response.data !== null) {

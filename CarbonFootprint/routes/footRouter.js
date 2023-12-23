@@ -77,20 +77,20 @@ router.get('/huellaCarbono/:distancia/:peso/:transporte', async (req, res) => {
 //     idProducto es el producto que desea comprar
 // comprobado con Postman
 router.get('/huellaCarbonoCostoCamion/:idUsuario/:idProducto', async (req, res) => {
-    axios.get('http://localhost:5004/mapa/coordenadasUsuario/' + req.params.idUsuario).then((respuesta) => {
+    axios.get('https://el-rastro-six.vercel.app/mapa/coor   denadasUsuario/' + req.params.idUsuario).then((respuesta) => {
         const latitudUsuario = respuesta.data.latitud;
         const longitudUsuario = respuesta.data.longitud;
         
-        axios.get('http://localhost:5004/mapa/coordenadasProducto/' + req.params.idProducto).then((respuesta) => {
+        axios.get('https://el-rastro-six.vercel.app/mapa/coordenadasProducto/' + req.params.idProducto).then((respuesta) => {
 
             const latitudProducto = respuesta.data.latitud;
             const longitudProducto = respuesta.data.longitud;
-            axios.get('http://localhost:5004/mapa/distancia/' + latitudUsuario + '/' + longitudUsuario + '/' + latitudProducto + '/' + longitudProducto).then((respuesta) => {
+            axios.get('https://el-rastro-six.vercel.app/mapa/distancia/' + latitudUsuario + '/' + longitudUsuario + '/' + latitudProducto + '/' + longitudProducto).then((respuesta) => {
 
                 const distancia = respuesta.data.distance;
-                axios.get('http://localhost:5001/productos/' + req.params.idProducto).then((respuesta) => {
+                axios.get('https://el-rastro-six.vercel.app/productos/' + req.params.idProducto).then((respuesta) => {
                     const peso = respuesta.data.peso;
-                    axios.get('http://localhost:5005/huellaC/huellaCarbono/' + distancia + '/' + peso + '/camion').then((respuesta) => {
+                    axios.get('https://el-rastro-six.vercel.app/huellaC/huellaCarbono/' + distancia + '/' + peso + '/camion').then((respuesta) => {
                         if (respuesta.data.length !== 0 && respuesta.data.message !== "No se ha encontrado ningún producto con esos datos.") {
                             res.json(respuesta.data.huella);
                         } else {
@@ -135,7 +135,7 @@ router.get('/huellaCarbonoCostoCamion/:idUsuario/:idProducto', async (req, res) 
                                     const carbonFootprint = response.data.data.attributes.carbon_g;
 
                                     res.json({ carbonFootprint });
-                                    axios.post('http://localhost:5005/huellaC/', {
+                                    axios.post('https://el-rastro-six.vercel.app/huellaC/', {
                                         distancia: distancia,
                                         peso: peso,
                                         distanciaMIN: distancia - 10,
@@ -163,18 +163,18 @@ router.get('/huellaCarbonoCostoCamion/:idUsuario/:idProducto', async (req, res) 
 });
 
 router.get('/huellaCarbonoCostoAvion/:idUsuario/:idProducto', async (req, res) => {
-    axios.get('http://localhost:5004/mapa/coordenadasUsuario/' + req.params.idUsuario).then((respuesta) => {
+    axios.get('https://el-rastro-six.vercel.app/mapa/coordenadasUsuario/' + req.params.idUsuario).then((respuesta) => {
         const latitudUsuario = respuesta.data.latitud;
         const longitudUsuario = respuesta.data.longitud;
-        axios.get('http://localhost:5004/mapa/coordenadasProducto/' + req.params.idProducto).then((respuesta) => {
+        axios.get('https://el-rastro-six.vercel.app/mapa/coordenadasProducto/' + req.params.idProducto).then((respuesta) => {
             const latitudProducto = respuesta.data.latitud;
             const longitudProducto = respuesta.data.longitud;
-            axios.get('http://localhost:5004/mapa/distancia/' + latitudUsuario + '/' + longitudUsuario + '/' + latitudProducto + '/' + longitudProducto).then((respuesta) => {
+            axios.get('https://el-rastro-six.vercel.app/mapa/distancia/' + latitudUsuario + '/' + longitudUsuario + '/' + latitudProducto + '/' + longitudProducto).then((respuesta) => {
                 
                 const distancia = respuesta.data.distance;
-                axios.get('http://localhost:5001/productos/' + req.params.idProducto).then((respuesta) => {
+                axios.get('https://el-rastro-six.vercel.app/productos/' + req.params.idProducto).then((respuesta) => {
                     const peso = respuesta.data.peso;
-                    axios.get('http://localhost:5005/huellaC/huellaCarbono/' + distancia + '/' + peso + '/avion').then((respuesta) => {
+                    axios.get('https://el-rastro-six.vercel.app/huellaC/huellaCarbono/' + distancia + '/' + peso + '/avion').then((respuesta) => {
                         if (respuesta.data.length !== 0 && respuesta.data.message !== "No se ha encontrado ningún producto con esos datos.") {
                             res.json(respuesta.data.huella);
                         } else {
@@ -219,7 +219,7 @@ router.get('/huellaCarbonoCostoAvion/:idUsuario/:idProducto', async (req, res) =
                                     const carbonFootprint = response.data.data.attributes.carbon_g;
 
                                     res.json({ carbonFootprint });
-                                    axios.post('http://localhost:5005/huellaC/', {
+                                    axios.post('https://el-rastro-six.vercel.app/huellaC/', {
                                         distancia: distancia,
                                         peso: peso,
                                         distanciaMIN: distancia - 10,
@@ -245,18 +245,18 @@ router.get('/huellaCarbonoCostoAvion/:idUsuario/:idProducto', async (req, res) =
 });
 
 router.get('/huellaCarbonoCostoBarco/:idUsuario/:idProducto', async (req, res) => {
-    axios.get('http://localhost:5004/mapa/coordenadasUsuario/' + req.params.idUsuario).then((respuesta) => {
+    axios.get('https://el-rastro-six.vercel.app/mapa/coordenadasUsuario/' + req.params.idUsuario).then((respuesta) => {
         const latitudUsuario = respuesta.data.latitud;
         const longitudUsuario = respuesta.data.longitud;
-        axios.get('http://localhost:5004/mapa/coordenadasProducto/' + req.params.idProducto).then((respuesta) => {
+        axios.get('https://el-rastro-six.vercel.app/mapa/coordenadasProducto/' + req.params.idProducto).then((respuesta) => {
             const latitudProducto = respuesta.data.latitud;
             const longitudProducto = respuesta.data.longitud;
-            axios.get('http://localhost:5004/mapa/distancia/' + latitudUsuario + '/' + longitudUsuario + '/' + latitudProducto + '/' + longitudProducto).then((respuesta) => {
+            axios.get('https://el-rastro-six.vercel.app/mapa/distancia/' + latitudUsuario + '/' + longitudUsuario + '/' + latitudProducto + '/' + longitudProducto).then((respuesta) => {
 
                 const distancia = respuesta.data.distance;
-                axios.get('http://localhost:5001/productos/' + req.params.idProducto).then((respuesta) => {
+                axios.get('https://el-rastro-six.vercel.app/productos/' + req.params.idProducto).then((respuesta) => {
                     const peso = respuesta.data.peso;
-                    axios.get('http://localhost:5005/huellaC/huellaCarbono/' + distancia + '/' + peso + '/barco').then((respuesta) => {
+                    axios.get('https://el-rastro-six.vercel.app/huellaC/huellaCarbono/' + distancia + '/' + peso + '/barco').then((respuesta) => {
                         if (respuesta.data.length !== 0 && respuesta.data.message !== "No se ha encontrado ningún producto con esos datos.") {
                             res.json(respuesta.data.huella);
                         } else {
@@ -301,7 +301,7 @@ router.get('/huellaCarbonoCostoBarco/:idUsuario/:idProducto', async (req, res) =
                                     const carbonFootprint = response.data.data.attributes.carbon_g;
 
                                     res.json({ carbonFootprint });
-                                    axios.post('http://localhost:5005/huellaC/', {
+                                    axios.post('https://el-rastro-six.vercel.app/huellaC/', {
                                         distancia: distancia,
                                         peso: peso,
                                         distanciaMIN: distancia - 10,
@@ -327,18 +327,18 @@ router.get('/huellaCarbonoCostoBarco/:idUsuario/:idProducto', async (req, res) =
 });
 
 router.get('/huellaCarbonoCostoTren/:idUsuario/:idProducto', async (req, res) => {
-    axios.get('http://localhost:5004/mapa/coordenadasUsuario/' + req.params.idUsuario).then((respuesta) => {
+    axios.get('https://el-rastro-six.vercel.app/mapa/coordenadasUsuario/' + req.params.idUsuario).then((respuesta) => {
         const latitudUsuario = respuesta.data.latitud;
         const longitudUsuario = respuesta.data.longitud;
-        axios.get('http://localhost:5004/mapa/coordenadasProducto/' + req.params.idProducto).then((respuesta) => {
+        axios.get('https://el-rastro-six.vercel.app/mapa/coordenadasProducto/' + req.params.idProducto).then((respuesta) => {
             const latitudProducto = respuesta.data.latitud;
             const longitudProducto = respuesta.data.longitud;
-            axios.get('http://localhost:5004/mapa/distancia/' + latitudUsuario + '/' + longitudUsuario + '/' + latitudProducto + '/' + longitudProducto).then((respuesta) => {
+            axios.get('https://el-rastro-six.vercel.app/mapa/distancia/' + latitudUsuario + '/' + longitudUsuario + '/' + latitudProducto + '/' + longitudProducto).then((respuesta) => {
 
                 const distancia = respuesta.data.distance;
-                axios.get('http://localhost:5001/productos/' + req.params.idProducto).then((respuesta) => {
+                axios.get('https://el-rastro-six.vercel.app/productos/' + req.params.idProducto).then((respuesta) => {
                     const peso = respuesta.data.peso;
-                    axios.get('http://localhost:5005/huellaC/huellaCarbono/' + distancia + '/' + peso + '/tren').then((respuesta) => {
+                    axios.get('https://el-rastro-six.vercel.app/huellaC/huellaCarbono/' + distancia + '/' + peso + '/tren').then((respuesta) => {
                         if (respuesta.data.length !== 0 && respuesta.data.message !== "No se ha encontrado ningún producto con esos datos.") {
                             res.json(respuesta.data.huella);
                         } else {
@@ -383,7 +383,7 @@ router.get('/huellaCarbonoCostoTren/:idUsuario/:idProducto', async (req, res) =>
                                     const carbonFootprint = response.data.data.attributes.carbon_g;
 
                                     res.json({ carbonFootprint });
-                                    axios.post('http://localhost:5005/huellaC/', {
+                                    axios.post('https://el-rastro-six.vercel.app/huellaC/', {
                                         distancia: distancia,
                                         peso: peso,
                                         distanciaMIN: distancia - 10,
@@ -413,27 +413,27 @@ router.get('/calcularHuella/:idUsuario/:idProducto/:transporte', async (req, res
     const {idUsuario, idProducto, transporte} = req.params;
 
     if(transporte == "camion"){
-        axios.get('http://localhost:5005/huellaC/huellaCarbonoCostoCamion/' + idUsuario + '/' + idProducto).then((respuesta) => {
+        axios.get('https://el-rastro-six.vercel.app/huellaC/huellaCarbonoCostoCamion/' + idUsuario + '/' + idProducto).then((respuesta) => {
             console.log(respuesta.data);
             res.json(respuesta.data);
         }).catch((error) => {
             res.json({ message: error });
         })
     }else if(transporte == "avion"){
-        axios.get('http://localhost:5005/huellaC/huellaCarbonoCostoAvion/' + idUsuario + '/' + idProducto).then((respuesta) => {
+        axios.get('https://el-rastro-six.vercel.app/huellaC/huellaCarbonoCostoAvion/' + idUsuario + '/' + idProducto).then((respuesta) => {
             res.json(respuesta.data);
         }).catch((error) => {
             res.json({ message: error });
         })
     }else if(transporte == "barco"){
-        axios.get('http://localhost:5005/huellaC/huellaCarbonoCostoBarco/' + idUsuario + '/' + idProducto).then((respuesta) => {
+        axios.get('https://el-rastro-six.vercel.app/huellaC/huellaCarbonoCostoBarco/' + idUsuario + '/' + idProducto).then((respuesta) => {
             
             res.json(respuesta.data);
         }).catch((error) => {
             res.json({ message: error });
         })
     }else if(transporte == "tren"){
-        axios.get('http://localhost:5005/huellaC/huellaCarbonoCostoTren/' + idUsuario + '/' + idProducto).then((respuesta) => {
+        axios.get('https://el-rastro-six.vercel.app/huellaC/huellaCarbonoCostoTren/' + idUsuario + '/' + idProducto).then((respuesta) => {
             res.json(respuesta.data);
         }).catch((error) => {
             res.json({ message: error });

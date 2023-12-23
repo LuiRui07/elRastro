@@ -34,7 +34,7 @@ router.get('/coordenadasDireccion/:lat/:lon', async (req, res) => {
 //Get coordenadas de un usuario dado su ID, comprobado con Postman
 router.get("/coordenadasUsuario/:id", async (req, res) => {
     const { id } = req.params;
-    axios.get('http://localhost:5002/usuarios/' + id)
+    axios.get('https://el-rastro-six.vercel.app/usuarios/' + id)
         .then((respuesta) => {
 
             const calle = respuesta.data.calle;
@@ -44,7 +44,7 @@ router.get("/coordenadasUsuario/:id", async (req, res) => {
             const provincia = respuesta.data.provincia;
             const pais = respuesta.data.pais;
             const direccion = calle + " " + numero + ", " + codigoPostal + ", " + ciudad + ", " + provincia + ", " + pais;
-            axios.get('http://localhost:5004/mapa/direccionCoordenadas/' + direccion)
+            axios.get('https://el-rastro-six.vercel.app/mapa/direccionCoordenadas/' + direccion)
                 .then((respuesta) => {
                     const latitud = respuesta.data.lat;
                     const longitud = respuesta.data.lon;
@@ -75,7 +75,7 @@ router.get("/direccionUsuario/:id", async (req, res) => {
     const { id } = req.params;
 
     try {
-        const respuesta = await axios.get(`http://localhost:5002/usuarios/${id}`);
+        const respuesta = await axios.get(`https://el-rastro-six.vercel.app/usuarios/${id}`);
         
         const calle = respuesta.data.calle;
         const numero = respuesta.data.numero;
@@ -96,11 +96,11 @@ router.get("/direccionUsuario/:id", async (req, res) => {
 //Get coordenadas dada una id de un producto, comprobado con Postman
 router.get('/coordenadasProducto/:id', async (req, res) => {
     try {
-         const responseUsuario = await axios.get(`http://localhost:5002/usuarios/propietario/${req.params.id}`);
+         const responseUsuario = await axios.get(`https://el-rastro-six.vercel.app/usuarios/propietario/${req.params.id}`);
          const vendedorId = responseUsuario.data._id;
-         const responseDireccionUsuario = await axios.get(`http://localhost:5004/mapa/direccionUsuario/${vendedorId}`);
+         const responseDireccionUsuario = await axios.get(`https://el-rastro-six.vercel.app/mapa/direccionUsuario/${vendedorId}`);
          const { direccion } = responseDireccionUsuario.data;
-         const responseCoordenadas = await axios.get(`http://localhost:5004/mapa/direccionCoordenadas/${direccion}`);
+         const responseCoordenadas = await axios.get(`https://el-rastro-six.vercel.app/mapa/direccionCoordenadas/${direccion}`);
          const { lat, lon } = responseCoordenadas.data;
  
          res.json({ latitud: lat, longitud: lon });
