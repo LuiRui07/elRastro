@@ -99,7 +99,7 @@ router.get("/puja-usuario-producto/:usuarioId/:productoId", (req, res) => {
     .find({ producto: new ObjectId(productoId), comprador: new ObjectId(usuarioId) })
     .then((pujas) => {
       if (pujas.length === 0) {
-        return res.json({ message: "No hay pujas para este producto y esta persona." });
+        return res.json({ message: "No hay pujas para este producto y esta persona ." });
       }
       res.json(pujas);
     })
