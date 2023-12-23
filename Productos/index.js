@@ -1,18 +1,17 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose")
-require("dotenv").config({ path: "./config.env" });
 const app = express();
 
 
-const port = process.env.PORT;
+const port = 5001;
 app.use(express.json());
 app.use(cors());
 
 const productoRoutes = require("./routes/productoRoutes.js")
 app.use('/productos', productoRoutes);
 mongoose.connect(
-  process.env.ATLAS_URI).then(()=>
+  "mongodb+srv://grupoWeb:grupoWeb@cluster0.syetq9a.mongodb.net/elRastro").then(()=>
     console.log("Hemos conectado con mongoDB")
   ).catch((error)=>
     console.error(error)

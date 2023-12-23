@@ -40,7 +40,7 @@ const getTokenParams = (code) => querystring.stringify({
 const app = express();
 
 
-const port = process.env.PORT;
+const port = 5009;
 app.use(cors({
   origin: [
     config.clientUrl,
@@ -126,7 +126,7 @@ app.get('/user/posts', auth, async (_, res) => {
 });
 
 mongoose.connect(
-  process.env.ATLAS_URI).then(()=>
+  "mongodb+srv://grupoWeb:grupoWeb@cluster0.syetq9a.mongodb.net/elRastro").then(()=>
     console.log("Hemos conectado con mongoDB")
   ).catch((error)=>
     console.error(error)

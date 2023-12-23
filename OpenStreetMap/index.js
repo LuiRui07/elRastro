@@ -11,7 +11,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-const port = process.env.PORT;
+const port = 5004;
 app.use(express.json());
 
 const productoRoutes = require("./routes/mapRouter.js")

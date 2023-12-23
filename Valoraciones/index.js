@@ -6,14 +6,14 @@ const app = express();
 const axios = require("axios");
 
 
-const port = process.env.PORT;
+const port = 5008;
 app.use(express.json());
 app.use(cors());
 
 const valoracionesRouter = require("./routes/valoracionesRoutes.js")
 app.use('/valoraciones', valoracionesRouter);
 mongoose.connect(
-  process.env.ATLAS_URI).then(()=>
+  "mongodb+srv://grupoWeb:grupoWeb@cluster0.syetq9a.mongodb.net/elRastro").then(()=>
     console.log("Hemos conectado con mongoDB")
   ).catch((error)=>
     console.error(error)

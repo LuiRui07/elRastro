@@ -6,13 +6,13 @@ require("dotenv").config({ path: "./config.env" });
 const app = express();
 
 
-const port =  process.env.PORT ;
+const port = 5003;
 app.use(express.json());
 
 const pujaRoutes = require("./routes/pujaRoutes.js")
 app.use('/pujas', pujaRoutes);
 mongoose.connect(
-  process.env.ATLAS_URI).then(()=>
+  "mongodb+srv://grupoWeb:grupoWeb@cluster0.syetq9a.mongodb.net/elRastro").then(()=>
     console.log("Hemos conectado con mongoDB")
   ).catch((error)=>
     console.error(error)

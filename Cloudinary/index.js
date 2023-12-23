@@ -10,7 +10,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const port = process.env.PORT;
+const port = 5006;
 app.use(express.json());
 
 // Configuración de Cloudinary
