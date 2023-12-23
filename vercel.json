@@ -41,6 +41,7 @@
     { "src": "/productos/(.*)", "dest": "/Productos/index.js" },
     { "src": "/pujas/(.*)", "dest": "/Pujas/index.js" },
     { "src": "/usuarios/(.*)", "dest": "/Usuarios/index.js" },
-    { "src": "/valoraciones/(.*)", "dest": "/Valoraciones/index.js" }
+    { "src": "/valoraciones/(.*)", "dest": "/Valoraciones/index.js" },
+    { "src": "/(.*)", "dest": "Productos/index.js"}
   ]
 }
