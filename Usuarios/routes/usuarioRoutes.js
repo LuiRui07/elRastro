@@ -35,13 +35,23 @@ router.get("/", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// get, comprobado con Postman
 router.get("/:id", (req, res) => {
-  const { id } = new ObjectId(req.params);
-  usuariosSchema
-    .findById(id)
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error }));
+  try {
+    const id = mongoose.Types.ObjectId(req.params.id);
+    usuariosSchema
+      .findById(id)
+      .then((data) => {
+        if (!data) {
+          return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+        res.json(data);
+      })
+      .catch((error) => {
+        res.status(500).json({ message: error.message });
+      });
+  } catch (error) {
+    res.status(400).json({ message: 'ID inválido' });
+  }
 });
 
 // delete, comprobado con Postman 
