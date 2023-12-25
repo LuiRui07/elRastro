@@ -137,7 +137,14 @@ const PaginaConcretaProducto = () => {
 
                     </div>
                     <div>
-                        Deadline: {articulo.fechaLimite}
+                        Deadline:{new Date(articulo.fechaDeCierre).toLocaleDateString("es-ES", {
+                                year: "numeric",
+                                month: "numeric",
+                                day: "numeric",
+                                hour: "numeric",
+                                minute: "numeric",
+                                second: "numeric",
+                            })}
                         {localStorage.id != null  ?
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <a href={`/chat/${articulo._id}/${vendedor._id}/${localStorage.id}`} style={{ marginRight: '1%' }}>
