@@ -13,6 +13,7 @@ import '../css/PaginaConcretaProducto.css';
 import { UserContext } from '../hooks/UserContentHook';
 import { useContext } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import PayPalButton from '../components/PayPalButton';
 
 const PaginaConcretaProducto = () => {
     const user = useContext(UserContext);
@@ -136,7 +137,14 @@ const PaginaConcretaProducto = () => {
 
                     </div>
                     <div>
-                        {localStorage.id != null  ? <a href={`/chat/${articulo._id}/${vendedor._id}/${localStorage.id}`}><button className="button-36" role="button">Contactar</button></a> :  <div id="sigInDiv" className='d-none d-md-block' style={{ paddingLeft: "2%" }}></div>}
+                        {localStorage.id != null  ?
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <a href={`/chat/${articulo._id}/${vendedor._id}/${localStorage.id}`} style={{ marginRight: '1%' }}>
+                        <button className="button-36" role="button">Contactar</button>
+                        </a>
+                        <PayPalButton precio={articulo.precioInicial} />
+                        </div>
+                        :  <div id="sigInDiv" className='d-none d-md-block' style={{ paddingLeft: "2%" }}></div>}
                     </div>
                 </div>
 
