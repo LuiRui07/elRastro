@@ -36,22 +36,17 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-  try {
-    const id = mongoose.Types.ObjectId(req.params.id);
-    usuariosSchema
-      .findById(id)
-      .then((data) => {
-        if (!data) {
-          return res.status(404).json({ message: 'Usuario no encontrado' });
-        }
+  const { id } = req.params;
+  usuariosSchema
+    .findById(id)
+    .then((data) => {
+      if (data) {
         res.json(data);
-      })
-      .catch((error) => {
-        res.status(500).json({ message: error.message });
-      });
-  } catch (error) {
-    res.status(400).json({ message: 'ID inválido' });
-  }
+      } else {
+        res.json({ message: "No se ha encontrado ningún usuario con ese id." });
+      }
+    })
+    .catch((error) => res.json({ message: error }));
 });
 
 // delete, comprobado con Postman 
