@@ -48,7 +48,7 @@ function Buzon() {
         </div>
       ))
     ) : (
-      <p>No hay mensajes!</p>
+      <p>Cargando...</p>
     )}
   </div>
   );
