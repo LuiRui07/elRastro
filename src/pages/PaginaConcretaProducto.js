@@ -209,7 +209,7 @@ const PaginaConcretaProducto = () => {
 
                     </div>
                     <div>
-                        {localStorage.id != null  ?
+                        {localStorage.id !== null  ?
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <h6 >Deadline:{new Date(articulo.fechaDeCierre).toLocaleDateString("es-ES", {
                                 year: "numeric",
@@ -220,9 +220,11 @@ const PaginaConcretaProducto = () => {
                                 second: "numeric",
                             })}
                             </h6>
+                        {localStorage.id !== vendedor._id ? 
                         <a href={`/chat/${articulo._id}/${vendedor._id}/${localStorage.id}`} style={{ marginRight: '1%' }}>
                         <button className="button-36" role="button">Contactar</button>
                         </a>
+                        : null}
                         </div>
                         :  <div id="sigInDiv" className='d-none d-md-block' style={{ paddingLeft: "2%" }}></div>}
                     </div>
@@ -250,6 +252,7 @@ const PaginaConcretaProducto = () => {
 
                 <div className='d-flex flex-justify-center align-items-center'>
                     <div className='d-flex flex-column border-bottom w-100'>
+                        {localStorage.id !== vendedor._id ? <div>
                         {articulo.pujaGanadora != null ? (
                             <div className='d-flex align-items-center'>
                                 <h2 className='mr-3'>Ultima Puja: {puja.precio} €</h2> 
@@ -266,7 +269,7 @@ const PaginaConcretaProducto = () => {
                                 <h2 className='mr-3'>Precio Inicial: {articulo.precioInicial} €</h2>
                                 <button onClick={() => pujar(articulo.precioInicial)} className='button-36 ml-auto' style={{ marginRight: '1%' }}>Pujar</button>
                             </div>
-                        )}
+                        )} </div> : null}
                         <h1 className='TituloProducto' >{articulo.nombre}</h1>    
                     </div>
                 </div>
