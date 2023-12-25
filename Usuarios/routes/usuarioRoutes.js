@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
+const ObjectId = mongoose.Types.ObjectId;
 const usuariosSchema = require("../models/usuarios.js");
 const usuarios = require("../models/usuarios.js");
 //LLAMADAS CRUD-------------------------------------------------------------------------------
@@ -35,7 +36,7 @@ router.get("/", (req, res) => {
 
 // get, comprobado con Postman
 router.get("/:id", (req, res) => {
-  const { id } = req.params;
+  const { id } = new ObjectId(req.params);
   usuariosSchema
     .findById(id)
     .then((data) => res.json(data))
