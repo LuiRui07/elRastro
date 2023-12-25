@@ -8,6 +8,7 @@ const app = express();
 
 const port = 5003;
 app.use(express.json());
+app.use(cors());
 
 const pujaRoutes = require("./routes/pujaRoutes.js")
 app.use('/pujas', pujaRoutes);
