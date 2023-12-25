@@ -70,30 +70,32 @@ router.get("/pujas-realizadas/:usuarioId", async (req, res) => {
   const { usuarioId } = req.params;
 
   try {
-    // Busca todas las pujas del usuario específico
-    const pujas = await pujasSchema.find({ comprador: new ObjectId(usuarioId) });
+    // Agrupa las pujas por producto y selecciona la máxima puja para cada producto
+    const pujasMaximas = await pujasSchema.aggregate([
+      {
+        $match: { comprador: new ObjectId(usuarioId) }
+      },
+      {
+        $group: {
+          _id: "$producto", // Agrupar por producto
+          max_puja: { $max: "$precio" } // Obtener la máxima puja para cada producto
+        }
+      }
+    ]);
 
-    if (pujas.length === 0) {
+    if (pujasMaximas.length === 0) {
       return res.json({ message: "El usuario no ha realizado ninguna puja." });
     }
 
-    // Obtén información completa del producto para cada puja
-    const pujasConProducto = await Promise.all(
-      pujas.map(async (puja) => {
-        const producto = await pujasSchema.findById(puja.producto);
-        return {
-          _id: puja._id,
-          comprador: puja.comprador,
-          producto: puja.producto,
-          precio: puja.precio,
-          fechaDeCreacion: puja.fechaDeCreacion,
-          __v: puja.__v,
-          ...producto._doc // Copia todas las propiedades del producto
-        };
+    // Para cada máxima puja, obtén los detalles completos de esa puja
+    const pujasDetalladas = await Promise.all(
+      pujasMaximas.map(async (pujaMaxima) => {
+        const puja = await pujasSchema.findOne({ producto: pujaMaxima._id, precio: pujaMaxima.max_puja }).populate('producto');
+        return puja;
       })
     );
 
-    res.json(pujasConProducto);
+    res.json(pujasDetalladas);
 
   } catch (error) {
     res.json({ message: error.message });
