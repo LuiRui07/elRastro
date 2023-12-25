@@ -90,7 +90,7 @@ router.get("/pujas-realizadas/:usuarioId", async (req, res) => {
     // Para cada máxima puja, obtén los detalles completos de esa puja
     const pujasDetalladas = await Promise.all(
       pujasMaximas.map(async (pujaMaxima) => {
-        const puja = await pujasSchema.findOne({ producto: pujaMaxima._id, precio: pujaMaxima.max_puja }).populate('producto');
+        const puja = await pujasSchema.findOne({ producto: pujaMaxima._id, precio: pujaMaxima.max_puja, comprador: new ObjectId(usuarioId) });
         return puja;
       })
     );
