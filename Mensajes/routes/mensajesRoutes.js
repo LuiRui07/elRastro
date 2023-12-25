@@ -84,7 +84,7 @@ router.put("/:id", (req, res) => {
 
 //Get mensajes relacionados a un usuario, comprobado con Postman
 router.get("/buzon/:idDestinatario", async (req, res) => {
-    const id  = req.params.idDestinatario;
+    const id  = new ObjectId(req.params.idDestinatario);
     mensajesSchema
       .find({ destinatario: id }).sort({ fechaEnvio: -1 })
       .then((data) => {
@@ -99,9 +99,9 @@ router.get("/buzon/:idDestinatario", async (req, res) => {
 
 //Get mensajes relacionados a un producto del vendedor y del comprador
 router.get("/:idProducto/:idRemitente/:idDestinatario", (req, res) => {
-  const idRemitente = req.params.idRemitente;
-  const idDestinatario = req.params.idDestinatario;
-  const idProducto = req.params.idProducto;
+  const idRemitente = new ObjectId(req.params.idRemitente);
+  const idDestinatario = new ObjectId(req.params.idDestinatario);
+  const idProducto = new ObjectId(req.params.idProducto);
   console.log(idRemitente, idDestinatario, idProducto);
   const mensajes = mensajesSchema.find({ remitente: { $in: [idDestinatario, idRemitente] }, productoId: idProducto, destinatario: { $in: [idDestinatario, idRemitente] } }).sort({ fecha: -1 });
 
