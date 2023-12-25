@@ -49,7 +49,7 @@ const Chat = () => {
     };
 
     const enviarMensaje = () => {
-        axios.post(`https://el-rastro-six.vercel.app/mensajes`, {
+        axios.post(`https://el-rastro-six.vercel.app/mensajes/`, {
             remitente: idRemitente,
             destinatario: idDestinatario,
             texto: nuevoMensaje,
