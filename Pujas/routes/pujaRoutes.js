@@ -66,29 +66,40 @@ router.get("/pujas-mas-alta/:productoId", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 // get todas las pujas a los que ha ofertado un usuario, comprobado con Postman
-router.get("/pujas-realizadas/:usuarioId", (req, res) => {
+router.get("/pujas-realizadas/:usuarioId", async (req, res) => {
   const { usuarioId } = req.params;
-  
-  // Agrupa las pujas por producto y selecciona la máxima puja para cada producto
-  pujasSchema.aggregate([
-    {
-      $match: { comprador: new ObjectId(usuarioId) }
-    },
-    {
-      $group: {
-        _id: "$producto", // Agrupar por producto
-        max_puja: { $max: "$precio" } // Obtener la máxima puja para cada producto
-      }
-    }
-  ])
-  .then((pujasMaximas) => {
-    if (pujasMaximas.length === 0) {
+
+  try {
+    // Busca todas las pujas del usuario específico
+    const pujas = await pujasSchema.find({ comprador: new ObjectId(usuarioId) });
+
+    if (pujas.length === 0) {
       return res.json({ message: "El usuario no ha realizado ninguna puja." });
     }
-    res.json(pujasMaximas);
-  })
-  .catch((error) => res.json({ message: error }));
+
+    // Obtén información completa del producto para cada puja
+    const pujasConProducto = await Promise.all(
+      pujas.map(async (puja) => {
+        const producto = await productosSchema.findById(puja.producto);
+        return {
+          _id: puja._id,
+          comprador: puja.comprador,
+          producto: puja.producto,
+          precio: puja.precio,
+          fechaDeCreacion: puja.fechaDeCreacion,
+          __v: puja.__v,
+          ...producto._doc // Copia todas las propiedades del producto
+        };
+      })
+    );
+
+    res.json(pujasConProducto);
+
+  } catch (error) {
+    res.json({ message: error.message });
+  }
 });
+
 
 // devolver cantidad de pujas para un producto con id x, comprobado con Postman
 router.get("/cantidad-pujas/:productoId", (req, res) => {
