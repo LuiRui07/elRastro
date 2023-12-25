@@ -19,7 +19,7 @@ const Navbar = () => {
     const cerrarSesion = () => {
         user.setUser(null);
         localStorage.removeItem("id");
-        window.location.href = "https://el-rastro-six.vercel.app";
+        window.location.href = "https://el-rastro-nine.vercel.app";
     }
 
     function handleCallbackResponse(response) {
