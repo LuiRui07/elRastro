@@ -111,6 +111,7 @@ function MisProductos() {
                                 <div className="col-md-6 d-flex flex-column text-start distancia">
                                     <h5 className="tipoLetraPrecios fw-bolder text-body">
                                         {puja.precio}
+                                        {puja.producto}
                                     </h5>
                                     <p
                                         className="fw-normal tipoLetraPrecios text-body-tertiary"
