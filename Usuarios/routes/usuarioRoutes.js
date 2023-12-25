@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
+const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const usuariosSchema = require("../models/usuarios.js");
 const usuarios = require("../models/usuarios.js");
