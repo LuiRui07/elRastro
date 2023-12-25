@@ -80,7 +80,7 @@ router.get("/pujas-realizadas/:usuarioId", async (req, res) => {
     // Obtén información completa del producto para cada puja
     const pujasConProducto = await Promise.all(
       pujas.map(async (puja) => {
-        const producto = await productosSchema.findById(puja.producto);
+        const producto = await pujasSchema.findById(puja.producto);
         return {
           _id: puja._id,
           comprador: puja.comprador,
