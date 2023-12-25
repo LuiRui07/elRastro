@@ -17,6 +17,8 @@ import PayPalButton from '../components/PayPalButton';
 
 const PaginaConcretaProducto = () => {
     const user = useContext(UserContext);
+    const [cantidad, setCantidad] = useState('');
+    const [puja, setPuja] = useState('');
     
     function handleCallbackResponse(response) {
         var userObject = jwtDecode(response.credential);
@@ -77,6 +79,7 @@ const PaginaConcretaProducto = () => {
     const handleClickImagen = (index) => {
         setImagenActual(index);
     };
+
     useEffect(() => {
         Axios.get(`https://el-rastro-six.vercel.app/productos/${id}`)
             .then(response => {
@@ -101,7 +104,7 @@ const PaginaConcretaProducto = () => {
                     setPosition([response.data.latitud, response.data.longitud]);
 
 
-                    console.log('Datos del backend:', response.data);
+                    console.log('Datos del Mapa backend:', response.data);
                 }
             })
             .catch(error => {
@@ -113,15 +116,83 @@ const PaginaConcretaProducto = () => {
         axios.get(`https://el-rastro-six.vercel.app/usuarios/${articulo.vendedor}`)
             .then(response => {
                 if (response.data !== null) {
-
                     setVendedor(response.data);
-                    console.log('Datos del backend:', response.data);
+                    console.log('Datos del Vendedor en backend:', response.data);
                 }
             })
             .catch(error => {
                 console.error('Error al obtener datos del backend:', error);
             })
     }, [articulo]);
+
+    useEffect(() => {
+        axios.get(`https://el-rastro-six.vercel.app/pujas/${articulo.pujaGanadora}`)
+            .then(response => {
+                if (response.data !== null) {
+                    setPuja(response.data);
+                    console.log('Datos de Puja en backend:', response.data);
+                }
+            })
+            .catch(error => {
+                console.error('Error al obtener datos del backend:', error);
+            })
+    }, [articulo]);
+
+    const pujar = (precio) => {
+
+        if (articulo.pujaGanadora !== null && puja !== null && precio < puja.precio) {
+            alert('La puja debe ser mayor que la puja ganadora');
+            return false;
+        } else if (user.user === null) {
+            alert('Identificate para pujar');
+            return false;
+        } else if (user.user.id === vendedor._id) {
+            alert('No puedes pujar por tu propio producto');
+            return false;
+        } else if (Date.now() > articulo.fechaDeCierre) {
+            alert('El producto ya ha cerrado');
+            return false;
+        }
+        
+        axios.post(`https://el-rastro-six.vercel.app/pujas/`, {
+            comprador: localStorage.id,
+            producto: articulo._id,
+            precio: precio,
+            fechaDeCreacion: Date.now(),
+        })
+        .then(response => {
+            console.log('Respuesta de POST:', response.data);
+            const idPuja = response.data._id;
+            setArticulo(response.data);
+            console.log('Datos del backend después de Crear la Puja:', response.data);
+
+            axios.put(`https://el-rastro-six.vercel.app/productos/${articulo._id}`, {
+                pujaGanadora: idPuja,
+                imagenes: articulo.imagenes,
+                nombre: articulo.nombre,
+                descripcion: articulo.descripcion,
+                categorias: articulo.categorias,
+                precioInicial: articulo.precioInicial,
+                fechaDeCierre: articulo.fechaDeCierre,
+                vendedor: articulo.vendedor,
+                fechaDeCreacion: articulo.fechaDeCreacion,
+                peso : articulo.peso,
+            })
+            .then(response => {
+                console.log('Respuesta de PUT:', response.data);
+                // Puedes agregar más lógica aquí si es necesario
+            })
+            .catch(error => {
+                console.error('Error en PUT:', error);
+            });
+            
+        })
+        .catch(error => {
+            console.error('Error en POST:', error);
+        });
+       
+        //window.location.reload();
+    }    
 
     return (
         <div>
@@ -134,10 +205,13 @@ const PaginaConcretaProducto = () => {
                             <h5 style={{paddingLeft: '10%'}} className='fs-4 fw-bolder ml-4 mr-4' >{vendedor.nombreCompleto}</h5>
                             <Estrellas valoracion={vendedor.valoracion} numeroValoraciones={vendedor.numeroValoraciones} />
                         </div>
+                        
 
                     </div>
                     <div>
-                        Deadline:{new Date(articulo.fechaDeCierre).toLocaleDateString("es-ES", {
+                        {localStorage.id != null  ?
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <h6 >Deadline:{new Date(articulo.fechaDeCierre).toLocaleDateString("es-ES", {
                                 year: "numeric",
                                 month: "numeric",
                                 day: "numeric",
@@ -145,12 +219,10 @@ const PaginaConcretaProducto = () => {
                                 minute: "numeric",
                                 second: "numeric",
                             })}
-                        {localStorage.id != null  ?
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            </h6>
                         <a href={`/chat/${articulo._id}/${vendedor._id}/${localStorage.id}`} style={{ marginRight: '1%' }}>
                         <button className="button-36" role="button">Contactar</button>
                         </a>
-                        <PayPalButton precio={articulo.precioInicial} />
                         </div>
                         :  <div id="sigInDiv" className='d-none d-md-block' style={{ paddingLeft: "2%" }}></div>}
                     </div>
@@ -177,14 +249,26 @@ const PaginaConcretaProducto = () => {
                 </div>
 
                 <div className='d-flex flex-justify-center align-items-center'>
-                    <div className='d-flex flex-column  border-bottom w-100'>
-                        <h1>{articulo.precioInicial} €</h1>
-                        <h1 className='TituloProducto' >{articulo.nombre}</h1>
-                        
-                        
+                    <div className='d-flex flex-column border-bottom w-100'>
+                        {articulo.pujaGanadora != null ? (
+                            <div className='d-flex align-items-center'>
+                                <h2 className='mr-3'>Ultima Puja: {puja.precio} €</h2> 
+                                <input 
+                                    value={cantidad}
+                                    onChange={(e) => setCantidad(e.target.value)}
+                                    placeholder="Cantidad" 
+                                    style={{ marginLeft: '10%', width: '100px' }}
+                                />
+                               <button onClick={() => pujar(cantidad)} className='button-36 ml-auto' style={{marginLeft: '10%'}}>Pujar</button>          
+                            </div>
+                        ) : (
+                            <div className='d-flex align-items-center'>
+                                <h2 className='mr-3'>Precio Inicial: {articulo.precioInicial} €</h2>
+                                <button onClick={() => pujar(articulo.precioInicial)} className='button-36 ml-auto' style={{ marginRight: '1%' }}>Pujar</button>
+                            </div>
+                        )}
+                        <h1 className='TituloProducto' >{articulo.nombre}</h1>    
                     </div>
-
-
                 </div>
                 <div className='d-flex flex-column  border-bottom w-100'>
                     <p className='DescripcionProducto' >{articulo.descripcion}</p>
