@@ -10,6 +10,8 @@ import { UserContext } from '../hooks/UserContentHook';
 
 function MisProductos() {
   const [productos, setData] = useState([]);
+  const [pujas, setPujas] = useState([]);
+  const [productoPujado, setProductoPujado] = useState([]);
   const user = useContext(UserContext);
 
   useEffect(() => {
@@ -24,6 +26,17 @@ function MisProductos() {
       });
   }}, []);
 
+  useEffect(() => {
+    axios.get('https://el-rastro-six.vercel.app/pujas/pujas-realizadas/' + user.user.id)
+        .then(response => {
+            setPujas(response.data);
+            console.log('Datos del backend Pujas:', response.data);
+        })
+        .catch(error => {
+            console.error('Error al obtener datos del backend:', error);
+        });
+    }, []);
+    
   return (
     <div style={{ textAlign: 'center' }} >
       <Navbar />
@@ -78,6 +91,56 @@ function MisProductos() {
             )}
         </div>
     </div>
+
+    {pujas.length > 0 && (
+            <h1 class="display-2" style={{marginTop: "2%", marginBottom: "2%"}}>Tus Pujas</h1>
+    )}
+
+    <div className="mt-4 w-75 carrousel">
+        <div className="d-flex flex-row overflow-x-auto overflow-y-hidden">
+            {pujas.length > 0 ? (
+                pujas.map((puja, index) => (
+                            <a
+                            className="col-md-5 text-decoration-none text-colour-black cartaProductos"
+                            href={`/paginaConcreta/${puja.producto}`}
+                            key={index}
+                        >
+                        
+                        <div className=" ">
+                            <div className="row g-0">
+                                <div className="col-md-6 d-flex flex-column text-start distancia">
+                                    <h5 className="tipoLetraPrecios fw-bolder text-body">
+                                        {puja.precio}
+                                    </h5>
+                                    <p
+                                        className="fw-normal tipoLetraPrecios text-body-tertiary"
+                                        style={{
+                                            display: "-webkit-box",
+                                            WebkitLineClamp: 2,
+                                            WebkitBoxOrient: "vertical",
+                                            overflow: "hidden",
+                                        }}
+                                    >
+                                        {new Date(puja.fechaDeCreacion).toLocaleDateString("es-ES", {
+                                            year: "numeric",
+                                            month: "numeric",
+                                            day: "numeric",
+                                            hour: "numeric",
+                                            minute: "numeric",
+                                            second: "numeric",
+                                        })}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                ))
+            ) : (
+                <h1 className='mt-4 tituloElRastro'>Aún no has pujado. ¡Anímate!</h1>
+            )}
+        </div>
+    </div>
+
     </div>
     );
 }
