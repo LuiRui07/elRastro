@@ -13,7 +13,7 @@
       "use": "@vercel/node"
     },
     {
-      "src": "/Map/index.js",
+      "src": "/OpenStreetMap/index.js",
       "use": "@vercel/node"
     },
     {
@@ -37,7 +37,7 @@
     { "src": "/huellaC/(.*)", "dest": "/CarbonFootprint/index.js" },
     { "src": "/cloudinary/(.*)", "dest": "/Cloudinary/index.js" },
     { "src": "/mensajes/(.*)", "dest": "/Mensajes/index.js" },
-    { "src": "/mapa/(.*)", "dest": "/Map/index.js" },
+    { "src": "/mapa/(.*)", "dest": "/OpenStreetMap/index.js" },
     { "src": "/productos/(.*)", "dest": "/Productos/index.js" },
     { "src": "/pujas/(.*)", "dest": "/Pujas/index.js" },
     { "src": "/usuarios/(.*)", "dest": "/Usuarios/index.js" },
