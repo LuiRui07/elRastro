@@ -53,7 +53,7 @@ const Navbar = () => {
         if (window.google && window.google.accounts && window.google.accounts.id) {
             // Inicializar Google Sign-In
             window.google.accounts.id.initialize({
-                client_id: '71937643255-t87vgiaf2pignoee98j3uej1q648cp5r.apps.googleusercontent.com',
+                client_id: '125549162694-dmj5gauc815vss9fnlo3ju6qeke9d2ea.apps.googleusercontent.com',
                 callback: handleCallbackResponse,
             });
 
