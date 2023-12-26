@@ -83,56 +83,37 @@ router.put("/:id", (req, res) => {
 });
 
 router.get("/buzon/:idUsuario", async (req, res) => {
-  const idUsuario = new ObjectId(req.params.idUsuario);
+  try {
+    const idUsuario = new ObjectId(req.params.idUsuario);
 
-  mensajesSchema
-    .aggregate([
-        {
-            $match: {
-                $or: [
-                    { destinatario: idUsuario },
-                    { remitente: idUsuario }
-                ]
-            }
-        },
-        {
-            $group: {
-                _id: { $ifNull: ["$productId", "NoDefinido"] },
-                mensajes: { $push: "$$ROOT" }
-            }
-        },
-        {
-            $addFields: {
-                mensajesOrdenados: {
-                    $map: {
-                        input: "$mensajes",
-                        as: "mensaje",
-                        in: {
-                            $mergeObjects: [
-                                "$$mensaje",
-                                { fechaEnvio: { $toDate: "$$mensaje.fechaEnvio" } }
-                            ]
-                        }
-                    }
-                }
-            }
-        },
-        {
-            $addFields: {
-                mensajesOrdenados: {
-                    $sort: { "fechaEnvio": -1 }
-                }
-            }
+    const mensajes = await Mensaje.aggregate([
+      {
+        $match: {
+          $or: [
+            { remitente: idUsuario },
+            { destinatario: idUsuario }
+          ]
         }
-    ])
-    .then((data) => {
-        if (data && data.length > 0) {
-            res.json(data);
-        } else {
-            res.json({ message: "No tienes mensajes" });
+      },
+      {
+        $group: {
+          _id: "$productId",
+          mensajes: {
+            $push: {
+              _id: "$_id",
+              remitente: "$remitente",
+              destinatario: "$destinatario",
+              contenido: "$contenido"
+            }
+          }
         }
-    })
-    .catch((error) => res.json({ message: error }));
+      }
+    ]);
+
+    res.json(mensajes);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 });
 
 
