@@ -102,9 +102,10 @@ router.get("/buzon/:idUsuario", async (req, res) => {
             }
         },
         {
-            $addFields: {
+            $project: {
+                _id: 1,
                 mensajesOrdenados: {
-                    $sort: { "mensajes.fechaEnvio": -1 }
+                    $sort: { "fechaEnvio": -1 }
                 }
             }
         }
@@ -118,7 +119,6 @@ router.get("/buzon/:idUsuario", async (req, res) => {
     })
     .catch((error) => res.json({ message: error }));
 });
-
 
 
 
