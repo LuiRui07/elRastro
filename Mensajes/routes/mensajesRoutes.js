@@ -104,8 +104,14 @@ router.get("/buzon/:idUsuario", async (req, res) => {
               remitente: "$remitente",
               destinatario: "$destinatario",
               texto: "$texto",
+              fechaEnvio: "$fechaEnvio"
             }
           }
+        }
+      },
+      {
+        $sort: {
+          "mensajes.fechaEnvio": -1
         }
       }
     ]);
