@@ -86,7 +86,7 @@ router.get("/buzon/:idUsuario", async (req, res) => {
   try {
     const idUsuario = new ObjectId(req.params.idUsuario);
 
-    const mensajes = await Mensaje.aggregate([
+    const mensajes = await mensajesSchema.aggregate([
       {
         $match: {
           $or: [
@@ -103,7 +103,7 @@ router.get("/buzon/:idUsuario", async (req, res) => {
               _id: "$_id",
               remitente: "$remitente",
               destinatario: "$destinatario",
-              contenido: "$contenido"
+              texto: "$texto",
             }
           }
         }
