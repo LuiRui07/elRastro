@@ -97,7 +97,7 @@ router.get("/buzon/:idUsuario", async (req, res) => {
       },
       {
         $group: {
-          _id: "$productId",
+          _id: "$productoId",
           mensajes: {
             $push: {
               _id: "$_id",
