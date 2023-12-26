@@ -110,9 +110,10 @@ function MisProductos() {
                             <div className="row g-0">
                                 <div className="col-md-6 d-flex flex-column text-start distancia">
                                     <h5 className="tipoLetraPrecios fw-bolder text-body">
-                                        {puja.precio}
-                                        {puja.producto}
+                                        {puja.precio} €
+                                        
                                     </h5>
+                                    {puja.producto} 
                                     <p
                                         className="fw-normal tipoLetraPrecios text-body-tertiary"
                                         style={{
