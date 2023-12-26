@@ -10,6 +10,7 @@ import { UserContext } from '../hooks/UserContentHook';
 
 function Buzon() {
   const [mensajes, setData] = useState([]);
+  const [productosMensajes, setProductosMensajes] = useState({});
   const user = useContext(UserContext);
 
   useEffect(() => {
@@ -23,41 +24,44 @@ function Buzon() {
         console.error('Error al obtener datos del backend:', error);
       });
   }}, []);
+  
   return (
     <div style={{ textAlign: 'center' }}>
       <Navbar />
       <h1 className="display-2" style={{ marginTop: "2%", marginBottom: "2%" }}>Mensajes</h1>
       
       {mensajes.length > 0 ? (
-        mensajes.map((grupo) => (
+        mensajes.map((grupo) => { 
+          axios.get('https://el-rastro-six.vercel.app/productos/' + grupo._id)
+            .then(response => {
+              setProductosMensajes(prevState => ({
+                ...prevState,
+                [grupo._id]: response.data,
+              }));
+              console.log('Datos del backend:', response.data);
+            })
+            .catch(error => {
+              console.error('Error al obtener datos del backend:', error);
+            });
+            
+            const productoActual = productosMensajes[grupo._id] || {};
+            console.log(productoActual);
+          return (
           <div key={grupo._id}>
-            {grupo.mensajes.map((mensaje, index) => (
-              <div className="card" key={index} onClick={() => window.location.href = `/chat/${grupo._id}/${mensaje.remitente}/${mensaje.destinatario}`}>
-                <div className="card-body">
-                  <h5 className="card-title">{mensaje.texto}</h5>
-                  {mensaje.fechaEnvio && (
-                    <h6 className="card-subtitle mb-2 text-muted">
-                      {new Date(mensaje.fechaEnvio).toLocaleDateString("es-ES", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                        hour: "numeric",
-                        minute: "numeric",
-                        second: "numeric",
-                      })}
-                    </h6>
-                  )}
-                  <p className="card-text">{mensaje.texto}</p> {/* Asegúrate de que el mensaje esté en "mensaje.texto" */}
-                </div>
+            <div className="card mb-3" onClick={() => window.location.href = `/chat/${grupo._id}/${grupo.mensajes[0].remitente}/${grupo.mensajes[0].destinatario}`}>
+              <div className="card-body">
+                <h5 className="card-title"> {productoActual.nombre}</h5>
+                <p className="card-text"> {grupo.mensajes[0].texto}</p>
               </div>
-            ))}
+            </div>
           </div>
-        ))
+        )})
       ) : (
         <h1 className='mt-4 tituloElRastro'>Aún no has hablado con nadie. ¡Anímate!</h1>
       )}
     </div>
   );
+  
   
   
 }
