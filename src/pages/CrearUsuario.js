@@ -46,7 +46,7 @@ const CrearUsuario = () => {
                         icon: 'error',
                         confirmButtonText: 'Venga va',
                         didClose: () => {
-                            window.location.href = "https://el-rastro-six.vercel.app";
+                            window.location.href = "https://el-rastro-nine.vercel.app";
                         }
                     });
                     
@@ -63,7 +63,7 @@ const CrearUsuario = () => {
                                 name: data.nombreCompleto,
                             });
                             localStorage.setItem("id", data._id);
-                            window.location.href = "https://el-rastro-six.vercel.app";}
+                            window.location.href = "https://el-rastro-nine.vercel.app";}
                         
                       })
 
