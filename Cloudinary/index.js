@@ -1,6 +1,7 @@
 
 const express = require('express');
 const cloudinary = require('cloudinary');
+const cors = require("cors");
 const app = express();
 require("dotenv").config({ path: "./config.env" });
 
@@ -12,6 +13,7 @@ app.use((req, res, next) => {
 
 const port = 5006;
 app.use(express.json());
+app.use(cors());
 
 // Configuración de Cloudinary
 cloudinary.config({ 
