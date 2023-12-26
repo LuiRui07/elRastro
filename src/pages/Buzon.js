@@ -28,7 +28,7 @@ function Buzon() {
     <div style={{ textAlign: 'center' }}>
     <Navbar />
     <h1 class="display-2" style={{marginTop: "2%", marginBottom: "2%"}}>Mensajes</h1>
-    {mensajes !== null ? (
+    {mensajes.length > 0 ? (
       mensajes.map((mensaje, index) => (
         <div className="card" key={index} onClick={() => window.location.href = `/chat/${mensaje.productoId}/${mensaje.remitente}/${mensaje.destinatario}`}>
           <div className="card-body">
