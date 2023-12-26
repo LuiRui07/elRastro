@@ -55,7 +55,7 @@ const CrearUsuario = () => {
                         title: 'Usuario Creado',
                         text: 'Ya esta todo listo, se te redirigira a la pagina principal, una vez que refresces se te deslogeara automaticamente',
                         icon: 'success',
-                        confirmButtonText: 'Bombazo',
+                        confirmButtonText: 'Confirmar',
                         didClose: () => {
                             user.setUser({
                                 id: data._id,

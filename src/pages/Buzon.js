@@ -48,7 +48,7 @@ function Buzon() {
         </div>
       ))
     ) : (
-      <p>Cargando...</p>
+      <h1 className='mt-4 tituloElRastro'>Aún no has hablado con nadie. ¡Anímate!</h1>
     )}
   </div>
   );
