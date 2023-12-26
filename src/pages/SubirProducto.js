@@ -65,7 +65,7 @@ const SubirProducto = () => {
           icon: 'success',
           confirmButtonText: 'Correcto',
           didClose: () => {
-            window.location.href = 'https://el-rastro-six.vercel.app';
+            window.location.href = 'https://el-rastro-nine.vercel.app';
           },
         });
       })
