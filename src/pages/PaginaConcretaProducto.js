@@ -139,7 +139,7 @@ const PaginaConcretaProducto = () => {
     }, [articulo]);
 
     const pujar = async (precio) => {
-
+        console.log('AQUI AQUI', articulo.fechaDeCierre);
         if (articulo.pujaGanadora !== null && puja !== null && precio < puja.precio) {
             alert('La puja debe ser mayor que la puja ganadora');
             return false;
@@ -149,7 +149,7 @@ const PaginaConcretaProducto = () => {
         } else if (user.user.id === vendedor._id) {
             alert('No puedes pujar por tu propio producto');
             return false;
-        } else if (Date.now() > articulo.fechaDeCierre) {
+        } else if (Date.now() > Date.parse(articulo.fechaDeCierre)) {
             alert('El producto ya ha cerrado');
             return false;
         }
@@ -204,6 +204,7 @@ const PaginaConcretaProducto = () => {
                     <div>
                         {localStorage.id !== null  ?
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        {Date.parse(articulo.fechaDeCierre) > Date.now() ?
                         <h6 >Deadline:{new Date(articulo.fechaDeCierre).toLocaleDateString("es-ES", {
                                 year: "numeric",
                                 month: "numeric",
@@ -213,6 +214,7 @@ const PaginaConcretaProducto = () => {
                                 second: "numeric",
                             })}
                             </h6>
+                        : null }
                         {localStorage.id !== vendedor._id ? 
                         <a href={`/chat/${articulo._id}/${vendedor._id}/${localStorage.id}`} style={{ marginRight: '1%' }}>
                         <button className="button-36" role="button">Contactar</button>
@@ -247,15 +249,29 @@ const PaginaConcretaProducto = () => {
                     <div className='d-flex flex-column border-bottom w-100'>
                         {localStorage.id !== vendedor._id ? <div>
                         {articulo.pujaGanadora != null ? (
-                            <div className='d-flex align-items-center'>
+                            <div className='d-flex align-items-center'> 
                                 <h2 className='mr-3'>Ultima Puja: {puja.precio} €</h2> 
+                                {
+                                articulo.pujaGanadora.comprador === localStorage._id &&
+                                    (
+                                        <img 
+                                        style={{ width: "7%" }} 
+                                        src={Date.parse(articulo.fechaDeCierre) < Date.now() ? "https://media.istockphoto.com/id/691856234/vector/flat-round-check-mark-green-icon-button-tick-symbol-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=hXL5nXQ2UJlh4yzs2LyZC4GtctQG0fs-mk30GPPbhbQ=" : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Eo_circle_yellow_checkmark.svg/1024px-Eo_circle_yellow_checkmark.svg.png"} 
+                                        alt={Date.parse(articulo.fechaDeCierre) < Date.now() ? "tick" : "tick2"} 
+                                        />
+                                    )
+                                }
+                                {Date.parse(articulo.fechaDeCierre) < Date.now() ? <PayPalButton /> : 
+                                <div>
                                 <input 
                                     value={cantidad}
                                     onChange={(e) => setCantidad(e.target.value)}
                                     placeholder="Cantidad" 
                                     style={{ marginLeft: '10%', width: '100px' }}
                                 />
-                               <button onClick={() => pujar(cantidad)} className='button-36 ml-auto' style={{marginLeft: '10%'}}>Pujar</button>          
+                               <button onClick={() => pujar(cantidad)} className='button-36 ml-auto' style={{marginLeft: '10%'}}>Pujar</button>  
+                               </div> 
+                                }       
                             </div>
                         ) : (
                             <div className='d-flex align-items-center'>

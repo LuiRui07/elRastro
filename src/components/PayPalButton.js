@@ -1,6 +1,6 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
-function PayPalButtonComponent({precio,nombre}) {
+function PayPalButtonComponent({precio}) {
   return (
     <PayPalScriptProvider options={{ "client-id": "AR1QAEpyauNJRmp8xvqn_NibqK_0yYbKodvFPax4QaDQHShuBkmUkGkKj2TXHOblwaVAlBsIohGU5q-E", 
     currency: "EUR"}}>
