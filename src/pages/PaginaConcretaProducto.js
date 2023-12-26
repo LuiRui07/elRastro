@@ -14,6 +14,7 @@ import { UserContext } from '../hooks/UserContentHook';
 import { useContext } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import PayPalButton from '../components/PayPalButton';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const PaginaConcretaProducto = () => {
     const user = useContext(UserContext);
@@ -138,6 +139,26 @@ const PaginaConcretaProducto = () => {
             })
     }, [articulo]);
 
+    const borrar = async () => {
+        // Mostrar ventana de confirmación
+        const confirmacion = window.confirm("¿Estás seguro de que deseas eliminar este artículo?");
+    
+        // Si el usuario hace clic en "Aceptar", procede con la operación de borrado
+        if (confirmacion) {
+            try {
+                const deleteResponse = await axios.delete(`https://el-rastro-six.vercel.app/productos/${articulo._id}`);
+                console.log('Respuesta de DELETE:', deleteResponse.data);
+                window.location.href = "https://el-rastro-nine.vercel.app";
+            } catch (error) {
+                console.error('Error en operaciones DELETE:', error);
+            }
+        } else {
+            // Si el usuario hace clic en "Cancelar", no hagas nada o muestra un mensaje
+            console.log('Operación de borrado cancelada por el usuario.');
+        }
+    }    
+
+
     const pujar = async (precio) => {
         console.log('AQUI AQUI', articulo.fechaDeCierre);
         if (articulo.pujaGanadora !== null && puja !== null && precio < puja.precio) {
@@ -205,7 +226,7 @@ const PaginaConcretaProducto = () => {
                         {localStorage.id !== null  ?
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         {Date.parse(articulo.fechaDeCierre) > Date.now() ?
-                        <h6 >Deadline:{new Date(articulo.fechaDeCierre).toLocaleDateString("es-ES", {
+                        <h6 style={{marginRight: "2%"}} >Deadline:{new Date(articulo.fechaDeCierre).toLocaleDateString("es-ES", {
                                 year: "numeric",
                                 month: "numeric",
                                 day: "numeric",
@@ -219,7 +240,7 @@ const PaginaConcretaProducto = () => {
                         <a href={`/chat/${articulo._id}/${vendedor._id}/${localStorage.id}`} style={{ marginRight: '1%' }}>
                         <button className="button-36" role="button">Contactar</button>
                         </a>
-                        : null}
+                        :  <button type="button" className="btn btn-danger" onClick={borrar}>Eliminar</button>}
                         </div>
                         :  <div id="sigInDiv" className='d-none d-md-block' style={{ paddingLeft: "2%" }}></div>}
                     </div>
