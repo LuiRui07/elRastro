@@ -3,9 +3,6 @@ const router = express.Router();
 const axios = require("axios");
 const cloudinary = require('cloudinary');
 
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
-
 cloudinary.config({ 
   cloud_name: 'dj8csnofh', 
   api_key: '597548295124334', 
