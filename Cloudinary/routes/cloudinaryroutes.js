@@ -3,6 +3,8 @@ const router = express.Router();
 const axios = require("axios");
 const cloudinary = require('cloudinary');
 
+const fileUpload = multer();
+
 cloudinary.config({ 
   cloud_name: 'dj8csnofh', 
   api_key: '597548295124334', 
@@ -67,7 +69,7 @@ router.delete('/eliminar/:public_id', async (req, res) => {
 });
 
 // Actualizar una imagen en Cloudinary
-router.put('/actualizar/:public_id',upload.single('imagen'), async (req, res) => {
+router.put('/actualizar/:public_id',fileUpload.single('imagen'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'Falta la imagen en la solicitud' });
