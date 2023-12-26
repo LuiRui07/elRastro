@@ -102,8 +102,23 @@ router.get("/buzon/:idUsuario", async (req, res) => {
             }
         },
         {
-            $project: {
-                _id: 1,
+            $addFields: {
+                mensajesOrdenados: {
+                    $map: {
+                        input: "$mensajes",
+                        as: "mensaje",
+                        in: {
+                            $mergeObjects: [
+                                "$$mensaje",
+                                { fechaEnvio: { $toDate: "$$mensaje.fechaEnvio" } }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            $addFields: {
                 mensajesOrdenados: {
                     $sort: { "fechaEnvio": -1 }
                 }
@@ -119,6 +134,7 @@ router.get("/buzon/:idUsuario", async (req, res) => {
     })
     .catch((error) => res.json({ message: error }));
 });
+
 
 
 
