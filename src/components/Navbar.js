@@ -33,7 +33,7 @@ const Navbar = () => {
                     user.setUser({
                         email: userObject.email,
                     });
-                    window.location.href = "https://el-rastro-six.vercel.app/crearUsuario";
+                    window.location.href = "https://el-rastro-nine.vercel.app/crearUsuario";
                     return
                 } else {
                     user.setUser({
