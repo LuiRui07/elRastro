@@ -85,16 +85,23 @@ router.put("/:id", (req, res) => {
 //Get mensajes relacionados a un usuario, comprobado con Postman
 router.get("/buzon/:idDestinatario", async (req, res) => {
     const id  = new ObjectId(req.params.idDestinatario);
+    
     mensajesSchema
-      .find({ destinatario: id }).sort({ fechaEnvio: -1 })
-      .then((data) => {
-        if (data) {
-          res.json(data);
+    .find({
+        $or: [
+            { destinatario: idUsuario },
+            { remitente: idUsuario }
+        ]
+    })
+    .sort({ fechaEnvio: -1 })
+    .then((data) => {
+        if (data && data.length > 0) {
+            res.json(data);
         } else {
-          res.json({ message: "No tienes mensajes" });
+            res.json({ message: "No tienes mensajes" });
         }
-      })
-      .catch((error) => res.json({ message: error }));
+    })
+    .catch((error) => res.json({ message: error }));
 });
 
 //Get mensajes relacionados a un producto del vendedor y del comprador
