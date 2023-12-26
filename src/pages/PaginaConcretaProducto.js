@@ -266,10 +266,15 @@ const PaginaConcretaProducto = () => {
                                             />
                                         )}
 
-                                        {puja.comprador !== localStorage.id  ? 
-                                            <img style={{width: "7%"}} src='https://as2.ftcdn.net/v2/jpg/02/50/79/73/1000_F_250797393_yLNptJKu7T6NSm3c70tidf2fEBUq6yNu.jpg'/> 
-                                            : null
-                                        }
+                                        {puja.comprador !== localStorage.id  && (
+                                            <img 
+                                            style={{ width: "7%" }} 
+                                            src={Date.parse(productoActual.fechaDeCierre) < Date.now() 
+                                                ? "https://as2.ftcdn.net/v2/jpg/02/50/79/73/1000_F_250797393_yLNptJKu7T6NSm3c70tidf2fEBUq6yNu.jpg" 
+                                                : "https://img.freepik.com/premium-vector/yellow-cross-illustration_637394-1884.jpg?w=2000"} 
+                                            alt={Date.parse(productoActual.fechaDeCierre) < Date.now() ? "tick" : "tick2"} 
+                                            />
+                                        )}
 
                                         {Date.parse(articulo.fechaDeCierre) < Date.now() ? (
                                             puja.comprador === localStorage.id ? <PayPalButton /> : null
