@@ -247,41 +247,55 @@ const PaginaConcretaProducto = () => {
 
                 <div className='d-flex flex-justify-center align-items-center'>
                     <div className='d-flex flex-column border-bottom w-100'>
-                        {localStorage.id !== vendedor._id ? <div>
-                        {articulo.pujaGanadora != null ? (
-                            <div className='d-flex align-items-center'> 
-                                <h2 className='mr-3'>Ultima Puja: {puja.precio} €</h2> 
-                                {
-                                articulo.pujaGanadora.comprador === localStorage._id &&
-                                    (
-                                        <img 
-                                        style={{ width: "7%" }} 
-                                        src={Date.parse(articulo.fechaDeCierre) < Date.now() ? "https://media.istockphoto.com/id/691856234/vector/flat-round-check-mark-green-icon-button-tick-symbol-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=hXL5nXQ2UJlh4yzs2LyZC4GtctQG0fs-mk30GPPbhbQ=" : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Eo_circle_yellow_checkmark.svg/1024px-Eo_circle_yellow_checkmark.svg.png"} 
-                                        alt={Date.parse(articulo.fechaDeCierre) < Date.now() ? "tick" : "tick2"} 
-                                        />
-                                    )
-                                }
-                                {Date.parse(articulo.fechaDeCierre) < Date.now() ? <PayPalButton /> : 
-                                <div>
-                                <input 
-                                    value={cantidad}
-                                    onChange={(e) => setCantidad(e.target.value)}
-                                    placeholder="Cantidad" 
-                                    style={{ marginLeft: '10%', width: '100px' }}
-                                />
-                               <button onClick={() => pujar(cantidad)} className='button-36 ml-auto' style={{marginLeft: '10%'}}>Pujar</button>  
-                               </div> 
-                                }       
+
+                        {localStorage.id !== vendedor._id ? (
+                            <div>
+                                <h1 className='TituloProducto'>{articulo.nombre}</h1>
+
+                                {articulo.pujaGanadora != null ? (
+                                    <div className='d-flex align-items-center'> 
+                                        <h2 className='mr-3'>Ultima Puja: {puja.precio} €</h2> 
+
+                                        {puja.comprador === localStorage.id && (
+                                            <img 
+                                                style={{ width: "7%" }} 
+                                                src={Date.parse(articulo.fechaDeCierre) < Date.now() 
+                                                    ? "https://media.istockphoto.com/id/691856234/vector/flat-round-check-mark-green-icon-button-tick-symbol-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=hXL5nXQ2UJlh4yzs2LyZC4GtctQG0fs-mk30GPPbhbQ=" 
+                                                    : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Eo_circle_yellow_checkmark.svg/1024px-Eo_circle_yellow_checkmark.svg.png"} 
+                                                alt={Date.parse(articulo.fechaDeCierre) < Date.now() ? "tick" : "tick2"} 
+                                            />
+                                        )}
+
+                                        {puja.comprador !== localStorage.id  ? 
+                                            <img style={{width: "7%"}} src='https://as2.ftcdn.net/v2/jpg/02/50/79/73/1000_F_250797393_yLNptJKu7T6NSm3c70tidf2fEBUq6yNu.jpg'/> 
+                                            : null
+                                        }
+
+                                        {Date.parse(articulo.fechaDeCierre) < Date.now() ? (
+                                            puja.comprador === localStorage.id ? <PayPalButton /> : null
+                                        ) : (
+                                            <div>
+                                                <input 
+                                                    value={cantidad}
+                                                    onChange={(e) => setCantidad(e.target.value)}
+                                                    placeholder="Cantidad" 
+                                                    style={{ marginLeft: '10%', width: '100px' }}
+                                                />
+                                                <button onClick={() => pujar(cantidad)} className='button-36 ml-auto' style={{marginLeft: '10%'}}>Pujar</button>  
+                                            </div>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <div className='d-flex align-items-center'>
+                                        <h2 className='mr-3'>Precio Inicial: {articulo.precioInicial} €</h2>
+                                        <button onClick={() => pujar(articulo.precioInicial)} className='button-36 ml-auto' style={{ marginRight: '1%' }}>Pujar</button>
+                                    </div>
+                                )}
                             </div>
-                        ) : (
-                            <div className='d-flex align-items-center'>
-                                <h2 className='mr-3'>Precio Inicial: {articulo.precioInicial} €</h2>
-                                <button onClick={() => pujar(articulo.precioInicial)} className='button-36 ml-auto' style={{ marginRight: '1%' }}>Pujar</button>
-                            </div>
-                        )} </div> : null}
-                        <h1 className='TituloProducto' >{articulo.nombre}</h1>    
+                        ) : null}
                     </div>
                 </div>
+
                 <div className='d-flex flex-column  border-bottom w-100'>
                     <p className='DescripcionProducto' >{articulo.descripcion}</p>
                 {categorias.map((categoria, index) => (
