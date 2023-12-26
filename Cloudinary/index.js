@@ -13,7 +13,9 @@ app.use((req, res, next) => {
 
 const port = 5006;
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'https://el-rastro-nine.vercel.app',
+}));
 
 // Configuración de Cloudinary
 cloudinary.config({ 
