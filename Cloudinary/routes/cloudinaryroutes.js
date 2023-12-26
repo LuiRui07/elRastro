@@ -39,7 +39,6 @@ router.post('/subir', fileUpload.single('imagen'), function (req, res, next) {
             }
           }
         );
-
       streamifier.createReadStream(req.file.buffer).pipe(stream);
     });
 };
