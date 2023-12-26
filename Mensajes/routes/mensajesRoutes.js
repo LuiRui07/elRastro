@@ -97,20 +97,15 @@ router.get("/buzon/:idUsuario", async (req, res) => {
         },
         {
             $group: {
-                _id: "$productId",
+                _id: { $ifNull: ["$productId", "NoDefinido"] },
                 mensajes: { $push: "$$ROOT" }
             }
         },
         {
-            $unwind: "$mensajes" // Descomponer el array para luego ordenar
-        },
-        {
-            $sort: { "mensajes.fechaEnvio": -1 } // Ordenar por fechaEnvio descendente
-        },
-        {
-            $group: {
-                _id: "$_id",
-                mensajes: { $push: "$mensajes" }
+            $addFields: {
+                mensajesOrdenados: {
+                    $sort: { "mensajes.fechaEnvio": -1 }
+                }
             }
         }
     ])
@@ -123,6 +118,7 @@ router.get("/buzon/:idUsuario", async (req, res) => {
     })
     .catch((error) => res.json({ message: error }));
 });
+
 
 
 
