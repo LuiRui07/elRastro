@@ -26,22 +26,34 @@ router.get('/obtener/:public_id', async (req, res) => {
 });
 
 // Subir una imagen 
-router.post('/subir', upload.single('imagen'), async (req, res) => {
+router.post('/subir', fileUpload.single('imagen'), function (req, res, next) {
+  let streamUpload = (req) => {
+    return new Promise((resolve, reject) => {
+        let stream = cloudinary.uploader.upload_stream(
+          (result, error) => {
+            if (result) {
+              resolve(result);
+            } else {
+              reject(error);
+            }
+          }
+        );
+
+      streamifier.createReadStream(req.file.buffer).pipe(stream);
+    });
+};
+
+async function upload(req) {
   try {
-    if (!req.file) {
-      return res.status(400).json({ error: 'Falta la imagen en la solicitud' });
-    }
-
-    const imagen = req.file;
-
-    const resultado = await cloudinary.uploader.upload(imagen.path);
-
-    console.log(resultado); // Imprime los detalles de la imagen subida en la consola
-    res.json(resultado); // Devuelve los detalles de la imagen subida como respuesta
+    let result = await streamUpload(req);
+    res.status(200).json({ message: 'Imagen subida correctamente', imageUrl: result.url});
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error al subir la imagen a Cloudinary' });
+    console.log('Error al subir la imagen: ', error)
+    res.status(500).json({ message: 'Error al subir la imagen:', error});
   }
+}
+
+upload(req);
 });
 
 // Borrar una imagen
