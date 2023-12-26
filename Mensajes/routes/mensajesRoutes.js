@@ -83,17 +83,26 @@ router.put("/:id", (req, res) => {
 });
 
 //Get mensajes relacionados a un usuario, comprobado con Postman
-router.get("/buzon/:idDestinatario", async (req, res) => {
-    const id  = new ObjectId(req.params.idDestinatario);
-    
-    mensajesSchema
-    .find({
-        $or: [
-            { destinatario: id },
-            { remitente: id }
-        ]
-    })
-    .sort({ fechaEnvio: -1 })
+router.get("/buzon/:idUsuario", async (req, res) => {
+  const idUsuario = new ObjectId(req.params.idUsuario);
+
+  mensajesSchema
+    .aggregate([
+        {
+            $match: {
+                $or: [
+                    { destinatario: idUsuario },
+                    { remitente: idUsuario }
+                ]
+            }
+        },
+        {
+            $group: {
+                _id: "$productId",
+                mensajes: { $push: "$$ROOT" }
+            }
+        }
+    ])
     .then((data) => {
         if (data && data.length > 0) {
             res.json(data);
@@ -103,6 +112,7 @@ router.get("/buzon/:idDestinatario", async (req, res) => {
     })
     .catch((error) => res.json({ message: error }));
 });
+
 
 //Get mensajes relacionados a un producto del vendedor y del comprador
 router.get("/:idProducto/:idRemitente/:idDestinatario", (req, res) => {
