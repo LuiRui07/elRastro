@@ -276,8 +276,8 @@ const PaginaConcretaProducto = () => {
                                             />
                                         )}
 
-                                        {Date.parse(articulo.fechaDeCierre) < Date.now() ? (
-                                            puja.comprador === localStorage.id ? <PayPalButton /> : null
+                                        {Date.parse(articulo.fechaDeCierre) < Date.now() && puja.comprador === localStorage.id ? (
+                                            puja.comprador === localStorage.id ? <PayPalButton precio={puja.precio}/> : null
                                         ) : (
                                             <div>
                                                 <input 
