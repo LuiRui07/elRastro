@@ -82,7 +82,6 @@ router.put("/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-//Get mensajes relacionados a un usuario, comprobado con Postman
 router.get("/buzon/:idUsuario", async (req, res) => {
   const idUsuario = new ObjectId(req.params.idUsuario);
 
@@ -101,6 +100,18 @@ router.get("/buzon/:idUsuario", async (req, res) => {
                 _id: "$productId",
                 mensajes: { $push: "$$ROOT" }
             }
+        },
+        {
+            $unwind: "$mensajes" // Descomponer el array para luego ordenar
+        },
+        {
+            $sort: { "mensajes.fechaEnvio": -1 } // Ordenar por fechaEnvio descendente
+        },
+        {
+            $group: {
+                _id: "$_id",
+                mensajes: { $push: "$mensajes" }
+            }
         }
     ])
     .then((data) => {
@@ -112,6 +123,7 @@ router.get("/buzon/:idUsuario", async (req, res) => {
     })
     .catch((error) => res.json({ message: error }));
 });
+
 
 
 //Get mensajes relacionados a un producto del vendedor y del comprador
