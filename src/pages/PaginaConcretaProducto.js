@@ -138,7 +138,7 @@ const PaginaConcretaProducto = () => {
             })
     }, [articulo]);
 
-    const pujar = (precio) => {
+    const pujar = async (precio) => {
 
         if (articulo.pujaGanadora !== null && puja !== null && precio < puja.precio) {
             alert('La puja debe ser mayor que la puja ganadora');
@@ -154,44 +154,37 @@ const PaginaConcretaProducto = () => {
             return false;
         }
         
-        axios.post(`https://el-rastro-six.vercel.app/pujas/`, {
+        try {
+        const postResponse = await axios.post(`https://el-rastro-six.vercel.app/pujas/`, {
             comprador: localStorage.id,
             producto: articulo._id,
             precio: precio,
             fechaDeCreacion: Date.now(),
-        })
-        .then(response => {
-            console.log('Respuesta de POST:', response.data);
-            const idPuja = response.data._id;
-            setArticulo(response.data);
-            console.log('Datos del backend después de Crear la Puja:', response.data);
-
-            axios.put(`https://el-rastro-six.vercel.app/productos/${articulo._id}`, {
-                pujaGanadora: idPuja,
-                imagenes: articulo.imagenes,
-                nombre: articulo.nombre,
-                descripcion: articulo.descripcion,
-                categorias: articulo.categorias,
-                precioInicial: articulo.precioInicial,
-                fechaDeCierre: articulo.fechaDeCierre,
-                vendedor: articulo.vendedor,
-                fechaDeCreacion: articulo.fechaDeCreacion,
-                peso : articulo.peso,
-            })
-            .then(response => {
-                console.log('Respuesta de PUT:', response.data);
-                // Puedes agregar más lógica aquí si es necesario
-            })
-            .catch(error => {
-                console.error('Error en PUT:', error);
-            });
-            
-        })
-        .catch(error => {
-            console.error('Error en POST:', error);
         });
+
+        console.log('Respuesta de POST:', postResponse.data);
+        const idPuja = postResponse.data._id;
+
+        const putResponse = await axios.put(`https://el-rastro-six.vercel.app/productos/${articulo._id}`, {
+            pujaGanadora: idPuja,
+            imagenes: articulo.imagenes,
+            nombre: articulo.nombre,
+            descripcion: articulo.descripcion,
+            categorias: articulo.categorias,
+            precioInicial: articulo.precioInicial,
+            fechaDeCierre: articulo.fechaDeCierre,
+            vendedor: articulo.vendedor,
+            fechaDeCreacion: articulo.fechaDeCreacion,
+            peso : articulo.peso,
+        })
+       
        
         //window.location.reload();
+        window.location.href = `/paginaConcreta/${articulo._id}`;
+
+      } catch (error) {
+        console.error('Error en operaciones POST o PUT:', error);
+      }
     }    
 
     return (
