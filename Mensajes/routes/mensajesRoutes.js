@@ -89,8 +89,8 @@ router.get("/buzon/:idDestinatario", async (req, res) => {
     mensajesSchema
     .find({
         $or: [
-            { destinatario: idUsuario },
-            { remitente: idUsuario }
+            { destinatario: id },
+            { remitente: id }
         ]
     })
     .sort({ fechaEnvio: -1 })
