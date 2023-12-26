@@ -7,7 +7,7 @@ const usuariosSchema = require("../models/usuarios.js");
 const usuarios = require("../models/usuarios.js");
 //LLAMADAS CRUD-------------------------------------------------------------------------------
 // create, comprobado con Postman 
-router.post("/crearUsuario", (req, res) => {
+router.post("/", (req, res) => {
   const user = usuariosSchema(req.body);
   axios.get('https://el-rastro-six.vercel.app/usuarios/correo/' + user.correo).then((response) => {
     const { data } = response;
