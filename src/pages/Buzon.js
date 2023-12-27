@@ -48,7 +48,7 @@ function Buzon() {
             console.log(productoActual);
           return (
           <div key={grupo._id}>                                                         
-            <div className="card mb-3" onClick={() => window.location.href = (user.user.id === grupo.mensajes[0].remitente) ? `/chat/${grupo._id}/${grupo.mensajes[0].remitente}/${grupo.mensajes[0].destinatario}` : `/chat/${grupo._id}/${grupo.mensajes[0].destinatario}/${grupo.mensajes[0].remitente}`}>
+            <div className="card mb-3" onClick={() => window.location.href = (user.user.id !== grupo.mensajes[0].remitente) ? `/chat/${grupo._id}/${grupo.mensajes[0].remitente}/${grupo.mensajes[0].destinatario}` : `/chat/${grupo._id}/${grupo.mensajes[0].destinatario}/${grupo.mensajes[0].remitente}`}>
               <div className="card-body">
                 <h5 className="card-title"> {productoActual.nombre}</h5>
                 <p className="card-text"> {grupo.mensajes[0].texto}</p>
