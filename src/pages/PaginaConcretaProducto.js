@@ -156,7 +156,17 @@ const PaginaConcretaProducto = () => {
             // Si el usuario hace clic en "Cancelar", no hagas nada o muestra un mensaje
             console.log('Operación de borrado cancelada por el usuario.');
         }
-    }    
+    }
+    
+    const handlePaymentSuccess = async (data) => {
+        console.log('Pago completado:', data);
+        alert('Pago completado');
+        
+        const deleteResponse = await axios.delete(`https://el-rastro-six.vercel.app/productos/${articulo._id}`);
+        console.log('Respuesta de DELETE:', deleteResponse.data);
+
+        window.location.href = "https://el-rastro-nine.vercel.app";
+      };
 
 
     const pujar = async (precio) => {
@@ -298,7 +308,7 @@ const PaginaConcretaProducto = () => {
                                         )}
 
                                         {Date.parse(articulo.fechaDeCierre) < Date.now() && puja.comprador === localStorage.id ? (
-                                            puja.comprador === localStorage.id ? <PayPalButton precio={puja.precio}/> : null
+                                            puja.comprador === localStorage.id ? <PayPalButton precio={puja.precio} onPaymentSuccess={handlePaymentSuccess}/> : null
                                         ) : (
                                             <div>
                                                 <input 
