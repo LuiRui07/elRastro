@@ -33,7 +33,7 @@ router.get("/:id", (req, res) => {
 
 // delete, comprobado con Postman
 router.delete("/:id", (req, res) => {
-  const { id } = req.params;
+  const { id } = new ObjectId(req.params);
   pujasSchema
     .deleteOne({ _id: id })
     .then((data) => res.json(data))
