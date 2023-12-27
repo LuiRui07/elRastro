@@ -162,8 +162,10 @@ const PaginaConcretaProducto = () => {
         console.log('Pago completado:', data);
         alert('Pago completado');
         
-        const deleteResponse = await axios.delete(`https://el-rastro-six.vercel.app/productos/${articulo._id}`);
+        const deleteArticulo = await axios.delete(`https://el-rastro-six.vercel.app/productos/${articulo._id}`);
         console.log('Respuesta de DELETE:', deleteResponse.data);
+
+        const deletePuja = await axios.delete(`https://el-rastro-six.vercel.app/pujas/${puja._id}`);
 
         window.location.href = "https://el-rastro-nine.vercel.app";
       };
