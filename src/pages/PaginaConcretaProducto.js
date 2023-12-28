@@ -99,7 +99,7 @@ const PaginaConcretaProducto = () => {
 
     useEffect(() => {
         calcularPrecio();
-    }, []);    
+    }, [articulo, puja]);    
 
     const calcularPrecio = async () => {
         try {
