@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import Swal from 'sweetalert2'
 import { useState } from 'react';
 import estilosCrearUsuario from '../css/estilosCrearUsuario.css';
+import NavBar from '../components/Navbar.js';
 const CrearUsuario = () => {
     const user = useContext(UserContext);
     const [showAlert, setShowAlert] = useState(false);
@@ -12,6 +13,7 @@ const CrearUsuario = () => {
     const handleClick = () => {
       setShowAlert(true);
     };
+    
     const funcionGuardar = (e) => {
         e.preventDefault();
         const nombreCompleto = e.target.nombreCompleto.value;
@@ -73,7 +75,9 @@ const CrearUsuario = () => {
     }
     return (
         <div>
-            <h1>Crear Usuario</h1>
+            <NavBar/>
+            <div className="container-lg mt-4 mb-5">
+            <h1>Registrate para formar parte de elRastro!</h1>
             <form onSubmit={funcionGuardar}>
                 <label>Nombre completo</label>
                 <input type="text" name="nombreCompleto" required  />
@@ -92,8 +96,9 @@ const CrearUsuario = () => {
                 <lablel>Correo</lablel>
                 <input type="text" name="correo" required />
 
-                <button>Crear</button>
+                <button style={{marginTop: "2%"}}>Registrarme</button>
             </form>
+            </div>
         </div>
     );
 }
