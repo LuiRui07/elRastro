@@ -73,7 +73,8 @@ const PaginaConcretaProducto = () => {
     const [longitud, setLongitud] = useState(0);
     const [position, setPosition] = useState([0, 0]); // [latitud, longitud
     const [imagenes, setImagenes] = useState([]);
-    const [costeTotal, setCosteTotal] = useState(1);
+    const [precioCalculado, setPrecioCalculado] = useState(null);
+    const [calculandoPrecio, setCalculandoPrecio] = useState(true); // estado para saber si estamos en proceso de cálculo
     const id = useParams().id;
     const [imagenActual, setImagenActual] = useState(0);
     
@@ -96,6 +97,10 @@ const PaginaConcretaProducto = () => {
             });
     }, []);
 
+    useEffect(() => {
+        calcularPrecio();
+    }, []);    
+
     const calcularPrecio = async () => {
         try {
             const response1 = await axios.get(`https://el-rastro-six.vercel.app/huellaC/huellaCarbonoCostoCamion/${puja.comprador}/${articulo._id}`);
@@ -107,11 +112,11 @@ const PaginaConcretaProducto = () => {
                 if (response2.data !== null) {
                     const precioHuellaCarbono = parseInt(response2.data.precio, 10);
                     const total = precioHuellaCarbono + parseInt(puja.precio, 10);
-                    setCosteTotal(total);
+                    setPrecioCalculado(total);
+                    setCalculandoPrecio(false);
                     console.log('Coste de huella de carbono:', precioHuellaCarbono);
                     console.log('Precio de la puja:', puja.precio);
                     console.log('Coste total:', total);
-                    return total;
                 }
             }
         } catch (error) {
@@ -332,7 +337,7 @@ const PaginaConcretaProducto = () => {
                                         )}
 
                                         {Date.parse(articulo.fechaDeCierre) < Date.now() && puja.comprador === localStorage.id ? (
-                                            puja.comprador === localStorage.id ? <PayPalButton precio={calcularPrecio()} onPaymentSuccess={handlePaymentSuccess}/> : null
+                                            calculandoPrecio ? <div>Cargando precio...</div> :  <PayPalButton precio={precioCalculado} onPaymentSuccess={handlePaymentSuccess}/>
                                         ) : (
                                             <div>
                                                 <input 
