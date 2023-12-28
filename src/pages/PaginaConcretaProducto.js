@@ -337,7 +337,11 @@ const PaginaConcretaProducto = () => {
                                         )}
 
                                         {Date.parse(articulo.fechaDeCierre) < Date.now() && puja.comprador === localStorage.id ? (
-                                            calculandoPrecio ? <div>Cargando precio...</div> :  <PayPalButton precio={precioCalculado} onPaymentSuccess={handlePaymentSuccess}/>
+                                            calculandoPrecio ? <div>Cargando precio...</div> : 
+                                            <>
+                                            <PayPalButton precio={precioCalculado} onPaymentSuccess={handlePaymentSuccess}/>
+                                            <p>Precio total: {precioCalculado} €</p>
+                                            </>
                                         ) : (
                                             <div>
                                                 <input 
