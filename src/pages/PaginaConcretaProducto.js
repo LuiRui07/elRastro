@@ -98,6 +98,7 @@ const PaginaConcretaProducto = () => {
     }, []);
 
     useEffect(() => {
+        if(articulo !== undefined && puja !== undefined)
         calcularPrecio();
     }, [articulo, puja]);    
 
