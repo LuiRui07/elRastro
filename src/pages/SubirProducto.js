@@ -33,7 +33,7 @@ const SubirProducto = () => {
       return axios.post('https://el-rastro-six.vercel.app/cloudinary/subir', formData)
         .then((response) => {
           console.log('Respuesta de Cloudinary:', response.data);
-          return response.data.secure_url;
+          return response.data.imageUrl;
         })
       
     });
