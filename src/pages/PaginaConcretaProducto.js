@@ -95,7 +95,6 @@ const PaginaConcretaProducto = () => {
             .catch(error => {
                 console.error('Error al obtener datos del backend:', error);
             });
-            calcularPrecio();
     }, []);
 
     useEffect(() => {
@@ -141,7 +140,6 @@ const PaginaConcretaProducto = () => {
             .catch(error => {
                 console.error('Error al obtener datos del backend:', error);
             });
-            calcularPrecio();
     }, [articulo]);
 
     useEffect(() => {
@@ -155,7 +153,6 @@ const PaginaConcretaProducto = () => {
             .catch(error => {
                 console.error('Error al obtener datos del backend:', error);
             })
-            calcularPrecio();
     }, [articulo]);
 
     useEffect(() => {
@@ -169,7 +166,6 @@ const PaginaConcretaProducto = () => {
             .catch(error => {
                 console.error('Error al obtener datos del backend:', error);
             })
-            calcularPrecio();
     }, [articulo]);
 
     const borrar = async () => {
