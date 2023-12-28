@@ -1,44 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const ValoracionEstrellasDejarValoracion = ({ idUsuario, idVendedor }) => {
   const [valoracionActual, setValoracionActual] = useState(0);
-
-  console.log('idUsuario', idUsuario);
-  console.log('idVendedor', idVendedor);
-
   const handleClick = (rating) => {
     setValoracionActual(rating);
   };
 
+  const [valor, setValor] = useState();
+  const [valoraciones, setValoraciones] = useState(null);
+
+  useEffect(() => {
+    axios.get(`http://localhost:5008/valoraciones/valoracion/${idVendedor}/${idUsuario}`).then(response => {
+    if (response.data !== null) {
+        console.log('Datos del backend:', response.data);
+        setValoraciones(response.data);
+      }
+    }).catch(error => {
+      console.error('Error al obtener datos del backend:', error);
+    }
+    );
+  },[]);
+
+const handleChange = (e) => {
+  setValor(e.target.value);
+};
+
   const funcionLlamar = () => {
-    console.log('valoracionActual', valoracionActual);
-    console.log('idUsuario', idUsuario);
-    console.log('idVendedor', idVendedor);
-    // lo del comentario
-    const input = document.querySelector('.valoracion-input');
-    const texto = input.value;
-    console.log('texto', texto); 
+    console.log('idVendedor:', idVendedor);
+    console.log('idUsuario:', idUsuario);
     axios.post(`http://localhost:5008/valoraciones/`, {
-      idUsuario: idUsuario,
-      idVendedor: idVendedor,
+      comprador: idUsuario,
+      vendedor: idVendedor,
       valoracion: valoracionActual,
-      comentario: texto
+      comentario: valor,
     }).then(response => {
       if (response.data !== null) {
         console.log('Datos del backend:', response.data);
       }
-    }
-    ).catch(error => {
+      window.location.reload();
+    }).catch(error => {
       console.error('Error al obtener datos del backend:', error);
     });
   };
 
 
-
+  console.log('valoraciones:', valoraciones);
   return (
-    <div style={{ width: 200 }}>
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+    <div>
+    {valoraciones != null ? <div> ya has valorado a este usuario</div> :
+      <div>
         {[1, 2, 3, 4, 5].map((rating) => (
           <span
             key={rating}
@@ -48,12 +59,11 @@ const ValoracionEstrellasDejarValoracion = ({ idUsuario, idVendedor }) => {
             {rating <= valoracionActual ? '★' : '☆'}
           </span>
         ))}
-        <input type="text" class="valoracion-input" placeholder="Deja aquí tu valoración (es opcional) " />
-        <button onClick={funcionLlamar} class="btn btn-primary">Enviar</button>
-      </div>
+        <input className="valoracion-input" type="text" onChange={handleChange} placeholder='Deja aqui tu valoracion' />
+        <button style={{marginLeft: '3%'}} onClick={funcionLlamar} className="btn btn-primary">Enviar</button>
+      </div>}
     </div>
   );
 };
-
 
 export default ValoracionEstrellasDejarValoracion;

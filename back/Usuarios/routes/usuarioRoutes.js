@@ -88,7 +88,6 @@ router.put("/valoracion/:id", (req, res) => {
     .then((data) => {
       const { valoracion, numeroValoraciones } = data;
       const nuevaValoracion = (valoracion * numeroValoraciones + valoracionEnviar) / (numeroValoraciones + 1);
-      console.log(nuevaValoracion);
       usuariosSchema
         .updateOne({ _id: id }, { $set: { valoracion: nuevaValoracion, numeroValoraciones: numeroValoraciones + 1 } })
         .then((data) => res.json(data))

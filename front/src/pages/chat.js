@@ -6,19 +6,26 @@ import { useParams } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import axios from 'axios';
 import UserImage from '../media/user.jpg';
+import '../css/chat.css';
 
 const Chat = () => {
     const [mensajes, setMensajes] = useState([]);
-    const idVendedor = useParams().id;
+    const [producto, setProducto] = useState([]);
+    const idRemitente = useParams().idRemitente;
+    const idDestinatario = useParams().idDestinatario;
+    const idProducto = useParams().idProducto;
     const [nuevoMensaje, setNuevoMensaje] = useState('');
 
     useEffect(() => {
-        cargarMensajes();
-      }, []);
+      cargarMensajes();
+      cargarProducto();
+    }, [idProducto, idRemitente, idDestinatario]);  
     
-      const cargarMensajes = () => {
-        Axios.get(`http://localhost:5007/mensajes/${idVendedor}`)
+    const cargarMensajes = () => {
+        console.log(idProducto, idRemitente, idDestinatario)
+        axios.get(`http://localhost:5010/mensajes/${idProducto}/${idRemitente}/${idDestinatario} `)
           .then(response => {
+            console.log(response.data);
             if (response.data !== null) {
               setMensajes(response.data);
             }
@@ -26,13 +33,28 @@ const Chat = () => {
           .catch(error => {
             console.error('Error al obtener datos del backend:', error);
           });
-      };
+    };
+
+    const cargarProducto = () => {
+      axios.get(`http://localhost:5001/productos/${idProducto}`)
+        .then(response => {
+          console.log(response.data);
+          if (response.data !== null) {
+            setProducto(response.data);
+          }
+        })
+        .catch(error => {
+          console.error('Error al obtener datos del backend:', error);
+        });
+    };
 
     const enviarMensaje = () => {
-        Axios.post(`http://localhost:5007/mensajes`, {
-            destinatario: idVendedor,
+        axios.post(`http://localhost:5010/mensajes`, {
+            remitente: idRemitente,
+            destinatario: idDestinatario,
             texto: nuevoMensaje,
-            fechaEnvio: Date.now()
+            fechaEnvio: Date.now(),
+            productoId: idProducto,
         })
           .then(response => {
             cargarMensajes();
@@ -44,14 +66,15 @@ const Chat = () => {
       };
   
       return (
-        <div>
+        <div style={{alignItems: 'center'}}>
           <Navbar />
+          <h1 style={{marginLeft: '20%', marginTop: '5%', marginBottom: '0'}} > Artículo: {producto.nombre}</h1>
           <div className="containerChat">
             <div className="mensajes">
-              {Array.isArray(mensajes) && mensajes.length > 0 ? (
+              {mensajes.length > 0 ? (
                 mensajes.map((mensaje, index) => (
-                  <div key={index} className={mensaje.remitente === idVendedor ? 'mensaje enviado' : 'mensaje recibido'}>
-                    {mensaje.contenido}
+                  <div key={index} id="mensaje"className={mensaje.remitente === idRemitente ? 'enviado' : 'recibido'}>
+                    {mensaje.texto}
                   </div>
                 ))
               ) : (

@@ -8,11 +8,25 @@ router.use(express.json());
 //LLAMADAS CRUD-------------------------------------------------------------------------------
 // create, comprobado con Postman
 router.post("/", (req, res) => {
-  const user = mensajesSchema(req.body);
-  user
-    .save()
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error }));
+  try {
+    
+    const remitenteObjectId = new ObjectId(req.body.remitente);
+    const destinatarioObjectId = new ObjectId(req.body.destinatario);
+    const productoObjectId = new ObjectId(req.body.productoId);
+    
+    const nuevoMensaje = new mensajesSchema({
+      ...req.body,
+      remitente: remitenteObjectId,
+      destinatario: destinatarioObjectId,
+      productoId: productoObjectId,
+    });
+
+    const mensajeGuardado =  nuevoMensaje.save();
+
+    res.json(mensajeGuardado);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 // get all, comprobado con Postman
@@ -21,33 +35,20 @@ router.get("/", (req, res) => {
     .find()
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
-
 });
 
-// get por id, comprobado con Postman
+// get by MensajeId, comprobado con Postman
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   mensajesSchema
     .findById(id)
-    .then((data) =>{
-      if(data){
-        res.json(data)
-      }else{
-        res.json({message: 'No se ha encontrado ningún producto con ese id.'})
-      }})
-    .catch((error) => res.json({ message: error }));
-});
-
-router.get("/mensajes/:idDestinatario", (req, res) => {
-  const { idDestinatario} = req.params;
-  mensajesSchema
-    .find({ idDestinatario: { $regex: idDestinatario, $options: "i" }})
-    .then((data) =>{
-      if(data){
-        res.json(data)
-      }else{
-        res.json({message: 'No se ha encontrado ningún producto con ese id.'})
-      }})
+    .then((data) => {
+      if (data) {
+        res.json(data);
+      } else {
+        res.json({ message: "No se ha encontrado ningún mensaje con ese id." });
+      }
+    })
     .catch((error) => res.json({ message: error }));
 });
 
@@ -63,11 +64,54 @@ router.delete("/:id", (req, res) => {
 // update , comprobado con Postman
 router.put("/:id", (req, res) => {
   const { id } = req.params;
-  const { vendedor, comprador, mensaje} = req.body;
-  productosSchema
-    .updateOne({ _id: id }, { $set: {vendedor, comprador, mensaje} })
+  const { texto, remitente, fechaEnvio, productoId, destinatario } = req.body;
+  mensajesSchema
+    .updateOne(
+      { _id: id },
+      {
+        $set: {
+          texto: texto,
+          remitente: remitente,
+          destinatario: destinatario,
+          fechaEnvio: fechaEnvio,
+          productoId: productoId,
+        },
+      }
+    )
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
+});
+
+//Get mensajes relacionados a un usuario, comprobado con Postman
+router.get("/buzon/:idDestinatario", async (req, res) => {
+    const id  = req.params.idDestinatario;
+    mensajesSchema
+      .find({ destinatario: id }).sort({ fechaEnvio: -1 })
+      .then((data) => {
+        if (data) {
+          res.json(data);
+        } else {
+          res.json({ message: "No tienes mensajes" });
+        }
+      })
+      .catch((error) => res.json({ message: error }));
+});
+
+//Get mensajes relacionados a un producto del vendedor y del comprador
+router.get("/:idProducto/:idRemitente/:idDestinatario", (req, res) => {
+  const idRemitente = req.params.idRemitente;
+  const idDestinatario = req.params.idDestinatario;
+  const idProducto = req.params.idProducto;
+  console.log(idRemitente, idDestinatario, idProducto);
+  const mensajes = mensajesSchema.find({ remitente: { $in: [idDestinatario, idRemitente] }, productoId: idProducto, destinatario: { $in: [idDestinatario, idRemitente] } }).sort({ fecha: -1 });
+
+  mensajes.then((data) => {
+    if (data.length) {
+      res.json(data);
+    } else {
+      res.json({ message: "No se ha encontrado ningún mensaje con ese id." });
+    }
+  });
 });
 
 module.exports = router;
