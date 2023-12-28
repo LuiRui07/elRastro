@@ -77,7 +77,7 @@ router.get('/huellaCarbono/:distancia/:peso/:transporte', async (req, res) => {
 //     idProducto es el producto que desea comprar
 // comprobado con Postman
 router.get('/huellaCarbonoCostoCamion/:idUsuario/:idProducto', async (req, res) => {
-    axios.get('https://el-rastro-six.vercel.app/mapa/coor   denadasUsuario/' + req.params.idUsuario).then((respuesta) => {
+    axios.get('https://el-rastro-six.vercel.app/mapa/coordenadasUsuario/' + req.params.idUsuario).then((respuesta) => {
         const latitudUsuario = respuesta.data.latitud;
         const longitudUsuario = respuesta.data.longitud;
         
