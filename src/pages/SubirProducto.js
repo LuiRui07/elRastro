@@ -174,10 +174,10 @@ const SubirProducto = () => {
                   Fecha de Cierre
                 </label>
                 <input
+                  style={{ width: "20%" }}
                   type="datetime-local"
                   className="form-control"
                   name="fechaDeCierre"
-                  id = "fechaDeCierre"
                   required
                 />
               </div>
