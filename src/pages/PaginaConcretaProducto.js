@@ -74,7 +74,7 @@ const PaginaConcretaProducto = () => {
     const [longitud, setLongitud] = useState(0);
     const [position, setPosition] = useState([0, 0]); // [latitud, longitud
     const [imagenes, setImagenes] = useState([]);
-    const [costeTotal, setCosteTotal] = useState(0);
+    const [costeTotal, setCosteTotal] = useState([]);
     const id = useParams().id;
     const [imagenActual, setImagenActual] = useState(0);
     
@@ -111,7 +111,7 @@ const PaginaConcretaProducto = () => {
                                 setCosteTotal(suma);
                                 console.log('Coste de huella de carbono:', response.data.precio);
                                 console.log('Precio de la puja:', puja.precio)
-                                console.log('Coste total:', costeTotal)
+                                console.log('Coste total:', suma)
                             }
                         })
                         .catch(error => {
