@@ -94,7 +94,6 @@ const PaginaConcretaProducto = () => {
             .catch(error => {
                 console.error('Error al obtener datos del backend:', error);
             });
-            calcularPrecio();
     }, []);
 
     const calcularPrecio = async () => {
@@ -185,7 +184,6 @@ const PaginaConcretaProducto = () => {
     }
     
     const handlePaymentSuccess = async (data) => {
-        await calcularPrecio();
         console.log('Pago completado:', data);
         alert('Pago completado');
         
@@ -335,7 +333,7 @@ const PaginaConcretaProducto = () => {
                                         )}
 
                                         {Date.parse(articulo.fechaDeCierre) < Date.now() && puja.comprador === localStorage.id ? (
-                                            puja.comprador === localStorage.id ? <PayPalButton precio={costeTotal} onPaymentSuccess={handlePaymentSuccess}/> : null
+                                            puja.comprador === localStorage.id ? <PayPalButton precio={calcularPrecio()} onPaymentSuccess={handlePaymentSuccess}/> : null
                                         ) : (
                                             <div>
                                                 <input 
