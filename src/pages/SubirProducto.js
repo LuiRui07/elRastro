@@ -24,7 +24,7 @@ const SubirProducto = () => {
     const peso = e.target.peso.value;
     const imagenes = e.target.imagenes.files;
 
-    fechaDeCierre.setTime(fechaDeCierre.getTime() - 3600000);
+    fechaDeCierre.setTime(fechaDeCierre - 3600000);
 
     // Mapa de promesas de subida de imágenes
     const cloudinaryUploadPromises = Array.from(imagenes).map((imagen) => {
