@@ -96,31 +96,30 @@ const PaginaConcretaProducto = () => {
             });
     }, []);
 
-    useEffect(() => {
-        console.log(puja);
-        console.log(articulo);
-        axios.get(`https://el-rastro-six.vercel.app/huellaC/huellaCarbonoCostoCamion/${puja.comprador}/${articulo._id}`)
-            .then(response => {
-                if (response.data !== null) {
-                    const { data } = response;
-                    axios.get(`https://el-rastro-six.vercel.app/huellaC/getPrecio/${data}`)
-                        .then(response => {
-                            if (response.data !== null) {
-                                setCosteTotal(parseInt(response.data.precio, 10) + parseInt(puja.precio, 10));
-                                console.log('Coste de huella de carbono:', response.data.precio);
-                                console.log('Precio de la puja:', puja.precio)
-                                console.log('Coste total:', costeTotal)
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error al obtener datos del backend:', error);
-                        });
+    const calcularPrecio = async () => {
+        try {
+            const response1 = await axios.get(`https://el-rastro-six.vercel.app/huellaC/huellaCarbonoCostoCamion/${puja.comprador}/${articulo._id}`);
+            
+            if (response1.data !== null) {
+                const { data } = response1;
+                const response2 = await axios.get(`https://el-rastro-six.vercel.app/huellaC/getPrecio/${data}`);
+                
+                if (response2.data !== null) {
+                    const precioHuellaCarbono = parseInt(response2.data.precio, 10);
+                    const total = precioHuellaCarbono + parseInt(puja.precio, 10);
+                    setCosteTotal(total);
+                    console.log('Coste de huella de carbono:', precioHuellaCarbono);
+                    console.log('Precio de la puja:', puja.precio);
+                    console.log('Coste total:', total);
+                    return total;
                 }
-            })
-            .catch(error => {
-                console.error('Error al obtener datos del backend:', error);
-            });
-    }, [puja]);
+            }
+        } catch (error) {
+            console.error('Error al obtener datos del backend:', error);
+            throw error;
+        }
+    }   
+    
 
     useEffect(() => {
         axios.get(`https://el-rastro-six.vercel.app/mapa/coordenadasProducto/` + id)
