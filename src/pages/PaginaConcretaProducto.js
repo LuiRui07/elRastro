@@ -103,8 +103,18 @@ const PaginaConcretaProducto = () => {
         axios.get(`https://el-rastro-six.vercel.app/huellaC/huellaCarbonoCostoCamion/${puja.comprador}/${articulo._id}`)
             .then(response => {
                 if (response.data !== null) {
-                    setCosteTotal(response.data + puja.precio);
-                    console.log('Datos del backend:', response.data);
+                    const { data } = response;
+                    axios.get(`https://el-rastro-six.vercel.app/huellaC/getPrecio/${data}`)
+                        .then(response => {
+                            if (response.data !== null) {
+                                setCosteTotal(response.data + puja.precio);
+                                console.log('Coste de huella de carbono:', response.data);
+                                console.log('Coste total:', costeTotal)
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error al obtener datos del backend:', error);
+                        });
                 }
             })
             .catch(error => {
