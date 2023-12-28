@@ -98,7 +98,7 @@ const PaginaConcretaProducto = () => {
     }, []);
 
     useEffect(() => {
-        axios.get(`https://el-rastro-six.vercel.app/mapa/huellaCarbonoCostoCamion/${articulo.idUsuario}/${articulo._id}`)
+        axios.get(`https://el-rastro-six.vercel.app/mapa/huellaCarbonoCostoCamion/${puja.comprador}/${puja.comprador}`)
             .then(response => {
                 if (response.data !== null) {
                     setCosteTotal(response.data + puja.precio);
@@ -108,7 +108,7 @@ const PaginaConcretaProducto = () => {
             .catch(error => {
                 console.error('Error al obtener datos del backend:', error);
             });
-    }, [articulo]);
+    }, [puja]);
 
     useEffect(() => {
         axios.get(`https://el-rastro-six.vercel.app/mapa/coordenadasProducto/` + id)
