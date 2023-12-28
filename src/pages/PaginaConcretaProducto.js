@@ -73,7 +73,8 @@ const PaginaConcretaProducto = () => {
     const [longitud, setLongitud] = useState(0);
     const [position, setPosition] = useState([0, 0]); // [latitud, longitud
     const [imagenes, setImagenes] = useState([]);
-    const [precioCalculado, setPrecioCalculado] = useState(1);
+    const [precioCalculado, setPrecioCalculado] = useState(0);
+    const [calculandoPrecio, setCalculandoPrecio] = useState(true); // estado para saber si estamos en proceso de cálculo
     const id = useParams().id;
     const [imagenActual, setImagenActual] = useState(0);
     
@@ -94,8 +95,38 @@ const PaginaConcretaProducto = () => {
             .catch(error => {
                 console.error('Error al obtener datos del backend:', error);
             });
-
     }, []);
+
+    useEffect(() => {
+        if(articulo !== undefined && puja !== undefined)
+        calcularPrecio();
+    }, [articulo, puja]);    
+
+    const calcularPrecio = async () => {
+        try {
+            console.log(puja.comprador);
+            console.log(articulo._id);
+            const response1 = await axios.get(`https://el-rastro-six.vercel.app/huellaC/huellaCarbonoCostoCamion/${puja.comprador}/${articulo._id}`);
+            
+            if (response1.data !== null) {
+                const { data } = response1;
+                const response2 = await axios.get(`https://el-rastro-six.vercel.app/huellaC/getPrecio/${data}`);
+                
+                if (response2.data !== null) {
+                    const precioHuellaCarbono = parseInt(response2.data.precio, 10);
+                    const total = precioHuellaCarbono + parseInt(puja.precio, 10);
+                    setPrecioCalculado(total);
+                    setCalculandoPrecio(false);
+                    console.log('Coste de huella de carbono:', precioHuellaCarbono);
+                    console.log('Precio de la puja:', puja.precio);
+                    console.log('Coste total:', total);
+                }
+            }
+        } catch (error) {
+            console.error('Error al obt ener datos del backend:', error);
+            throw error;
+        }
+    }   
 
     useEffect(() => {
         axios.get(`https://el-rastro-six.vercel.app/mapa/coordenadasProducto/` + id)
@@ -134,22 +165,6 @@ const PaginaConcretaProducto = () => {
                     setPuja(response.data);
                     console.log('Datos de Puja en backend:', response.data);
                 }
-                const response1 = axios.get(`https://el-rastro-six.vercel.app/huellaC/huellaCarbonoCostoCamion/${puja.comprador}/${articulo._id}`);
-            
-                if (response1.data !== null) {
-                    const { data } = response1;
-                    const response2 = axios.get(`https://el-rastro-six.vercel.app/huellaC/getPrecio/${data}`);
-                    
-                    if (response2.data !== null) {
-                        const precioHuellaCarbono = parseInt(response2.data.precio, 10);
-                        const total = precioHuellaCarbono + parseInt(puja.precio, 10);
-                        setPrecioCalculado(total);
-                        console.log('Coste de huella de carbono:', precioHuellaCarbono);
-                        console.log('Precio de la puja:', puja.precio);
-                        console.log('Coste total:', total);
-                    }
-                }
-
             })
             .catch(error => {
                 console.error('Error al obtener datos del backend:', error);
@@ -325,7 +340,11 @@ const PaginaConcretaProducto = () => {
                                         )}
 
                                         {Date.parse(articulo.fechaDeCierre) < Date.now() && puja.comprador === localStorage.id ? (
-                                            precioCalculado == 1 ? <div>Cargando precio...</div> :  <PayPalButton precio={precioCalculado} onPaymentSuccess={handlePaymentSuccess}/>
+                                            calculandoPrecio ? <div>Cargando precio...</div> : 
+                                            <>
+                                            <PayPalButton precio={precioCalculado} onPaymentSuccess={handlePaymentSuccess}/>
+                                            <p>Precio total: {precioCalculado} €</p>
+                                            </>
                                         ) : (
                                             <div>
                                                 <input 
