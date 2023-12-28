@@ -24,6 +24,8 @@ const SubirProducto = () => {
     const peso = e.target.peso.value;
     const imagenes = e.target.imagenes.files;
 
+    fechaDeCierre.setTime(fechaDeCierre.getTime() - 3600000);
+
     // Mapa de promesas de subida de imágenes
     const cloudinaryUploadPromises = Array.from(imagenes).map((imagen) => {
       const formData = new FormData();
@@ -108,17 +110,17 @@ const SubirProducto = () => {
                   required
                 />
               </div>
-              <div className="mb-4 ms-2" >
-                <label htmlFor="desc" className="form-label">
+              <div className="mb-4 ms-2 d-flex flex-column align-items-start">
+                <label htmlFor="desc" className="form-label mb-1 d-block w-100">
                   Descripción
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
+                <textarea
+                  className="form-control w-100"
                   id="desc"
                   name="descripcion"
+                  rows="4"  // Número de filas visibles inicialmente
                   required
-                />
+                ></textarea>
               </div>
               <div className="mb-3">
                 <label htmlFor="chico" className="form-label">
@@ -177,6 +179,7 @@ const SubirProducto = () => {
                   type="datetime-local"
                   className="form-control"
                   name="fechaDeCierre"
+                  id = "fechaDeCierre"
                   required
                 />
               </div>

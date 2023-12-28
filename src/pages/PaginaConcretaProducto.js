@@ -173,7 +173,7 @@ const PaginaConcretaProducto = () => {
 
 
     const pujar = async (precio) => {
-        console.log('AQUI AQUI', articulo.fechaDeCierre);
+        
         if (articulo.pujaGanadora !== null && puja !== null && precio < puja.precio) {
             alert('La puja debe ser mayor que la puja ganadora');
             return false;

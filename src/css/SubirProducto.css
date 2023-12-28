@@ -3,29 +3,25 @@
     margin-top: 2%;
 }
 
-input{
-    margin-left: 2%;
-    margin-top: 2%;
-    width: 40% !important;
-}
 
 input#desc{
-    height: 200px !important;
-    margin-left: 10%;
+
 }
 
-input#chico{
+input#nombre{
     width: 20% !important;
 }
 
-label#subir{
-    margin-left: 2%;
-    margin-top: 2%;
-    width: 40%;
+input#nombre{
+    width: 20% !important;
 }
 
+input#fechaDeCierre{
+    width: 20% !important;
+}
+
+
 .SelectCategoria{
-    margin-left: 2%;
     margin-top: 2%;
     width: 40%;
 }
