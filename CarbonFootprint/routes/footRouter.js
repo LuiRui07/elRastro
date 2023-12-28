@@ -133,8 +133,6 @@ router.get('/huellaCarbonoCostoCamion/:idUsuario/:idProducto', async (req, res) 
                                     //   }
                                     //Accedemos a los g de carbono
                                     const carbonFootprint = response.data.data.attributes.carbon_g;
-
-                                    res.json({ carbonFootprint });
                                     axios.post('https://el-rastro-six.vercel.app/huellaC/', {
                                         distancia: distancia,
                                         peso: peso,
@@ -145,6 +143,8 @@ router.get('/huellaCarbonoCostoCamion/:idUsuario/:idProducto', async (req, res) 
                                         huella: carbonFootprint,
                                         metodoTransporte: "camion"
                                     })
+                                    res.json({ carbonFootprint });
+
                                 })
                                 .catch((error) => {
                                     res.json({ message: error });
