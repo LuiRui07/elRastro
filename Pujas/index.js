@@ -4,6 +4,7 @@ const mongoose = require("mongoose")
 const axios = require("axios");
 require("dotenv").config({ path: "./config.env" });
 const app = express();
+const {revisarPujas } = require("./pujasScheduler.js");
 
 
 const port = 5003;
@@ -17,7 +18,10 @@ mongoose.connect(
     console.log("Hemos conectado con mongoDB")
   ).catch((error)=>
     console.error(error)
-  )
+  );
+
+const intervalo = 1 * 60 * 1000;
+setInterval(revisarPujas, intervalo);
 
 app.get("/",(req,res) =>{
   res.send("Esta es la API")}
