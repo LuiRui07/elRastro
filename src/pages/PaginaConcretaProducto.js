@@ -15,7 +15,6 @@ import { useContext } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import PayPalButton from '../components/PayPalButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { use } from '../../CarbonFootprint/routes/footRouter';
 
 const PaginaConcretaProducto = () => {
     const user = useContext(UserContext);
