@@ -18,7 +18,7 @@ function Inicio() {
   const user = useContext(UserContext);
 
   useEffect(() => {
-    axios.get('https://front-elrastro.vercel.app/productos')
+    axios.get('https://front-elrastro-c5xuda402-chemafdezuma.vercel.app/productos')
       .then(response => {
         if (response.data !== null) {
           if (user.user !== null) {
