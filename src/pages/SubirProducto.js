@@ -38,6 +38,7 @@ const SubirProducto = () => {
     // Resolvemos todas las promesas de subida de imágenes
     Promise.all(cloudinaryUploadPromises)
       .then((imagenesUrls) => {
+        console.log('URLs de imágenes:', imagenesUrls);
         const producto = {
           vendedor: user.user.id,
           pujaGanadora: null,
