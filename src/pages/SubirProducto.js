@@ -46,9 +46,18 @@ const SubirProducto = () => {
     const precioInicial = e.target.precioInicial.value;
     const categorias = e.target.categorias.value;
     const nombre = e.target.nombre.value;
-    const fechaDeCierre = e.target.fechaDeCierre.value ;
+    let fechaDeCierre = e.target.fechaDeCierre.value ;
     const peso = e.target.peso.value;
     const imagenes = e.target.imagenes.files;
+
+    // Convertir la fecha de cierre a objeto Date
+    const fechaCierreDate = new Date(fechaDeCierre);
+
+    // Añadir una hora (3600 segundos) a la fecha de cierre
+    fechaCierreDate.setSeconds(fechaCierreDate.getSeconds() + 3600);
+
+    // Convertir de nuevo a formato de cadena para el valor del input
+    fechaDeCierre = fechaCierreDate.toISOString().slice(0, 16);
 
     // Mapa de promesas de subida de imágenes
     const cloudinaryUploadPromises = Array.from(imagenes).map((imagen) => {
