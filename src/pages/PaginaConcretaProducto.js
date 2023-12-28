@@ -98,7 +98,9 @@ const PaginaConcretaProducto = () => {
     }, []);
 
     useEffect(() => {
-        axios.get(`https://el-rastro-six.vercel.app/mapa/huellaCarbonoCostoCamion/${puja.comprador}/${puja.comprador}`)
+        console.log(puja);
+        console.log(articulo);
+        axios.get(`https://el-rastro-six.vercel.app/huellaC/huellaCarbonoCostoCamion/${puja.comprador}/${articulo._id}`)
             .then(response => {
                 if (response.data !== null) {
                     setCosteTotal(response.data + puja.precio);
