@@ -5,6 +5,14 @@ require("dotenv").config({ path: "./config.env" });
 const app = express();
 const axios = require("axios");
 
+const corsOptions = {
+  origin: 'https://el-rastro-nine.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  headers: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
+};
+
+app.use(cors(corsOptions));
+
 const port = 5005;
 app.use(express.json());
 
