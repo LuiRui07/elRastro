@@ -15,6 +15,32 @@ const SubirProducto = () => {
   };
 
   const funcionGuardar = (e) => {
+    if (e.target.precioInicial.value < 0) {
+      Swal.fire({
+        title: 'Error',
+        text: 'El precio inicial no puede ser negativo.',
+        icon: 'error',
+        confirmButtonText: 'Entendido',
+      });
+    }
+    if (e.target.peso.value < 0) {
+      Swal.fire({
+        title: 'Error',
+        text: 'El peso no puede ser negativo.',
+        icon: 'error',
+        confirmButtonText: 'Entendido',
+      });
+    }
+    if (e.target.fechaDeCierre.value < Date.now()) {
+      Swal.fire({
+        title: 'Error',
+        text: 'La fecha de cierre no puede ser anterior a la fecha actual.',
+        icon: 'error',
+        confirmButtonText: 'Entendido',
+      });
+    }
+
+
     e.preventDefault();
     const descripcion = e.target.descripcion.value;
     const precioInicial = e.target.precioInicial.value;
