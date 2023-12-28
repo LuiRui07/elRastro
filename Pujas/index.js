@@ -20,7 +20,7 @@ mongoose.connect(
     console.error(error)
   );
 
-const intervalo = 60 * 60 * 1000; // 1 hora en milisegundos
+const intervalo = 24 * 60 * 60 * 1000; // 24 horas en milisegundos
 setInterval(revisarPujas, intervalo);
 
 app.get("/",(req,res) =>{
