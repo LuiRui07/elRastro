@@ -15,6 +15,8 @@ const port = 5006;
 app.use(express.json());
 app.use(cors({
   origin: 'https://el-rastro-nine.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
 }));
 
 // Configuración de Cloudinary
