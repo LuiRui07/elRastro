@@ -332,10 +332,12 @@ const PaginaConcretaProducto = () => {
                                     </div>
                                 )}
                     </div>
+                    <small class="text-muted">Se incluyen gastos de huella de carbono</small> 
                 </div>
-
+                
                 <div className='d-flex flex-column  border-bottom w-100'>
                     <p className='DescripcionProducto' >{articulo.descripcion}</p>
+                    
                 {categorias.map((categoria, index) => (
                             <div key={index} className='card m-3'>
                                 <div className='card-body'>
