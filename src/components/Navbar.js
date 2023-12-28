@@ -205,12 +205,6 @@ const Navbar = () => {
                                     Coleccionismo
                                 </Link>
                             </li>
-                            <li className='text-light tipoLetraMonse'>
-                                <Link to="/category/otro" style={{ textDecoration: 'none', color: 'inherit' }}>
-                                    Otro
-                                </Link>
-                            </li>
-
                         </ul>
 
                         <ul className=" w-100 d-flex   text-start flex-column mt-4"
@@ -278,9 +272,10 @@ const Navbar = () => {
                                 </Link>
                             </li>
                             <li className='text-light tipoLetraMonse'>
-                                <Link to="/category/empleo" style={{ textDecoration: 'none', color: 'inherit' }}>
-                                    Empleo
-                                </Link></li>
+                                <Link to="/category/otro" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    Otro
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                 </div>
