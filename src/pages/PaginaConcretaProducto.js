@@ -107,7 +107,7 @@ const PaginaConcretaProducto = () => {
                     axios.get(`https://el-rastro-six.vercel.app/huellaC/getPrecio/${data}`)
                         .then(response => {
                             if (response.data !== null) {
-                                const suma = response.data.precio + puja.precio;
+                                const suma = parseInt(response.data.precio, 10) + parseInt(puja.precio, 10);
                                 setCosteTotal(suma);
                                 console.log('Coste de huella de carbono:', response.data.precio);
                                 console.log('Precio de la puja:', puja.precio)
