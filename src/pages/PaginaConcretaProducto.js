@@ -73,7 +73,7 @@ const PaginaConcretaProducto = () => {
     const [longitud, setLongitud] = useState(0);
     const [position, setPosition] = useState([0, 0]); // [latitud, longitud
     const [imagenes, setImagenes] = useState([]);
-    const [precioCalculado, setPrecioCalculado] = useState(null);
+    const [precioCalculado, setPrecioCalculado] = useState(0);
     const [calculandoPrecio, setCalculandoPrecio] = useState(true); // estado para saber si estamos en proceso de cálculo
     const id = useParams().id;
     const [imagenActual, setImagenActual] = useState(0);
@@ -103,6 +103,8 @@ const PaginaConcretaProducto = () => {
 
     const calcularPrecio = async () => {
         try {
+            console.log(puja.comprador);
+            console.log(articulo._id);
             const response1 = await axios.get(`https://el-rastro-six.vercel.app/huellaC/huellaCarbonoCostoCamion/${puja.comprador}/${articulo._id}`);
             
             if (response1.data !== null) {
