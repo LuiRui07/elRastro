@@ -94,6 +94,7 @@ const PaginaConcretaProducto = () => {
             .catch(error => {
                 console.error('Error al obtener datos del backend:', error);
             });
+            calcularPrecio();
     }, []);
 
     const calcularPrecio = async () => {
@@ -184,6 +185,7 @@ const PaginaConcretaProducto = () => {
     }
     
     const handlePaymentSuccess = async (data) => {
+        await calcularPrecio();
         console.log('Pago completado:', data);
         alert('Pago completado');
         
