@@ -31,8 +31,11 @@ const SubirProducto = () => {
 
       // Devolvemos la promesa de la subida de la imagen
       return axios.post('https://el-rastro-six.vercel.app/cloudinary/subir', formData)
-        .then((response) => response.data.secure_url);
-
+        .then((response) => {
+          console.log('Respuesta de Cloudinary:', response.data);
+          return response.data.secure_url;
+        })
+      
     });
 
     // Resolvemos todas las promesas de subida de imágenes
