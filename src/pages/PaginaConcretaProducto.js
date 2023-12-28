@@ -343,7 +343,7 @@ const PaginaConcretaProducto = () => {
                                             calculandoPrecio ? <div>Cargando precio...</div> : 
                                             <>
                                             <PayPalButton precio={precioCalculado} onPaymentSuccess={handlePaymentSuccess}/>
-                                            <p>Precio total: {precioCalculado} €</p>
+                                            <p>Precio totale: {precioCalculado} €</p>
                                             </>
                                         ) : (
                                             <div>
