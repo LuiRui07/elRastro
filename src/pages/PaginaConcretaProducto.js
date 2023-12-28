@@ -115,11 +115,10 @@ const PaginaConcretaProducto = () => {
                 }
             }
         } catch (error) {
-            console.error('Error al obtener datos del backend:', error);
+            console.error('Error al obt ener datos del backend:', error);
             throw error;
         }
     }   
-    
 
     useEffect(() => {
         axios.get(`https://el-rastro-six.vercel.app/mapa/coordenadasProducto/` + id)
