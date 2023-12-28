@@ -180,7 +180,7 @@ const PaginaConcretaProducto = () => {
         } else if (user.user === null) {
             alert('Identificate para pujar');
             return false;
-        } else if (user.user.id === vendedor._id) {
+        } else if (user.user.id === vendedor._id || user.user.id === articulo.vendedor) {
             alert('No puedes pujar por tu propio producto');
             return false;
         } else if (Date.now() > Date.parse(articulo.fechaDeCierre)) {
@@ -281,15 +281,12 @@ const PaginaConcretaProducto = () => {
 
                 <div className='d-flex flex-justify-center align-items-center'>
                     <div className='d-flex flex-column border-bottom w-100'>
-
-                        {localStorage.id !== vendedor._id ? (
-                            <div>
-                                <h1 className='TituloProducto'>{articulo.nombre}</h1>
-
+                        <h1 className='TituloProducto'>{articulo.nombre}</h1>
                                 {articulo.pujaGanadora != null ? (
                                     <div className='d-flex align-items-center'> 
                                         <h2 className='mr-3'>Ultima Puja: {puja.precio} €</h2> 
-
+                                    {localStorage.id !== vendedor._id && (
+                                        <div>
                                         {puja.comprador === localStorage.id && (
                                             <img 
                                                 style={{ width: "7%" }} 
@@ -324,14 +321,16 @@ const PaginaConcretaProducto = () => {
                                             </div>
                                         )}
                                     </div>
+                                )}
+                                </div>
                                 ) : (
                                     <div className='d-flex align-items-center'>
                                         <h2 className='mr-3'>Precio Inicial: {articulo.precioInicial} €</h2>
+                                        {localStorage.id !== vendedor._id && (
                                         <button onClick={() => pujar(articulo.precioInicial)} className='button-36 ml-auto' style={{ marginRight: '1%' }}>Pujar</button>
+                                        )}
                                     </div>
                                 )}
-                            </div>
-                        ) : null}
                     </div>
                 </div>
 

@@ -14,7 +14,8 @@ const ProductoCategoria = () => {
     axios.get(`https://el-rastro-six.vercel.app/productos/productos-categoria/${categoria}`)
       .then(response => {
         if (response.data !== null) {
-          setData(response.data);
+          const filteredArticulos = response.data.filter(articulo => articulo.vendedor !== localStorage.id);
+          setData(filteredArticulos);
           console.log('Datos del backend:', response.data);
         }
       })
