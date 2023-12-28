@@ -15,6 +15,7 @@ import { useContext } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import PayPalButton from '../components/PayPalButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { use } from '../../CarbonFootprint/routes/footRouter';
 
 const PaginaConcretaProducto = () => {
     const user = useContext(UserContext);
@@ -74,6 +75,7 @@ const PaginaConcretaProducto = () => {
     const [longitud, setLongitud] = useState(0);
     const [position, setPosition] = useState([0, 0]); // [latitud, longitud
     const [imagenes, setImagenes] = useState([]);
+    const [costeTotal, setCosteTotal] = useState(0);
     const id = useParams().id;
     const [imagenActual, setImagenActual] = useState(0);
     
@@ -82,7 +84,7 @@ const PaginaConcretaProducto = () => {
     };
 
     useEffect(() => {
-        Axios.get(`https://el-rastro-six.vercel.app/productos/${id}`)
+        axios.get(`https://el-rastro-six.vercel.app/productos/${id}`)
             .then(response => {
                 if (response.data !== null) {
                     setArticulo(response.data);
@@ -95,6 +97,19 @@ const PaginaConcretaProducto = () => {
                 console.error('Error al obtener datos del backend:', error);
             });
     }, []);
+
+    useEffect(() => {
+        axios.get(`https://el-rastro-six.vercel.app/mapa/huellaCarbonoCostoCamion/${articulo.idUsuario}/${articulo._id}`)
+            .then(response => {
+                if (response.data !== null) {
+                    setCosteTotal(response.data + puja.precio);
+                    console.log('Datos del backend:', response.data);
+                }
+            })
+            .catch(error => {
+                console.error('Error al obtener datos del backend:', error);
+            });
+    }, [articulo]);
 
     useEffect(() => {
         axios.get(`https://el-rastro-six.vercel.app/mapa/coordenadasProducto/` + id)
@@ -308,7 +323,7 @@ const PaginaConcretaProducto = () => {
                                         )}
 
                                         {Date.parse(articulo.fechaDeCierre) < Date.now() && puja.comprador === localStorage.id ? (
-                                            puja.comprador === localStorage.id ? <PayPalButton precio={puja.precio} onPaymentSuccess={handlePaymentSuccess}/> : null
+                                            puja.comprador === localStorage.id ? <PayPalButton precio={costeTotal} onPaymentSuccess={handlePaymentSuccess}/> : null
                                         ) : (
                                             <div>
                                                 <input 
