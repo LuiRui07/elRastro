@@ -109,7 +109,8 @@ const PaginaConcretaProducto = () => {
                             if (response.data !== null) {
                                 const suma = response.data.precio + puja.precio;
                                 setCosteTotal(suma);
-                                console.log('Coste de huella de carbono:', response.data);
+                                console.log('Coste de huella de carbono:', response.data.precio);
+                                console.log('Precio de la puja:', puja.precio)
                                 console.log('Coste total:', costeTotal)
                             }
                         })
