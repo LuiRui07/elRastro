@@ -20,7 +20,7 @@ const SubirProducto = () => {
     const precioInicial = e.target.precioInicial.value;
     const categorias = e.target.categorias.value;
     const nombre = e.target.nombre.value;
-    const fechaDeCierre = (e.target.fechaDeCierre.value - 3600000);
+    const fechaDeCierre = e.target.fechaDeCierre.value ;
     const peso = e.target.peso.value;
     const imagenes = e.target.imagenes.files;
 
