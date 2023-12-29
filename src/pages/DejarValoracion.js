@@ -45,7 +45,6 @@ function DejarValoracion() {
         <div>
             
             <h2>Dejar valoración a {usuario.nombreCompleto}</h2> y a su producto {p.nombre}
-            <img src={p.imagenes[0]} alt={p.nombre} width="200" height="200" />
         </div>
 }
         <EstrellasDejarValoracion idUsuario={idUsuario} idVendedor={idVendedor}/>

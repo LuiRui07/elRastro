@@ -81,7 +81,7 @@ const CrearUsuario = () => {
             <form onSubmit={funcionGuardar}>
                 <label>Nombre completo</label>
                 <input type="text" name="nombreCompleto" required  />
-                <label>Calle</label>
+                <label>Calle <small class="text-muted">(Solo la calle, sin número)</small></label>
                 <input type="text" name="calle" required />
                 <label>Numero</label>
                 <input type="text" name="numero" required />
@@ -93,7 +93,7 @@ const CrearUsuario = () => {
                 <input type="text" name="provincia" required />
                 <label>Pais</label>
                 <input type="text" name="pais" required />
-                <lablel>Correo</lablel>
+                <lablel>Correo (de tu cuenta de google)</lablel>
                 <input type="text" name="correo" required />
 
                 <button style={{marginTop: "2%"}}>Registrarme</button>

@@ -108,7 +108,7 @@ const PaginaConcretaProducto = () => {
             console.log(articulo);
             const response1 = await axios.get(`https://mi-repo-ten.vercel.app/huellaC/huellaCarbonoCostoCamion/${puja.comprador}/${articulo._id}`);
                 console.log(response1);
-            if (response1.data !== null) {
+            if (response1.data !== null && response1.data !== undefined && response1.data !== ''){
                 const { data } = response1;
                 const response2 = await axios.get(`https://mi-repo-ten.vercel.app/huellaC/getPrecio/${data}`);
                 
@@ -124,6 +124,10 @@ const PaginaConcretaProducto = () => {
                         setCalculandoPrecio(false);
                     }
                 }
+            } else{
+                setCalculandoPrecio(false);
+                setPrecioCalculado(parseInt(puja.precio, 10));
+
             }
         } catch (error) {
             console.error('Error al obt ener datos del backend:', error);
@@ -200,7 +204,7 @@ const PaginaConcretaProducto = () => {
         const deleteArticulo = await axios.delete(`https://mi-repo-ten.vercel.app/productos/${articulo._id}`);
         console.log('Respuesta de DELETE:', deleteArticulo.data);
         console.log('Puja:', puja)
-        const deletePuja = await axios.delete(`https://mi-repo-ten.vercel.app/pujas/${puja._id}`);
+        const deletePuja = await axios.delete(`https://mi-repo-ten.vercel.app/pujas/borrar-pujas-producto/${articulo._id}`);
         console.log('Respuesta de DELETE de Puja:', deletePuja.data);
 
         window.location.href = "https://el-rastro-nine.vercel.app/dejarValoracion/" + vendedor._id + "/" + articulo._id;
@@ -342,13 +346,14 @@ const PaginaConcretaProducto = () => {
                                             />
                                         )}
 
-                                        {Date.parse(articulo.fechaDeCierre) < Date.now() && puja.comprador === localStorage.id ? (
+                                        {Date.parse(articulo.fechaDeCierre) < Date.now() && puja.comprador === localStorage.id && (
                                             calculandoPrecio == true && !precioCalculado ? <div>Cargando precio...</div> : 
                                             <>
                                             <PayPalButton precio={precioCalculado} onPaymentSuccess={handlePaymentSuccess}/>
                                             <p>Precio total: {precioCalculado} €</p>
                                             </>
-                                        ) : (
+                                        )} 
+                                        {Date.parse(articulo.fechaDeCierre) > Date.now() && (
                                             <div>
                                                 <input 
                                                     value={cantidad}

@@ -21,7 +21,8 @@ const SubirProducto = () => {
         text: 'El precio inicial no puede ser negativo.',
         icon: 'error',
         confirmButtonText: 'Entendido',
-      });
+      }); 
+      return false;
     }
     if (e.target.peso.value < 0) {
       Swal.fire({
@@ -30,6 +31,7 @@ const SubirProducto = () => {
         icon: 'error',
         confirmButtonText: 'Entendido',
       });
+      return false;
     }
     if (e.target.fechaDeCierre.value < Date.now()) {
       Swal.fire({
@@ -38,6 +40,7 @@ const SubirProducto = () => {
         icon: 'error',
         confirmButtonText: 'Entendido',
       });
+      return false;
     }
 
 
