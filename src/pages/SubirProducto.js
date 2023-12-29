@@ -42,7 +42,7 @@ const SubirProducto = () => {
     if (fechaCierre < new Date()) {
       Swal.fire({
         title: 'Error',
-        text: 'La fecha de cierre no puede ser anterior a la fecha actual.',
+        text: 'La puja debe durar al menos una hora.',
         icon: 'error',
         confirmButtonText: 'Entendido',
       });
@@ -66,7 +66,7 @@ const SubirProducto = () => {
     const fechaCierreDate = new Date(fechaDeCierre);
 
     // Añadir una hora (3600 segundos) a la fecha de cierre
-    fechaCierreDate.setSeconds(fechaCierreDate.getSeconds() - 3600);
+    fechaCierreDate.setSeconds(fechaCierreDate.getSeconds());
 
     // Convertir de nuevo a formato de cadena para el valor del input
     fechaDeCierre = fechaCierreDate.toISOString().slice(0, 16);
