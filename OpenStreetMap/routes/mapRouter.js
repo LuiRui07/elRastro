@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require("axios");
 router.use(express.json());
 
-//Get coordenadas de una dirección, comprobado con Postman
+//Get coordenadas de una dirección, comprobado con Postmann
 router.get('/direccionCoordenadas/:direccion', async (req, res) => {
     const { direccion } = req.params;
     try {
