@@ -38,6 +38,7 @@ const SubirProducto = () => {
       errores = true;
     }
     const fechaCierre = new Date(e.target.fechaDeCierre.value);
+    fechaCierre.setSeconds(fechaCierre.getSeconds() - 3600);
     if (fechaCierre < new Date()) {
       Swal.fire({
         title: 'Error',
@@ -65,7 +66,7 @@ const SubirProducto = () => {
     const fechaCierreDate = new Date(fechaDeCierre);
 
     // Añadir una hora (3600 segundos) a la fecha de cierre
-    fechaCierreDate.setSeconds(fechaCierreDate.getSeconds() + 3600);
+    fechaCierreDate.setSeconds(fechaCierreDate.getSeconds() - 3600);
 
     // Convertir de nuevo a formato de cadena para el valor del input
     fechaDeCierre = fechaCierreDate.toISOString().slice(0, 16);
