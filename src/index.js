@@ -14,6 +14,7 @@ import CrearUsuario from './pages/CrearUsuario';
 import ProductoCategoria from './pages/ProductoCategoria';
 import Buzon from './pages/Buzon';
 import MisProductos from './pages/MisProductos';
+import DejarValoracion from './pages/DejarValoracion';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -30,6 +31,7 @@ root.render(
           <Route path='/buzon' element={<Buzon />} />
           <Route path='/MisProductos' element={<MisProductos />} />
           <Route path='*' element={<h1>404 Not Found</h1>} />
+          <Route path='/dejarValoracion/:idVendedor/:idArticulo' element={<DejarValoracion />} />
         </Routes>
       </Router>
       </UserProvider>

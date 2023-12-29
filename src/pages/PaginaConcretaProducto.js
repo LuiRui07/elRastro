@@ -98,16 +98,16 @@ const PaginaConcretaProducto = () => {
     }, []);
 
     useEffect(() => {
-        if(articulo !== undefined && puja !== undefined)
+        if(articulo !== undefined && puja !== undefined && articulo !== null && puja !== null && !puja.message)
         calcularPrecio();
     }, [articulo, puja]);    
 
     const calcularPrecio = async () => {
         try {
-            console.log(puja.comprador);
-            console.log(articulo._id);
+            console.log(puja);
+            console.log(articulo);
             const response1 = await axios.get(`https://front-elrastro.vercel.app/huellaC/huellaCarbonoCostoCamion/${puja.comprador}/${articulo._id}`);
-            
+                console.log(response1);
             if (response1.data !== null) {
                 const { data } = response1;
                 const response2 = await axios.get(`https://front-elrastro.vercel.app/huellaC/getPrecio/${data}`);
@@ -116,10 +116,13 @@ const PaginaConcretaProducto = () => {
                     const precioHuellaCarbono = parseInt(response2.data.precio, 10);
                     const total = precioHuellaCarbono + parseInt(puja.precio, 10);
                     setPrecioCalculado(total);
-                    setCalculandoPrecio(false);
                     console.log('Coste de huella de carbono:', precioHuellaCarbono);
                     console.log('Precio de la puja:', puja.precio);
                     console.log('Coste total:', total);
+                    if(typeof total === 'number' && !isNaN(total)) {
+                        console.log('Precio calculado:', total);
+                        setCalculandoPrecio(false);
+                    }
                 }
             }
         } catch (error) {
@@ -200,7 +203,7 @@ const PaginaConcretaProducto = () => {
         const deletePuja = await axios.delete(`https://front-elrastro.vercel.app/pujas/${puja._id}`);
         console.log('Respuesta de DELETE de Puja:', deleteArticulo.data);
 
-        window.location.href = "https://el-rastro-nine.vercel.app";
+        window.location.href = "localhost:3000/dejarValoracion/" + vendedor._id + "/" + articulo._id;
       };
 
 
@@ -340,7 +343,7 @@ const PaginaConcretaProducto = () => {
                                         )}
 
                                         {Date.parse(articulo.fechaDeCierre) < Date.now() && puja.comprador === localStorage.id ? (
-                                            calculandoPrecio ? <div>Cargando precio...</div> : 
+                                            calculandoPrecio == true && !precioCalculado ? <div>Cargando precio...</div> : 
                                             <>
                                             <PayPalButton precio={precioCalculado} onPaymentSuccess={handlePaymentSuccess}/>
                                             <p>Precio totale: {precioCalculado} €</p>
