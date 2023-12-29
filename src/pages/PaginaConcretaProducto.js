@@ -326,6 +326,7 @@ const PaginaConcretaProducto = () => {
                                     <div>
                                         <h2 className='mr-3'>Ultima Puja: {puja.precio} €</h2> 
                                     </div>
+                                    <div className='w-100'>
                                     {localStorage.id !== vendedor._id && (
                                         <div>
                                         {puja.comprador === localStorage.id && (
@@ -368,6 +369,7 @@ const PaginaConcretaProducto = () => {
                                         )}
                                     </div>
                                 )}
+                                </div>
                                 </div>
                                 ) : (
                                     <div className='d-flex align-items-center'>
