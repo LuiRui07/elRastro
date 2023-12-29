@@ -65,9 +65,9 @@ router.put("/:id", (req, res) => {
   const { id } = req.params;
   const vendedor = new ObjectId(req.body.vendedor);
   const pujaGanadora = new ObjectId(req.body.pujaGanadora);
-  const { descripcion , precioInicial, categorias, fechaDeCreacion, nombre, fechaDeCierre, peso } = req.body;
+  const { descripcion , precioInicial, categorias, fechaDeCreacion, nombre, fechaDeCierre, peso, desertico } = req.body;
   productosSchema
-    .updateOne({ _id: id }, { $set: { vendedor, pujaGanadora, descripcion , precioInicial, categorias, fechaDeCreacion, nombre, fechaDeCierre, peso} })
+    .updateOne({ _id: id }, { $set: { desertico, vendedor, pujaGanadora, descripcion , precioInicial, categorias, fechaDeCreacion, nombre, fechaDeCierre, peso} })
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
@@ -188,6 +188,30 @@ router.get('/productos-ordenados-por-pujas/:categoria', (req, res) => {
     res.json(productosArray)
   })
 })
+
+// hacer su atributo desertico true, es decir
+// En ese caso, se
+// iniciará automáticamente una nueva subasta, con la misma duración, y con un precio salida un 10%
+// inferior al inicial
+router.put("/desertico/:id", (req, res) => {
+  const { id } = req.params;
+  productosSchema
+    .findOne({ _id: id })
+    .then((data) => {
+      if(data){
+        console.log(Date.now() + (data.fechaDeCierre - data.fechaDeCreacion))
+        console.log(new Date(Date.now() + (data.fechaDeCierre - data.fechaDeCreacion)))
+        productosSchema
+        .updateOne({ _id: id }, { $set: { desertico: true, precioInicial: data.precioInicial * 0.9, fechaDeCierre: (new Date(Date.now() + (data.fechaDeCierre - data.fechaDeCreacion))), fechaDeCreacion: new Date() } })
+        .then((data) => res.json(data))
+        .catch((error) => res.json({ message: error }));
+      }else{
+        res.json({message: 'No se ha encontrado ningún producto con ese id.'})
+      }
+    })
+
+});
+
 module.exports = router;
 
 

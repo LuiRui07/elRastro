@@ -45,6 +45,11 @@ const productosSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    desertico: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
 });
 
 module.exports = mongoose.model("productos", productosSchema);
