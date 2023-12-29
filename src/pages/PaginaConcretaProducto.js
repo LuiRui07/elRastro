@@ -31,7 +31,7 @@ const PaginaConcretaProducto = () => {
                     user.setUser({
                         email: userObject.email,
                     });
-                    window.location.href = "https://el-rastro-six.vercel.app/crearUsuario";
+                    window.location.href = "https://el-rastro-nine.vercel.app/crearUsuario";
                     return
                 } else {
                     user.setUser({
@@ -98,16 +98,16 @@ const PaginaConcretaProducto = () => {
     }, []);
 
     useEffect(() => {
-        if(articulo !== undefined && puja !== undefined)
+        if(articulo !== undefined && puja !== undefined && articulo !== null && puja !== null && !puja.message)
         calcularPrecio();
     }, [articulo, puja]);    
 
     const calcularPrecio = async () => {
         try {
-            console.log(puja.comprador);
-            console.log(articulo._id);
+            console.log(puja);
+            console.log(articulo);
             const response1 = await axios.get(`https://el-rastro-six.vercel.app/huellaC/huellaCarbonoCostoCamion/${puja.comprador}/${articulo._id}`);
-            
+                console.log(response1);
             if (response1.data !== null) {
                 const { data } = response1;
                 const response2 = await axios.get(`https://el-rastro-six.vercel.app/huellaC/getPrecio/${data}`);
@@ -116,10 +116,13 @@ const PaginaConcretaProducto = () => {
                     const precioHuellaCarbono = parseInt(response2.data.precio, 10);
                     const total = precioHuellaCarbono + parseInt(puja.precio, 10);
                     setPrecioCalculado(total);
-                    setCalculandoPrecio(false);
                     console.log('Coste de huella de carbono:', precioHuellaCarbono);
                     console.log('Precio de la puja:', puja.precio);
                     console.log('Coste total:', total);
+                    if(typeof total === 'number' && !isNaN(total)) {
+                        console.log('Precio calculado:', total);
+                        setCalculandoPrecio(false);
+                    }
                 }
             }
         } catch (error) {
@@ -196,11 +199,11 @@ const PaginaConcretaProducto = () => {
         
         const deleteArticulo = await axios.delete(`https://el-rastro-six.vercel.app/productos/${articulo._id}`);
         console.log('Respuesta de DELETE:', deleteArticulo.data);
-
+        console.log('Puja:', puja)
         const deletePuja = await axios.delete(`https://el-rastro-six.vercel.app/pujas/${puja._id}`);
-        console.log('Respuesta de DELETE de Puja:', deleteArticulo.data);
+        console.log('Respuesta de DELETE de Puja:', deletePuja.data);
 
-        window.location.href = "https://el-rastro-nine.vercel.app";
+        window.location.href = "localhost:3000/dejarValoracion/" + vendedor._id + "/" + articulo._id;
       };
 
 
@@ -340,7 +343,7 @@ const PaginaConcretaProducto = () => {
                                         )}
 
                                         {Date.parse(articulo.fechaDeCierre) < Date.now() && puja.comprador === localStorage.id ? (
-                                            calculandoPrecio ? <div>Cargando precio...</div> : 
+                                            calculandoPrecio == true && !precioCalculado ? <div>Cargando precio...</div> : 
                                             <>
                                             <PayPalButton precio={precioCalculado} onPaymentSuccess={handlePaymentSuccess}/>
                                             <p>Precio totale: {precioCalculado} €</p>
@@ -411,9 +414,6 @@ const PaginaConcretaProducto = () => {
                     <p>Cargando mapa...</p>
                 )}
                 
-                {(user.user != null && vendedor._id != null && <div className='d-flex flex-row justify-content-between align-items-center'>
-                    <EstrellasDejarValoracion idUsuario={user.user.id} idVendedor={vendedor._id} />
-                </div>)}
             </div>
 
 
