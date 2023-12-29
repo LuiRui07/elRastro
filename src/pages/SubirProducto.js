@@ -15,6 +15,10 @@ const SubirProducto = () => {
   };
 
   const funcionGuardar = (e) => {
+    e.preventDefault();
+
+    let errores   = false;
+
     if (e.target.precioInicial.value < 0) {
       Swal.fire({
         title: 'Error',
@@ -22,7 +26,7 @@ const SubirProducto = () => {
         icon: 'error',
         confirmButtonText: 'Entendido',
       }); 
-      return false;
+      errores = true;
     }
     if (e.target.peso.value < 0) {
       Swal.fire({
@@ -31,20 +35,24 @@ const SubirProducto = () => {
         icon: 'error',
         confirmButtonText: 'Entendido',
       });
-      return false;
+      errores = true;
     }
-    if (e.target.fechaDeCierre.value < new Date(Date.now())) {
+    const fechaCierre = new Date(e.target.fechaDeCierre.value);
+    if (fechaCierre < new Date()) {
       Swal.fire({
         title: 'Error',
         text: 'La fecha de cierre no puede ser anterior a la fecha actual.',
         icon: 'error',
         confirmButtonText: 'Entendido',
       });
+      errores = true;
+    }
+
+    if (errores) {
       return false;
     }
 
 
-    e.preventDefault();
     const descripcion = e.target.descripcion.value;
     const precioInicial = e.target.precioInicial.value;
     const categorias = e.target.categorias.value;
