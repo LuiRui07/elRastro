@@ -1,0 +1,6 @@
+@media (max-width: 767px) {
+    #sigInDiv {
+        display: block !important; /* Asegurarte de que el botón se muestre */
+        background-color: red; /* Color de fondo temporal para diagnóstico */
+    }
+}

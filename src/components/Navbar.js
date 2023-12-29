@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import MailBox from '../media/mailbox-svgrepo-com.svg';
 import Package from '../media/package-svgrepo-com.svg';
+import '../css/Navbar.css'
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -114,7 +115,6 @@ const Navbar = () => {
                     <Link to="/category/tecnología">Tecnología</Link>
                     <Link to="/category/deporte">Deporte</Link>
                     <Link to="/category/hogar%20y%20jardin">Hogar y Jardin</Link>
-                    {(user.user == null && <div id="sigInDiv" className="d-none d-md-block"></div>)}
                 </div>
             )}
             <nav className='navbar d-none d-md-block'>
