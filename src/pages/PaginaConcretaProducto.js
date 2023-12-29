@@ -199,9 +199,9 @@ const PaginaConcretaProducto = () => {
         
         const deleteArticulo = await axios.delete(`https://front-elrastro.vercel.app/productos/${articulo._id}`);
         console.log('Respuesta de DELETE:', deleteArticulo.data);
-
+        console.log('Puja:', puja)
         const deletePuja = await axios.delete(`https://front-elrastro.vercel.app/pujas/${puja._id}`);
-        console.log('Respuesta de DELETE de Puja:', deleteArticulo.data);
+        console.log('Respuesta de DELETE de Puja:', deletePuja.data);
 
         window.location.href = "localhost:3000/dejarValoracion/" + vendedor._id + "/" + articulo._id;
       };
@@ -414,9 +414,6 @@ const PaginaConcretaProducto = () => {
                     <p>Cargando mapa...</p>
                 )}
                 
-                {(user.user != null && vendedor._id != null && <div className='d-flex flex-row justify-content-between align-items-center'>
-                    <EstrellasDejarValoracion idUsuario={user.user.id} idVendedor={vendedor._id} />
-                </div>)}
             </div>
 
 
