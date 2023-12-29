@@ -9,7 +9,7 @@ const axios = require("axios");
 const port = 5001;
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'https://el-rastro-nine.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));

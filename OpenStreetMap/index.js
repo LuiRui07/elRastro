@@ -9,11 +9,7 @@ const corsOptions = {
   headers: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
 };
 
-app.use(cors({
-  origin: 'http://localhost:3000',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
-}));
+app.use(cors(corsOptions));
 
 const port = 5004;
 app.use(express.json());
