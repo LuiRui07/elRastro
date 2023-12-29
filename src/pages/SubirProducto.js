@@ -65,7 +65,7 @@ const SubirProducto = () => {
       formData.append('imagen', imagen);
 
       // Devolvemos la promesa de la subida de la imagen
-      return axios.post('https://el-rastro-six.vercel.app/cloudinary/subir', formData)
+      return axios.post('https://mi-repo-ten.vercel.app/cloudinary/subir', formData)
         .then((response) => {
           console.log('Respuesta de Cloudinary:', response.data);
           return response.data.imageUrl;
@@ -91,7 +91,7 @@ const SubirProducto = () => {
         };
         console.log('Producto a crear:', producto);
         // Ahora, puedes hacer la solicitud para crear el producto
-        return axios.post('https://el-rastro-six.vercel.app/productos/', producto);
+        return axios.post('https://mi-repo-ten.vercel.app/productos/', producto);
       })
       .then((response) => {
         const { data } = response;

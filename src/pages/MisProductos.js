@@ -16,7 +16,7 @@ function MisProductos() {
 
   useEffect(() => {
     if (user.user !== null) {
-    axios.get('https://el-rastro-six.vercel.app/productos/productos-ofertados/' + user.user.id)
+    axios.get('https://mi-repo-ten.vercel.app/productos/productos-ofertados/' + user.user.id)
       .then(response => {
         setData(response.data);
         console.log('Datos del backend:', response.data);
@@ -27,7 +27,7 @@ function MisProductos() {
   }}, []);
 
   useEffect(() => {
-    axios.get('https://el-rastro-six.vercel.app/pujas/pujas-realizadas/' + user.user.id)
+    axios.get('https://mi-repo-ten.vercel.app/pujas/pujas-realizadas/' + user.user.id)
         .then(response => {
             setPujas(response.data);
             console.log('Datos del backend Pujas:', response.data);
@@ -100,7 +100,7 @@ function MisProductos() {
         <div className="d-flex flex-row overflow-x-auto overflow-y-hidden">
             {pujas.length > 0 ? (
                 pujas.map((puja, index) => {
-                    axios.get('https://el-rastro-six.vercel.app/productos/' + puja.producto)
+                    axios.get('https://mi-repo-ten.vercel.app/productos/' + puja.producto)
                         .then(response => {
                             setProductosPujados(prevState => ({
                                 ...prevState,

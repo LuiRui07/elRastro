@@ -15,7 +15,7 @@ function Buzon() {
 
   useEffect(() => {
     if (user.user !== null) {
-    axios.get('https://el-rastro-six.vercel.app/mensajes/buzon/' + user.user.id)
+    axios.get('https://mi-repo-ten.vercel.app/mensajes/buzon/' + user.user.id)
       .then(response => {
         setData(response.data);
         console.log('Datos del backend:', response.data);
@@ -32,7 +32,7 @@ function Buzon() {
       
       {mensajes.length > 0 ? (
         mensajes.map((grupo) => { 
-          axios.get('https://el-rastro-six.vercel.app/productos/' + grupo._id)
+          axios.get('https://mi-repo-ten.vercel.app/productos/' + grupo._id)
             .then(response => {
               setProductosMensajes(prevState => ({
                 ...prevState,

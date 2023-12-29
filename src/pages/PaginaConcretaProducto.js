@@ -22,7 +22,7 @@ const PaginaConcretaProducto = () => {
     
     function handleCallbackResponse(response) {
         var userObject = jwtDecode(response.credential);
-        axios.get('https://el-rastro-six.vercel.app/usuarios/correo/' + userObject.email)
+        axios.get('https://mi-repo-ten.vercel.app/usuarios/correo/' + userObject.email)
             .then((response) => {
                 const { data } = response;
                 const { message } = data;
@@ -83,7 +83,7 @@ const PaginaConcretaProducto = () => {
     };
 
     useEffect(() => {
-        axios.get(`https://el-rastro-six.vercel.app/productos/${id}`)
+        axios.get(`https://mi-repo-ten.vercel.app/productos/${id}`)
             .then(response => {
                 if (response.data !== null) {
                     setArticulo(response.data);
@@ -106,11 +106,11 @@ const PaginaConcretaProducto = () => {
         try {
             console.log(puja);
             console.log(articulo);
-            const response1 = await axios.get(`https://el-rastro-six.vercel.app/huellaC/huellaCarbonoCostoCamion/${puja.comprador}/${articulo._id}`);
+            const response1 = await axios.get(`https://mi-repo-ten.vercel.app/huellaC/huellaCarbonoCostoCamion/${puja.comprador}/${articulo._id}`);
                 console.log(response1);
             if (response1.data !== null) {
                 const { data } = response1;
-                const response2 = await axios.get(`https://el-rastro-six.vercel.app/huellaC/getPrecio/${data}`);
+                const response2 = await axios.get(`https://mi-repo-ten.vercel.app/huellaC/getPrecio/${data}`);
                 
                 if (response2.data !== null) {
                     const precioHuellaCarbono = parseInt(response2.data.precio, 10);
@@ -132,7 +132,7 @@ const PaginaConcretaProducto = () => {
     }   
 
     useEffect(() => {
-        axios.get(`https://el-rastro-six.vercel.app/mapa/coordenadasProducto/` + id)
+        axios.get(`https://mi-repo-ten.vercel.app/mapa/coordenadasProducto/` + id)
             .then(response => {
                 if (response.data !== null) {
                     setLatitud(response.data.latitud);
@@ -149,7 +149,7 @@ const PaginaConcretaProducto = () => {
     }, [articulo]);
 
     useEffect(() => {
-        axios.get(`https://el-rastro-six.vercel.app/usuarios/${articulo.vendedor}`)
+        axios.get(`https://mi-repo-ten.vercel.app/usuarios/${articulo.vendedor}`)
             .then(response => {
                 if (response.data !== null) {
                     setVendedor(response.data);
@@ -162,7 +162,7 @@ const PaginaConcretaProducto = () => {
     }, [articulo]);
 
     useEffect(() => {
-        axios.get(`https://el-rastro-six.vercel.app/pujas/${articulo.pujaGanadora}`)
+        axios.get(`https://mi-repo-ten.vercel.app/pujas/${articulo.pujaGanadora}`)
             .then(response => {
                 if (response.data !== null) {
                     setPuja(response.data);
@@ -181,7 +181,7 @@ const PaginaConcretaProducto = () => {
         // Si el usuario hace clic en "Aceptar", procede con la operación de borrado
         if (confirmacion) {
             try {
-                const deleteResponse = await axios.delete(`https://el-rastro-six.vercel.app/productos/${articulo._id}`);
+                const deleteResponse = await axios.delete(`https://mi-repo-ten.vercel.app/productos/${articulo._id}`);
                 console.log('Respuesta de DELETE:', deleteResponse.data);
                 window.location.href = "https://el-rastro-nine.vercel.app";
             } catch (error) {
@@ -197,10 +197,10 @@ const PaginaConcretaProducto = () => {
         console.log('Pago completado:', data);
         alert('Pago completado');
         
-        const deleteArticulo = await axios.delete(`https://el-rastro-six.vercel.app/productos/${articulo._id}`);
+        const deleteArticulo = await axios.delete(`https://mi-repo-ten.vercel.app/productos/${articulo._id}`);
         console.log('Respuesta de DELETE:', deleteArticulo.data);
         console.log('Puja:', puja)
-        const deletePuja = await axios.delete(`https://el-rastro-six.vercel.app/pujas/${puja._id}`);
+        const deletePuja = await axios.delete(`https://mi-repo-ten.vercel.app/pujas/${puja._id}`);
         console.log('Respuesta de DELETE de Puja:', deletePuja.data);
 
         window.location.href = "localhost:3000/dejarValoracion/" + vendedor._id + "/" + articulo._id;
@@ -224,7 +224,7 @@ const PaginaConcretaProducto = () => {
         }
         
         try {
-        const postResponse = await axios.post(`https://el-rastro-six.vercel.app/pujas/`, {
+        const postResponse = await axios.post(`https://mi-repo-ten.vercel.app/pujas/`, {
             comprador: localStorage.id,
             producto: articulo._id,
             precio: precio,
@@ -234,7 +234,7 @@ const PaginaConcretaProducto = () => {
         console.log('Respuesta de POST:', postResponse.data);
         const idPuja = postResponse.data._id;
 
-        const putResponse = await axios.put(`https://el-rastro-six.vercel.app/productos/${articulo._id}`, {
+        const putResponse = await axios.put(`https://mi-repo-ten.vercel.app/productos/${articulo._id}`, {
             pujaGanadora: idPuja,
             imagenes: articulo.imagenes,
             nombre: articulo.nombre,

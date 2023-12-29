@@ -11,7 +11,7 @@ const ProductoCategoria = () => {
   const { categoria } = useParams();
 
   useEffect(() => {
-    axios.get(`https://el-rastro-six.vercel.app/productos/productos-categoria/${categoria}`)
+    axios.get(`https://mi-repo-ten.vercel.app/productos/productos-categoria/${categoria}`)
       .then(response => {
         if (response.data !== null) {
           const filteredArticulos = response.data.filter(articulo => articulo.vendedor !== localStorage.id);

@@ -24,7 +24,7 @@ const Navbar = () => {
 
     function handleCallbackResponse(response) {
         var userObject = jwtDecode(response.credential);
-        axios.get('https://el-rastro-six.vercel.app/usuarios/correo/' + userObject.email)
+        axios.get('https://mi-repo-ten.vercel.app/usuarios/correo/' + userObject.email)
             .then((response) => {
                 const { data } = response;
                 const { message } = data;

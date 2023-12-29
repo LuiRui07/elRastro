@@ -11,7 +11,7 @@ const ValoracionEstrellasDejarValoracion = ({ idUsuario, idVendedor }) => {
   const [valoraciones, setValoraciones] = useState(null);
 
   useEffect(() => {
-    axios.get(`https://el-rastro-six.vercel.app/valoraciones/valoracion/${idVendedor}/${idUsuario}`).then(response => {
+    axios.get(`https://mi-repo-ten.vercel.app/valoraciones/valoracion/${idVendedor}/${idUsuario}`).then(response => {
     if (response.data !== null) {
         console.log('Datos del backend:', response.data);
         setValoraciones(response.data);
@@ -29,7 +29,7 @@ const handleChange = (e) => {
   const funcionLlamar = () => {
     console.log('idVendedor:', idVendedor);
     console.log('idUsuario:', idUsuario);
-    axios.post(`https://el-rastro-six.vercel.app/valoraciones/`, {
+    axios.post(`https://mi-repo-ten.vercel.app/valoraciones/`, {
       comprador: idUsuario,
       vendedor: idVendedor,
       valoracion: valoracionActual,

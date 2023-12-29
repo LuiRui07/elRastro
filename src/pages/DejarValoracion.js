@@ -11,7 +11,7 @@ function DejarValoracion() {
     const [p, setP] = useState(null);
 
     useEffect(() => {
-        axios.get(`https://el-rastro-six.vercel.app/usuarios/${idVendedor}`)
+        axios.get(`https://mi-repo-ten.vercel.app/usuarios/${idVendedor}`)
         .then(response => {
             console.log(response.data);
             if (response.data !== null) {
@@ -22,7 +22,7 @@ function DejarValoracion() {
             console.error('Error al obtener datos del backend:', error);
         });
 
-        axios.get(`https://el-rastro-six.vercel.app/productos/${idArticulo}`)
+        axios.get(`https://mi-repo-ten.vercel.app/productos/${idArticulo}`)
         .then(response => {
             console.log(response.data);
             if (response.data !== null) {

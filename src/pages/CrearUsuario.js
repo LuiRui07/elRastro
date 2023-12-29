@@ -36,7 +36,7 @@ const CrearUsuario = () => {
             valoracion: 0,
             numeroValoraciones: 0
         }
-        axios.post('https://el-rastro-six.vercel.app/usuarios/', usuario)
+        axios.post('https://mi-repo-ten.vercel.app/usuarios/', usuario)
             .then((response) => {
                 const { data } = response;
                 const { message } = data;
