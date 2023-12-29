@@ -323,7 +323,9 @@ const PaginaConcretaProducto = () => {
                         <h1 className='TituloProducto'>{articulo.nombre}</h1>
                                 {articulo.pujaGanadora != null ? (
                                     <div className='d-flex align-items-center'> 
+                                    <div>
                                         <h2 className='mr-3'>Ultima Puja: {puja.precio} €</h2> 
+                                    </div>
                                     {localStorage.id !== vendedor._id && (
                                         <div>
                                         {puja.comprador === localStorage.id && (
