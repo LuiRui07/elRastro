@@ -203,7 +203,7 @@ const PaginaConcretaProducto = () => {
         const deletePuja = await axios.delete(`https://mi-repo-ten.vercel.app/pujas/${puja._id}`);
         console.log('Respuesta de DELETE de Puja:', deletePuja.data);
 
-        window.location.href = "localhost:3000/dejarValoracion/" + vendedor._id + "/" + articulo._id;
+        window.location.href = "https://el-rastro-nine.vercel.app/dejarValoracion/" + vendedor._id + "/" + articulo._id;
       };
 
 
@@ -346,7 +346,7 @@ const PaginaConcretaProducto = () => {
                                             calculandoPrecio == true && !precioCalculado ? <div>Cargando precio...</div> : 
                                             <>
                                             <PayPalButton precio={precioCalculado} onPaymentSuccess={handlePaymentSuccess}/>
-                                            <p>Precio totale: {precioCalculado} €</p>
+                                            <p>Precio total: {precioCalculado} €</p>
                                             </>
                                         ) : (
                                             <div>
