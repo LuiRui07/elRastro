@@ -33,7 +33,7 @@ const SubirProducto = () => {
       });
       return false;
     }
-    if (e.target.fechaDeCierre.value < Date.now()) {
+    if (e.target.fechaDeCierre.value < new Date(Date.now())) {
       Swal.fire({
         title: 'Error',
         text: 'La fecha de cierre no puede ser anterior a la fecha actual.',

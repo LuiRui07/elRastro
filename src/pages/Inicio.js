@@ -77,7 +77,7 @@ function Inicio() {
                         </div>
                         <div className="col-md-6 d-flex flex-column text-start distancia">
                           <h5 className="tipoLetraPrecios fw-bolder text-body"> {articulo.nombre}</h5>
-                          <p className="fw-normal tipoLetraPrecios text-body-tertiary" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{articulo.precioInicial} €</p>
+                          <p className="fw-normal tipoLetraPrecios text-body-tertiary" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>Precio Inicial: {articulo.precioInicial} €</p>
                         </div>
                       </div>
                     </div>
